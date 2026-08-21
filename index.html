@@ -35,7 +35,7 @@
             text-align: center;
             display: flex;
             flex-direction: column;
-            gap: 22px;
+            gap: 18px;
             box-sizing: border-box;
         }
 
@@ -92,6 +92,16 @@
             flex: 1;
             text-align: center;
             padding-right: 30px;
+        }
+
+        /* Texto indicador externo para no ensanchar el botón */
+        .info-seleccion {
+            font-size: 0.78rem;
+            color: #2af598;
+            margin: -10px 0 0 5px;
+            text-align: left;
+            font-style: italic;
+            min-height: 15px;
         }
 
         .textarea-box {
@@ -188,23 +198,26 @@
     <div class="card" id="mainCard">
         <h2>SUBIR CONTENIDO</h2>
 
-        <!-- AQUI ESTÁ EL MULTIPLE RESTAURADO -->
         <input type="file" id="fileGaleria" class="input-oculto" accept="image/*,video/*" multiple>
         <input type="file" id="fileCamara" class="input-oculto" accept="image/*" capture="environment">
 
+        <!-- Botón Galería -->
         <button type="button" class="btn-accion" id="btnGaleria">
             <span class="icono">
                 <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
             </span>
             <span class="texto">SELECCIONAR DE GALERÍA</span>
         </button>
+        <div class="info-seleccion" id="infoGaleria"></div>
 
+        <!-- Botón Cámara -->
         <button type="button" class="btn-accion" id="btnCamara">
             <span class="icono">
                 <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
             </span>
             <span class="texto">TOMAR FOTO O VIDEO</span>
         </button>
+        <div class="info-seleccion" id="infoCamara"></div>
 
         <div class="textarea-box" id="textBoxContainer">
             <textarea id="saludoText" placeholder="Escribe tu saludo" maxlength="200"></textarea>
@@ -234,8 +247,12 @@
 
         const btnGaleria = document.getElementById('btnGaleria');
         const fileGaleria = document.getElementById('fileGaleria');
+        const infoGaleria = document.getElementById('infoGaleria');
+
         const btnCamara = document.getElementById('btnCamara');
         const fileCamara = document.getElementById('fileCamara');
+        const infoCamara = document.getElementById('infoCamara');
+
         const saludoText = document.getElementById('saludoText');
         const contador = document.getElementById('contador');
         const btnEnviar = document.getElementById('btnEnviar');
@@ -245,23 +262,24 @@
         const btnSubirMas = document.getElementById('btnSubirMas');
         const loadingOverlay = document.getElementById('loadingOverlay');
 
-        let archivosSeleccionados = [];
+        let archivosGaleria = [];
+        let archivosCamara = [];
 
         btnGaleria.addEventListener('click', () => fileGaleria.click());
         fileGaleria.addEventListener('change', (e) => {
             if(e.target.files.length > 0) {
-                archivosSeleccionados = Array.from(e.target.files);
+                archivosGaleria = Array.from(e.target.files);
+                infoGaleria.textContent = `${archivosGaleria.length} archivo(s) seleccionado(s) ✓`;
                 btnGaleria.style.background = 'linear-gradient(135deg, #2af598 0%, #009efd 100%)';
-                btnGaleria.querySelector('.texto').textContent = `${archivosSeleccionados.length} ARCHIVO(S) SELECCIONADO(S) ✓`;
             }
         });
 
         btnCamara.addEventListener('click', () => fileCamara.click());
         fileCamara.addEventListener('change', (e) => {
             if(e.target.files.length > 0) {
-                archivosSeleccionados = Array.from(e.target.files);
+                archivosCamara = Array.from(e.target.files);
+                infoCamara.textContent = `${archivosCamara.length} foto(s) capturada(s) ✓`;
                 btnCamara.style.background = 'linear-gradient(135deg, #2af598 0%, #009efd 100%)';
-                btnCamara.querySelector('.texto').textContent = "FOTO TOMADA ✓";
             }
         });
 
@@ -280,9 +298,10 @@
 
         btnEnviar.addEventListener('click', async () => {
             const texto = saludoText.value.trim();
+            const todosLosArchivos = [...archivosGaleria, ...archivosCamara];
             const nombreInvitado = "Invitado";
 
-            if (archivosSeleccionados.length === 0 && texto === "") {
+            if (todosLosArchivos.length === 0 && texto === "") {
                 alert("Por favor, selecciona al menos una foto/video o escribe un saludo.");
                 return;
             }
@@ -290,8 +309,8 @@
             loadingOverlay.style.display = 'flex';
 
             try {
-                // Enviar cada archivo seleccionado uno por uno
-                for (let archivo of archivosSeleccionados) {
+                // Enviar archivos
+                for (let archivo of todosLosArchivos) {
                     const base64Data = await leerArchivoComoBase64(archivo);
                     const tipoArchivo = archivo.type.startsWith('video') ? 'video' : 'foto';
 
@@ -310,7 +329,7 @@
                     });
                 }
 
-                // Enviar texto si hay
+                // Enviar texto
                 if (texto !== "") {
                     const payloadTexto = {
                         tipo: "texto",
@@ -340,13 +359,14 @@
         btnSubirMas.addEventListener('click', () => {
             saludoText.value = '';
             contador.textContent = '0/200 (opcional)';
-            archivosSeleccionados = [];
+            archivosGaleria = [];
+            archivosCamara = [];
             fileGaleria.value = '';
             fileCamara.value = '';
+            infoGaleria.textContent = '';
+            infoCamara.textContent = '';
             btnGaleria.style.background = 'linear-gradient(135deg, #4deeea 0%, #00bcd4 100%)';
-            btnGaleria.querySelector('.texto').textContent = "SELECCIONAR DE GALERÍA";
             btnCamara.style.background = 'linear-gradient(135deg, #4deeea 0%, #00bcd4 100%)';
-            btnCamara.querySelector('.texto').textContent = "TOMAR FOTO O VIDEO";
             
             successCard.style.display = 'none';
             mainCard.style.display = 'flex';
