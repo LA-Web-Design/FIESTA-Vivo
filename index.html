@@ -12,21 +12,24 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Fondo base oscuro */
             background-color: #1a0f24;
-            /* Si subiste tu textura a GitHub, descomentá la siguiente línea y poné el nombre exacto:
-            background-image: url('textura.jpg'); background-size: cover; background-position: center; */
+            /* Fondo con tu textura (asegúrate de que el archivo en GitHub se llame fondo.jpg) */
+            background-image: url('fondo.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #ffffff;
             overflow: hidden;
         }
 
-        /* Panel principal */
+        /* Panel Principal */
         .card {
-            background: linear-gradient(135deg, rgba(48, 28, 68, 0.85), rgba(24, 12, 36, 0.92));
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.15);
+            background: linear-gradient(135deg, rgba(85, 55, 115, 0.9), rgba(55, 34, 78, 0.93));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6),
+                        inset 0 15px 35px rgba(255, 255, 255, 0.1),
+                        inset 0 -15px 35px rgba(0, 0, 0, 0.2);
             border-radius: 32px;
             padding: 35px 24px;
             width: 90%;
@@ -41,19 +44,18 @@
         .card h2 {
             font-size: 1.1rem;
             letter-spacing: 1.5px;
-            color: #ebdff5;
+            color: #f0e0ff;
             margin: 0 0 5px 0;
             font-weight: 600;
         }
 
-        /* BOTONES CILÍNDRICOS 3D (Relieve superior, sombra inferior) */
+        /* Botones sólidos profesionales (sin blur) */
         .btn-accion {
             display: flex;
             align-items: center;
-            /* Degradado complejo para simular volumen 3D */
-            background: linear-gradient(to bottom, #4deeea 0%, #00bcd4 50%, #0097a7 100%);
+            background: linear-gradient(135deg, #4deeea 0%, #00bcd4 100%);
             color: #120b18;
-            border: none;
+            border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 50px;
             padding: 15px 20px;
             width: 100%;
@@ -61,24 +63,17 @@
             font-weight: bold;
             letter-spacing: 0.5px;
             cursor: pointer;
-            /* Sombra exterior suave + brillo interior superior + sombra inferior interna */
-            box-shadow: 0 8px 20px rgba(0, 188, 212, 0.4),
-                        inset 0 3px 5px rgba(255, 255, 255, 0.5),
-                        inset 0 -4px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 188, 212, 0.2);
             text-decoration: none;
             box-sizing: border-box;
             position: relative;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            transition: transform 0.15s ease, background 0.15s ease;
         }
 
         .btn-accion:active {
             transform: scale(0.98);
-            /* Al hacer clic, el botón se "aplana" un poco */
-            box-shadow: 0 4px 10px rgba(0, 188, 212, 0.4),
-                        inset 0 1px 2px rgba(255, 255, 255, 0.4);
         }
 
-        /* Icono minimalista en línea negra (ya está perfecto) */
         .btn-accion .icono {
             width: 30px;
             display: flex;
@@ -91,7 +86,7 @@
             height: 20px;
             fill: none;
             stroke: #120b18;
-            stroke-width: 2.5; /* Un pelín más grueso para que resalte */
+            stroke-width: 2.5;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
@@ -102,7 +97,7 @@
             padding-right: 30px;
         }
 
-        /* CUADRO DE TEXTO CON EFECTO "CUENCO" (Sombras internas) */
+        /* Cuadro de texto rehundido */
         .textarea-box {
             background: linear-gradient(145deg, #100718, #180c22);
             border: 1px solid rgba(255, 255, 255, 0.03);
@@ -137,12 +132,15 @@
             font-size: 0.75rem;
             color: rgba(220, 210, 235, 0.4);
             margin-top: 5px;
+            font-style: italic;
         }
 
+        /* Mensajes dinámicos de estado */
         .mensaje-exito {
             font-size: 0.88rem;
             color: #d0d0d0;
             margin: 2px 0;
+            display: none; /* Oculto hasta que se envíe algo */
         }
 
         .mensaje-exito span.verde {
@@ -150,23 +148,21 @@
             font-weight: bold;
         }
 
-        /* BOTÓN VERDE INFERIOR CILÍNDRICO 3D */
+        /* Botón verde inferior sólido */
         .btn-subir-mas {
-            display: inline-flex;
+            display: none; /* Oculto hasta que se envíe algo */
             align-items: center;
             justify-content: center;
             gap: 8px;
-            background: linear-gradient(to bottom, #76ff03 0%, #00e676 50%, #00c853 100%);
+            background: linear-gradient(135deg, #76ff03 0%, #00e676 100%);
             color: #120b18;
-            border: none;
+            border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 30px;
             padding: 10px 24px;
             font-size: 0.88rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 6px 18px rgba(0, 230, 118, 0.4),
-                        inset 0 3px 4px rgba(255, 255, 255, 0.6),
-                        inset 0 -3px 4px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 230, 118, 0.2);
             margin: 0 auto;
             text-decoration: none;
             transition: transform 0.15s ease;
@@ -175,51 +171,130 @@
         .btn-subir-mas:active {
             transform: scale(0.98);
         }
+
+        /* Inputs de archivo ocultos por detrás */
+        .input-oculto {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-    <div class="card">
+    <div class="card" id="mainCard">
         <h2>SUBIR CONTENIDO</h2>
 
-        <!-- Botón Galería con icono SVG negro -->
-        <button class="btn-accion">
+        <!-- Inputs reales ocultos -->
+        <input type="file" id="fileGaleria" class="input-oculto" accept="image/*,video/*" multiple>
+        <input type="file" id="fileCamara" class="input-oculto" accept="image/*" capture="environment">
+
+        <!-- Botón Galería -->
+        <button type="button" class="btn-accion" id="btnGaleria">
             <span class="icono">
                 <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
             </span>
             <span class="texto">SELECCIONAR DE GALERÍA</span>
         </button>
 
-        <!-- Botón Cámara con icono SVG negro -->
-        <button class="btn-accion">
+        <!-- Botón Cámara -->
+        <button type="button" class="btn-accion" id="btnCamara">
             <span class="icono">
                 <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
             </span>
             <span class="texto">TOMAR FOTO O VIDEO</span>
         </button>
 
-        <!-- Cuadro de texto con efecto cuenco -->
-        <div class="textarea-box">
-            <textarea placeholder="Escribe tu saludo (máx. 200 caracteres)" maxlength="200"></textarea>
-            <div class="contador-caracteres">0/200</div>
+        <!-- Cuadro de texto -->
+        <div class="textarea-box" id="textBoxContainer">
+            <textarea id="saludoText" placeholder="Escribe tu saludo" maxlength="200"></textarea>
+            <div class="contador-caracteres" id="contador">0/200 (opcional)</div>
         </div>
 
-        <!-- Botón Enviar con icono SVG negro -->
-        <button class="btn-accion">
+        <!-- Botón Enviar -->
+        <button type="button" class="btn-accion" id="btnEnviar">
             <span class="icono">
                 <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
             </span>
             <span class="texto">ENVIAR</span>
         </button>
+    </div>
 
-        <div class="mensaje-exito">
-            ¡ÉXITO! Se subieron <span class="verde">3</span> imágenes y <span class="verde">1</span> texto.
+    <!-- Mensaje y Botón de éxito (fuera de la card principal para alternar) -->
+    <div class="card" id="successCard" style="display: none;">
+        <h2>¡LISTO!</h2>
+        <div class="mensaje-exito" id="textoResultado" style="display: block;">
+            ¡ÉXITO! Se subió tu contenido correctamente.
         </div>
-
-        <button class="btn-subir-mas">
+        <button type="button" class="btn-subir-mas" id="btnSubirMas" style="display: inline-flex;">
             <span>+</span> SUBIR MÁS
         </button>
     </div>
 
+    <script>
+        // Elementos interactivos
+        const btnGaleria = document.getElementById('btnGaleria');
+        const fileGaleria = document.getElementById('fileGaleria');
+        const btnCamara = document.getElementById('btnCamara');
+        const fileCamara = document.getElementById('fileCamara');
+        const saludoText = document.getElementById('saludoText');
+        const contador = document.getElementById('contador');
+        const btnEnviar = document.getElementById('btnEnviar');
+        
+        const mainCard = document.getElementById('mainCard');
+        const successCard = document.getElementById('successCard');
+        const btnSubirMas = document.getElementById('btnSubirMas');
+
+        let archivosSeleccionados = 0;
+
+        // Abrir galería al hacer clic en el botón
+        btnGaleria.addEventListener('click', () => fileGaleria.click());
+        fileGaleria.addEventListener('change', (e) => {
+            archivosSeleccionados = e.target.files.length;
+            if(archivosSeleccionados > 0) {
+                btnGaleria.style.background = 'linear-gradient(135deg, #2af598 0%, #009efd 100%)';
+            }
+        });
+
+        // Abrir cámara al hacer clic en el botón
+        btnCamara.addEventListener('click', () => fileCamara.click());
+        fileCamara.addEventListener('change', (e) => {
+            if(e.target.files.length > 0) {
+                archivosSeleccionados += e.target.files.length;
+                btnCamara.style.background = 'linear-gradient(135deg, #2af598 0%, #009efd 100%)';
+            }
+        });
+
+        // Contador de caracteres en tiempo real
+        saludoText.addEventListener('input', () => {
+            const actual = saludoText.value.length;
+            contador.textContent = `${actual}/200 (opcional)`;
+        });
+
+        // Simular envío de datos
+        btnEnviar.addEventListener('click', () => {
+            const texto = saludoText.value.trim();
+            if (archivosSeleccionados === 0 && texto === "") {
+                alert("Por favor, selecciona al menos una foto/video o escribe un saludo.");
+                return;
+            }
+
+            // Ocultamos formulario y mostramos éxito
+            mainCard.style.display = 'none';
+            successCard.style.display = 'flex';
+        });
+
+        // Botón para resetear y subir más
+        btnSubirMas.addEventListener('click', () => {
+            saludoText.value = '';
+            contador.textContent = '0/200 (opcional)';
+            archivosSeleccionados = 0;
+            fileGaleria.value = '';
+            fileCamara.value = '';
+            btnGaleria.style.background = 'linear-gradient(135deg, #4deeea 0%, #00bcd4 100%)';
+            btnCamara.style.background = 'linear-gradient(135deg, #4deeea 0%, #00bcd4 100%)';
+            
+            successCard.style.display = 'none';
+            mainCard.style.display = 'flex';
+        });
+    </script>
 </body>
 </html>
