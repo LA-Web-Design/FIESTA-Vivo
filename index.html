@@ -13,7 +13,6 @@
             justify-content: center;
             align-items: center;
             background-color: #1a0f24;
-            /* Fondo con tu textura (asegúrate de que el archivo en GitHub se llame fondo.jpg) */
             background-image: url('fondo.jpg'); 
             background-size: cover;
             background-position: center;
@@ -23,7 +22,6 @@
             overflow: hidden;
         }
 
-        /* Panel Principal */
         .card {
             background: linear-gradient(135deg, rgba(85, 55, 115, 0.9), rgba(55, 34, 78, 0.93));
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -49,7 +47,6 @@
             font-weight: 600;
         }
 
-        /* Botones sólidos profesionales (sin blur) */
         .btn-accion {
             display: flex;
             align-items: center;
@@ -97,7 +94,6 @@
             padding-right: 30px;
         }
 
-        /* Cuadro de texto rehundido */
         .textarea-box {
             background: linear-gradient(145deg, #100718, #180c22);
             border: 1px solid rgba(255, 255, 255, 0.03);
@@ -135,22 +131,14 @@
             font-style: italic;
         }
 
-        /* Mensajes dinámicos de estado */
         .mensaje-exito {
             font-size: 0.88rem;
             color: #d0d0d0;
             margin: 2px 0;
-            display: none; /* Oculto hasta que se envíe algo */
         }
 
-        .mensaje-exito span.verde {
-            color: #2af598;
-            font-weight: bold;
-        }
-
-        /* Botón verde inferior sólido */
         .btn-subir-mas {
-            display: none; /* Oculto hasta que se envíe algo */
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
@@ -172,44 +160,58 @@
             transform: scale(0.98);
         }
 
-        /* Inputs de archivo ocultos por detrás */
         .input-oculto {
             display: none;
+        }
+
+        /* Pantalla de carga */
+        #loadingOverlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(26, 15, 36, 0.85);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 15px;
+            font-size: 1rem;
+            color: #4deeea;
         }
     </style>
 </head>
 <body>
 
+    <!-- Overlay de carga -->
+    <div id="loadingOverlay">
+        <div>Enviando contenido... por favor espera ⏳</div>
+    </div>
+
     <div class="card" id="mainCard">
         <h2>SUBIR CONTENIDO</h2>
 
-        <!-- Inputs reales ocultos -->
-        <input type="file" id="fileGaleria" class="input-oculto" accept="image/*,video/*" multiple>
+        <input type="file" id="fileGaleria" class="input-oculto" accept="image/*,video/*">
         <input type="file" id="fileCamara" class="input-oculto" accept="image/*" capture="environment">
 
-        <!-- Botón Galería -->
         <button type="button" class="btn-accion" id="btnGaleria">
             <span class="icono">
                 <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
             </span>
-            <span class="texto">SELECCIONAR DE GALERÍA</span>
+            <span class="texto">SELECCIONAR ARCHIVO</span>
         </button>
 
-        <!-- Botón Cámara -->
         <button type="button" class="btn-accion" id="btnCamara">
             <span class="icono">
                 <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
             </span>
-            <span class="texto">TOMAR FOTO O VIDEO</span>
+            <span class="texto">TOMAR FOTO</span>
         </button>
 
-        <!-- Cuadro de texto -->
         <div class="textarea-box" id="textBoxContainer">
-            <textarea id="saludoText" placeholder="Escribe tu saludo" maxlength="200"></textarea>
-            <div class="contador-caracteres" id="contador">0/200 (opcional)</div>
+            <textarea id="saludoText" placeholder="Escribe tu saludo o nombre" maxlength="200"></textarea>
+            <div class="contador-caracteres" id="contador">0/200</div>
         </div>
 
-        <!-- Botón Enviar -->
         <button type="button" class="btn-accion" id="btnEnviar">
             <span class="icono">
                 <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
@@ -218,19 +220,20 @@
         </button>
     </div>
 
-    <!-- Mensaje y Botón de éxito (fuera de la card principal para alternar) -->
     <div class="card" id="successCard" style="display: none;">
         <h2>¡LISTO!</h2>
-        <div class="mensaje-exito" id="textoResultado" style="display: block;">
-            ¡ÉXITO! Se subió tu contenido correctamente.
+        <div class="mensaje-exito">
+            ¡ÉXITO! Se subió tu contenido correctamente. 🎉
         </div>
-        <button type="button" class="btn-subir-mas" id="btnSubirMas" style="display: inline-flex;">
+        <button type="button" class="btn-subir-mas" id="btnSubirMas">
             <span>+</span> SUBIR MÁS
         </button>
     </div>
 
     <script>
-        // Elementos interactivos
+        // URL de tu Web App de Google Apps Script (Versión 4)
+        const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbwR3jniWrcz6p8k06LBfT4TxDMsLkhlbpnX8dws0dEB2rElX3pJW12T9Y6xFFIY9wYo/exec";
+
         const btnGaleria = document.getElementById('btnGaleria');
         const fileGaleria = document.getElementById('fileGaleria');
         const btnCamara = document.getElementById('btnCamara');
@@ -242,55 +245,116 @@
         const mainCard = document.getElementById('mainCard');
         const successCard = document.getElementById('successCard');
         const btnSubirMas = document.getElementById('btnSubirMas');
+        const loadingOverlay = document.getElementById('loadingOverlay');
 
-        let archivosSeleccionados = 0;
+        let archivoSeleccionado = null;
 
-        // Abrir galería al hacer clic en el botón
+        // Manejar selección de galería
         btnGaleria.addEventListener('click', () => fileGaleria.click());
         fileGaleria.addEventListener('change', (e) => {
-            archivosSeleccionados = e.target.files.length;
-            if(archivosSeleccionados > 0) {
-                btnGaleria.style.background = 'linear-gradient(135deg, #2af598 0%, #009efd 100%)';
+            if(e.target.files.length > 0) {
+                archivoSeleccionado = e.target.files[0];
+                btnGaleria.style.background = 'linear-gradient(135deg, #2af598 0%, #009efd 100% )';
+                btnGaleria.querySelector('.texto').textContent = "ARCHIVO SELECCIONADO ✓";
             }
         });
 
-        // Abrir cámara al hacer clic en el botón
+        // Manejar selección de cámara
         btnCamara.addEventListener('click', () => fileCamara.click());
         fileCamara.addEventListener('change', (e) => {
             if(e.target.files.length > 0) {
-                archivosSeleccionados += e.target.files.length;
+                archivoSeleccionado = e.target.files[0];
                 btnCamara.style.background = 'linear-gradient(135deg, #2af598 0%, #009efd 100%)';
+                btnCamara.querySelector('.texto').textContent = "FOTO TOMADA ✓";
             }
         });
 
-        // Contador de caracteres en tiempo real
         saludoText.addEventListener('input', () => {
-            const actual = saludoText.value.length;
-            contador.textContent = `${actual}/200 (opcional)`;
+            contador.textContent = `${saludoText.value.length}/200`;
         });
 
-        // Simular envío de datos
-        btnEnviar.addEventListener('click', () => {
+        // Función para convertir archivo a Base64
+        function leerArchivoComoBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Envío real con fetch hacia Google Apps Script
+        btnEnviar.addEventListener('click', async () => {
             const texto = saludoText.value.trim();
-            if (archivosSeleccionados === 0 && texto === "") {
-                alert("Por favor, selecciona al menos una foto/video o escribe un saludo.");
+            const nombreInvitado = "Invitado"; // Podés cambiarlo o pedirlo en un input si querés
+
+            if (!archivoSeleccionado && texto === "") {
+                alert("Por favor, selecciona una foto/video o escribe un saludo.");
                 return;
             }
 
-            // Ocultamos formulario y mostramos éxito
-            mainCard.style.display = 'none';
-            successCard.style.display = 'flex';
+            loadingOverlay.style.display = 'flex';
+
+            try {
+                // 1. Si hay un archivo, lo mandamos como foto o video
+                if (archivoSeleccionado) {
+                    const base64Data = await leerArchivoComoBase64(archivoSeleccionado);
+                    const tipoArchivo = archivoSeleccionado.type.startsWith('video') ? 'video' : 'foto';
+
+                    const payload = {
+                        tipo: tipoArchivo,
+                        usuario: nombreInvitado,
+                        contenido: base64Data,
+                        nombreArchivo: archivoSeleccionado.name
+                    };
+
+                    await fetch(URL_APPS_SCRIPT, {
+                        method: 'POST',
+                        mode: 'no-cors', // Necesario para evitar bloqueos de CORS en Apps Script
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                }
+
+                // 2. Si hay texto escrito, mandamos el mensaje de texto también
+                if (texto !== "") {
+                    const payloadTexto = {
+                        tipo: "texto",
+                        usuario: nombreInvitado,
+                        contenido: texto
+                    };
+
+                    await fetch(URL_APPS_SCRIPT, {
+                        method: 'no-cors',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payloadTexto)
+                    });
+                }
+
+                // Éxito: cambiamos pantallas
+                loadingOverlay.style.display = 'none';
+                mainCard.style.display = 'none';
+                successCard.style.display = 'flex';
+
+            } catch (error) {
+                loadingOverlay.style.display = 'none';
+                alert("Hubo un error al enviar. Revisa tu conexión.");
+                console.error(error);
+            }
         });
 
-        // Botón para resetear y subir más
+        // Resetear para subir más
         btnSubirMas.addEventListener('click', () => {
             saludoText.value = '';
-            contador.textContent = '0/200 (opcional)';
-            archivosSeleccionados = 0;
+            contador.textContent = '0/200';
+            archivoSeleccionado = null;
             fileGaleria.value = '';
             fileCamara.value = '';
             btnGaleria.style.background = 'linear-gradient(135deg, #4deeea 0%, #00bcd4 100%)';
+            btnGaleria.querySelector('.texto').textContent = "SELECCIONAR ARCHIVO";
             btnCamara.style.background = 'linear-gradient(135deg, #4deeea 0%, #00bcd4 100%)';
+            btnCamara.querySelector('.texto').textContent = "TOMAR FOTO";
             
             successCard.style.display = 'none';
             mainCard.style.display = 'flex';
