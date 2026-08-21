@@ -164,7 +164,6 @@
             display: none;
         }
 
-        /* Pantalla de carga */
         #loadingOverlay {
             display: none;
             position: fixed;
@@ -182,7 +181,6 @@
 </head>
 <body>
 
-    <!-- Overlay de carga -->
     <div id="loadingOverlay">
         <div>Enviando contenido... por favor espera ⏳</div>
     </div>
@@ -190,26 +188,27 @@
     <div class="card" id="mainCard">
         <h2>SUBIR CONTENIDO</h2>
 
-        <input type="file" id="fileGaleria" class="input-oculto" accept="image/*,video/*">
+        <!-- AQUI ESTÁ EL MULTIPLE RESTAURADO -->
+        <input type="file" id="fileGaleria" class="input-oculto" accept="image/*,video/*" multiple>
         <input type="file" id="fileCamara" class="input-oculto" accept="image/*" capture="environment">
 
         <button type="button" class="btn-accion" id="btnGaleria">
             <span class="icono">
                 <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
             </span>
-            <span class="texto">SELECCIONAR ARCHIVO</span>
+            <span class="texto">SELECCIONAR DE GALERÍA</span>
         </button>
 
         <button type="button" class="btn-accion" id="btnCamara">
             <span class="icono">
                 <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
             </span>
-            <span class="texto">TOMAR FOTO</span>
+            <span class="texto">TOMAR FOTO O VIDEO</span>
         </button>
 
         <div class="textarea-box" id="textBoxContainer">
-            <textarea id="saludoText" placeholder="Escribe tu saludo o nombre" maxlength="200"></textarea>
-            <div class="contador-caracteres" id="contador">0/200</div>
+            <textarea id="saludoText" placeholder="Escribe tu saludo" maxlength="200"></textarea>
+            <div class="contador-caracteres" id="contador">0/200 (opcional)</div>
         </div>
 
         <button type="button" class="btn-accion" id="btnEnviar">
@@ -231,7 +230,6 @@
     </div>
 
     <script>
-        // URL de tu Web App de Google Apps Script (Versión 4)
         const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbwR3jniWrcz6p8k06LBfT4TxDMsLkhlbpnX8dws0dEB2rElX3pJW12T9Y6xFFIY9wYo/exec";
 
         const btnGaleria = document.getElementById('btnGaleria');
@@ -247,33 +245,30 @@
         const btnSubirMas = document.getElementById('btnSubirMas');
         const loadingOverlay = document.getElementById('loadingOverlay');
 
-        let archivoSeleccionado = null;
+        let archivosSeleccionados = [];
 
-        // Manejar selección de galería
         btnGaleria.addEventListener('click', () => fileGaleria.click());
         fileGaleria.addEventListener('change', (e) => {
             if(e.target.files.length > 0) {
-                archivoSeleccionado = e.target.files[0];
-                btnGaleria.style.background = 'linear-gradient(135deg, #2af598 0%, #009efd 100% )';
-                btnGaleria.querySelector('.texto').textContent = "ARCHIVO SELECCIONADO ✓";
+                archivosSeleccionados = Array.from(e.target.files);
+                btnGaleria.style.background = 'linear-gradient(135deg, #2af598 0%, #009efd 100%)';
+                btnGaleria.querySelector('.texto').textContent = `${archivosSeleccionados.length} ARCHIVO(S) SELECCIONADO(S) ✓`;
             }
         });
 
-        // Manejar selección de cámara
         btnCamara.addEventListener('click', () => fileCamara.click());
         fileCamara.addEventListener('change', (e) => {
             if(e.target.files.length > 0) {
-                archivoSeleccionado = e.target.files[0];
+                archivosSeleccionados = Array.from(e.target.files);
                 btnCamara.style.background = 'linear-gradient(135deg, #2af598 0%, #009efd 100%)';
                 btnCamara.querySelector('.texto').textContent = "FOTO TOMADA ✓";
             }
         });
 
         saludoText.addEventListener('input', () => {
-            contador.textContent = `${saludoText.value.length}/200`;
+            contador.textContent = `${saludoText.value.length}/200 (opcional)`;
         });
 
-        // Función para convertir archivo a Base64
         function leerArchivoComoBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -283,40 +278,39 @@
             });
         }
 
-        // Envío real con fetch hacia Google Apps Script
         btnEnviar.addEventListener('click', async () => {
             const texto = saludoText.value.trim();
-            const nombreInvitado = "Invitado"; // Podés cambiarlo o pedirlo en un input si querés
+            const nombreInvitado = "Invitado";
 
-            if (!archivoSeleccionado && texto === "") {
-                alert("Por favor, selecciona una foto/video o escribe un saludo.");
+            if (archivosSeleccionados.length === 0 && texto === "") {
+                alert("Por favor, selecciona al menos una foto/video o escribe un saludo.");
                 return;
             }
 
             loadingOverlay.style.display = 'flex';
 
             try {
-                // 1. Si hay un archivo, lo mandamos como foto o video
-                if (archivoSeleccionado) {
-                    const base64Data = await leerArchivoComoBase64(archivoSeleccionado);
-                    const tipoArchivo = archivoSeleccionado.type.startsWith('video') ? 'video' : 'foto';
+                // Enviar cada archivo seleccionado uno por uno
+                for (let archivo of archivosSeleccionados) {
+                    const base64Data = await leerArchivoComoBase64(archivo);
+                    const tipoArchivo = archivo.type.startsWith('video') ? 'video' : 'foto';
 
                     const payload = {
                         tipo: tipoArchivo,
                         usuario: nombreInvitado,
                         contenido: base64Data,
-                        nombreArchivo: archivoSeleccionado.name
+                        nombreArchivo: archivo.name
                     };
 
                     await fetch(URL_APPS_SCRIPT, {
                         method: 'POST',
-                        mode: 'no-cors', // Necesario para evitar bloqueos de CORS en Apps Script
+                        mode: 'no-cors',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
                 }
 
-                // 2. Si hay texto escrito, mandamos el mensaje de texto también
+                // Enviar texto si hay
                 if (texto !== "") {
                     const payloadTexto = {
                         tipo: "texto",
@@ -325,14 +319,13 @@
                     };
 
                     await fetch(URL_APPS_SCRIPT, {
-                        method: 'no-cors',
+                        method: 'POST',
                         mode: 'no-cors',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payloadTexto)
                     });
                 }
 
-                // Éxito: cambiamos pantallas
                 loadingOverlay.style.display = 'none';
                 mainCard.style.display = 'none';
                 successCard.style.display = 'flex';
@@ -344,17 +337,16 @@
             }
         });
 
-        // Resetear para subir más
         btnSubirMas.addEventListener('click', () => {
             saludoText.value = '';
-            contador.textContent = '0/200';
-            archivoSeleccionado = null;
+            contador.textContent = '0/200 (opcional)';
+            archivosSeleccionados = [];
             fileGaleria.value = '';
             fileCamara.value = '';
             btnGaleria.style.background = 'linear-gradient(135deg, #4deeea 0%, #00bcd4 100%)';
-            btnGaleria.querySelector('.texto').textContent = "SELECCIONAR ARCHIVO";
+            btnGaleria.querySelector('.texto').textContent = "SELECCIONAR DE GALERÍA";
             btnCamara.style.background = 'linear-gradient(135deg, #4deeea 0%, #00bcd4 100%)';
-            btnCamara.querySelector('.texto').textContent = "TOMAR FOTO";
+            btnCamara.querySelector('.texto').textContent = "TOMAR FOTO O VIDEO";
             
             successCard.style.display = 'none';
             mainCard.style.display = 'flex';
