@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Foto Fiesta en Vivo!</title>
     <style>
-        /* Fondo con textura granulada original */
+        /* Fondo basado en el tono oscuro de tu textura */
         body {
             margin: 0;
             padding: 0;
@@ -13,58 +13,58 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #1a1025;
-            background-image: 
-                radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0),
-                radial-gradient(rgba(0, 0, 0, 0.3) 1px, transparent 0);
-            background-size: 4px 4px, 8px 8px;
-            background-position: 0 0, 2px 2px;
+            background-color: #1a0f24;
+            /* Si querés usar tu imagen de textura real más adelante, 
+               subila al repositorio y descomentá esta línea:
+               background-image: url('nombre-de-tu-imagen.jpg'); 
+               background-size: cover; */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #ffffff;
+            overflow: hidden;
         }
 
-        /* Tarjeta principal estilo Neumorfismo / Glassmorphism */
+        /* Tarjeta principal estilo Glassmorphism con el tono púrpura correcto */
         .card {
-            background: linear-gradient(135deg, rgba(40, 25, 55, 0.95), rgba(25, 15, 35, 0.95));
+            background: linear-gradient(135deg, rgba(38, 22, 53, 0.92), rgba(20, 11, 30, 0.95));
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-            border-radius: 24px;
-            padding: 30px 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+            border-radius: 28px;
+            padding: 35px 24px;
             width: 90%;
             max-width: 380px;
             text-align: center;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 22px;
+            box-sizing: border-box;
         }
 
         .card h2 {
             font-size: 1.1rem;
             letter-spacing: 1.5px;
-            color: #e0d4ed;
-            margin: 0 0 10px 0;
+            color: #d8c8e8;
+            margin: 0 0 5px 0;
             font-weight: 600;
         }
 
-        /* Estilo base para los botones principales con icono a la izquierda y texto centrado */
+        /* Botones principales: Cian neón con iconos bien alineados */
         .btn-accion {
             display: flex;
             align-items: center;
-            justify-content: center;
-            position: relative;
-            background: linear-gradient(135deg, #00b4db, #0083b0);
-            color: #ffffff;
+            background: linear-gradient(135deg, #00e5ff, #00acc1);
+            color: #120b18;
             border: none;
             border-radius: 50px;
-            padding: 16px 20px;
+            padding: 15px 20px;
             width: 100%;
             font-size: 0.9rem;
             font-weight: bold;
             letter-spacing: 0.5px;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0, 180, 219, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 229, 255, 0.5);
             text-decoration: none;
             box-sizing: border-box;
+            position: relative;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
@@ -72,26 +72,32 @@
             transform: scale(0.98);
         }
 
-        /* Icono fijo a la izquierda */
+        /* Contenedor fijo para el icono a la izquierda */
         .btn-accion .icono {
-            position: absolute;
-            left: 22px;
             font-size: 1.2rem;
+            width: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* Texto centrado en el botón */
+        /* Texto perfectamente centrado en el espacio restante */
         .btn-accion .texto {
-            margin: 0 auto;
+            flex: 1;
+            text-align: center;
+            padding-right: 30px; /* Compensación para que quede simétrico con el icono */
         }
 
-        /* Caja de texto para saludos */
+        /* Caja de texto con efecto "calado" (hundido) */
         .textarea-box {
-            background-color: rgba(15, 8, 22, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background-color: rgba(12, 6, 18, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: inset 0 5px 12px rgba(0, 0, 0, 0.7), 
+                        0 1px 0 rgba(255, 255, 255, 0.04);
             border-radius: 16px;
             padding: 15px;
             text-align: left;
-            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.4);
+            box-sizing: border-box;
         }
 
         textarea {
@@ -108,21 +114,21 @@
         }
 
         textarea::placeholder {
-            color: rgba(220, 210, 235, 0.5);
+            color: rgba(220, 210, 235, 0.35);
         }
 
         .contador-caracteres {
             text-align: right;
             font-size: 0.75rem;
-            color: rgba(220, 210, 235, 0.5);
+            color: rgba(220, 210, 235, 0.4);
             margin-top: 5px;
         }
 
         /* Mensaje de éxito */
         .mensaje-exito {
-            font-size: 0.85rem;
-            color: #ccc;
-            margin: 5px 0;
+            font-size: 0.88rem;
+            color: #d0d0d0;
+            margin: 2px 0;
         }
 
         .mensaje-exito span.verde {
@@ -130,7 +136,7 @@
             font-weight: bold;
         }
 
-        /* Botón verde inferior "SUBIR MÁS" */
+        /* Botón inferior "SUBIR MÁS" en verde brillante */
         .btn-subir-mas {
             display: inline-flex;
             align-items: center;
@@ -141,10 +147,10 @@
             border: none;
             border-radius: 30px;
             padding: 10px 24px;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(42, 245, 152, 0.3);
+            box-shadow: 0 4px 18px rgba(42, 245, 152, 0.4);
             margin: 0 auto;
             text-decoration: none;
             transition: transform 0.2s ease;
@@ -172,7 +178,7 @@
             <span class="texto">TOMAR FOTO O VIDEO</span>
         </button>
 
-        <!-- Cuadro de texto -->
+        <!-- Cuadro de texto (Efecto calado) -->
         <div class="textarea-box">
             <textarea placeholder="Escribe tu saludo (máx. 200 caracteres)" maxlength="200"></textarea>
             <div class="contador-caracteres">0/200</div>
@@ -184,12 +190,12 @@
             <span class="texto">ENVIAR</span>
         </button>
 
-        <!-- Estado -->
+        <!-- Mensaje de éxito -->
         <div class="mensaje-exito">
             ¡ÉXITO! Se subieron <span class="verde">3</span> imágenes y <span class="verde">1</span> texto.
         </div>
 
-        <!-- Botón Subir Más (Verde) -->
+        <!-- Botón Subir Más -->
         <button class="btn-subir-mas">
             <span>+</span> SUBIR MÁS
         </button>
