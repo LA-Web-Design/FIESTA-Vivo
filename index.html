@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subir Contenido</title>
+    <title>Subir Contenido - Fiesta</title>
     <style>
         * {
             box-sizing: border-box;
@@ -13,10 +13,11 @@
         }
 
         body {
-            /* Textura y fondo original de tu diseño */
-            background-color: #1a1025;
-            background-image: radial-gradient(circle at 50% 50%, rgba(50, 25, 75, 0.6) 0%, rgba(15, 8, 25, 0.95) 100%), 
-                              repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0, rgba(255,255,255,0.01) 2px, transparent 0, transparent 4px);
+            /* Tu textura y tono púrpura original */
+            background-color: #160d21;
+            background-image: 
+                radial-gradient(circle at 50% 30%, rgba(70, 30, 110, 0.5) 0%, rgba(15, 8, 25, 0.98) 100%),
+                repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 3px);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -25,14 +26,14 @@
         }
 
         .card {
-            background: rgba(30, 15, 45, 0.85);
+            background: rgba(32, 16, 48, 0.92);
             border: 1px solid rgba(255, 255, 255, 0.12);
             width: 100%;
             max-width: 380px;
             padding: 25px 20px;
             border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
             text-align: center;
         }
 
@@ -44,25 +45,28 @@
             text-transform: uppercase;
         }
 
+        /* Botones con iconos y texto alineados a la izquierda */
         .btn-upload {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
             width: 100%;
-            padding: 11px 15px; /* Altura optimizada y más estilizada */
-            margin-bottom: 4px;
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-            color: #0b1a2d;
-            font-weight: bold;
+            padding: 12px 20px;
+            margin-bottom: 6px;
+            background: #f4f4f4;
+            color: #111111;
+            font-weight: 500;
             font-size: 0.85rem;
-            border: none;
+            border: 1px solid #000000;
             border-radius: 25px;
             cursor: pointer;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.25);
-            transition: transform 0.1s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.1s, background 0.2s;
         }
 
         .btn-upload:active {
             transform: scale(0.98);
+            background: #e2e2e2;
         }
 
         input[type="file"] {
@@ -76,9 +80,11 @@
             display: block;
             min-height: 14px;
             font-weight: 500;
+            text-align: left;
+            padding-left: 15px;
         }
 
-        /* Caja de texto con el efecto de hendidura original */
+        /* Caja de texto con efecto de hendidura */
         textarea {
             width: 100%;
             height: 75px;
@@ -90,7 +96,7 @@
             font-size: 0.9rem;
             resize: none;
             outline: none;
-            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6); /* Efecto hendidura recuperado */
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6);
             margin-bottom: 4px;
         }
 
@@ -107,22 +113,27 @@
             padding-right: 5px;
         }
 
+        /* Botón principal ENVIAR también alineado y con la línea fina */
         .btn-submit {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 100%;
             padding: 12px;
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            background: #ffffff;
             color: #0b1a2d;
             font-weight: bold;
             font-size: 0.9rem;
-            border: none;
+            border: 1px solid #000000;
             border-radius: 25px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.35);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: background 0.2s;
         }
 
         .btn-submit:active {
             transform: scale(0.98);
+            background: #e2e2e2;
         }
     </style>
 </head>
@@ -131,32 +142,27 @@
     <div class="card">
         <h2>Subir Contenido</h2>
 
-        <!-- 1. Galería -->
         <label class="btn-upload">
-            📂 SELECCIONAR DE GALERÍA
+            📁&nbsp;&nbsp;SELECCIONAR DE GALERÍA
             <input type="file" id="fileGaleria" multiple accept="image/*,video/*">
         </label>
         <span id="counterGaleria" class="counter"></span>
 
-        <!-- 2. Tomar Foto -->
         <label class="btn-upload">
-            📷 TOMAR FOTO
+            📷&nbsp;&nbsp;TOMAR FOTO
             <input type="file" id="fileFoto" accept="image/*" capture="environment">
         </label>
         <span id="counterFoto" class="counter"></span>
 
-        <!-- 3. Grabar Video -->
         <label class="btn-upload">
-            📹 GRABAR VIDEO
+            📹&nbsp;&nbsp;GRABAR VIDEO
             <input type="file" id="fileVideo" accept="video/*" capture="environment">
         </label>
         <span id="counterVideo" class="counter"></span>
 
-        <!-- 4. Caja de Texto con hendidura -->
-        <textarea id="textoMensaje" maxlength="200" placeholder="Hola"></textarea>
-        <span id="charCount" class="char-counter">4/200 (opcional)</span>
+        <textarea id="textoMensaje" maxlength="200" placeholder="Escribe un mensaje..."></textarea>
+        <span id="charCount" class="char-counter">0/200 (opcional)</span>
 
-        <!-- Botón Enviar -->
         <button class="btn-submit" onclick="enviarContenido()">ENVIAR</button>
     </div>
 
@@ -185,8 +191,101 @@
             charCount.textContent = `${len}/200 (opcional)`;
         });
 
+        function comprimirImagen(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+                        const MAX_WIDTH = 1200;
+                        if (width > MAX_WIDTH) {
+                            height = Math.round((height * MAX_WIDTH) / width);
+                            width = MAX_WIDTH;
+                        }
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+                        resolve(dataUrl);
+                    };
+                };
+            });
+        }
+
+        function leerArchivoBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(file);
+            });
+        }
+
         async function enviarContenido() {
-            alert("¡Interfaz restaurada con el diseño original y botones independientes listos!");
+            const galeriaFiles = document.getElementById('fileGaleria').files;
+            const fotoFile = document.getElementById('fileFoto').files[0];
+            const videoFile = document.getElementById('fileVideo').files[0];
+            const texto = textarea.value.trim();
+
+            if (galeriaFiles.length === 0 && !fotoFile && !videoFile && !texto) {
+                alert("Por favor selecciona al menos un archivo o escribe un mensaje.");
+                return;
+            }
+
+            const btnSubmit = document.querySelector('.btn-submit');
+            btnSubmit.textContent = "ENVIANDO...";
+            btnSubmit.disabled = true;
+
+            try {
+                let itemsParaEnviar = [];
+
+                for (let file of galeriaFiles) {
+                    if (file.type.startsWith('image/')) {
+                        let base64Comprimido = await comprimirImagen(file);
+                        itemsParaEnviar.push({ tipo: 'foto', file: base64Comprimido, name: file.name, mimeType: 'image/jpeg' });
+                    } else if (file.type.startsWith('video/')) {
+                        let base64 = await leerArchivoBase64(file);
+                        itemsParaEnviar.push({ tipo: 'video', file: base64, name: file.name, mimeType: file.type });
+                    }
+                }
+
+                if (fotoFile) {
+                    let base64Comprimido = await comprimirImagen(fotoFile);
+                    itemsParaEnviar.push({ tipo: 'foto', file: base64Comprimido, name: fotoFile.name, mimeType: 'image/jpeg' });
+                }
+
+                if (videoFile) {
+                    let base64 = await leerArchivoBase64(videoFile);
+                    itemsParaEnviar.push({ tipo: 'video', file: base64, name: videoFile.name, mimeType: videoFile.type });
+                }
+
+                if (texto) {
+                    itemsParaEnviar.push({ tipo: 'texto', contenido: texto });
+                }
+
+                for (let item of itemsParaEnviar) {
+                    await fetch(URL_APPS_SCRIPT, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify(item)
+                    });
+                }
+
+                alert("¡Contenido enviado con éxito!");
+                location.reload();
+
+            } catch (error) {
+                alert("Hubo un error al enviar. Revisa tu conexión.");
+                btnSubmit.textContent = "ENVIAR";
+                btnSubmit.disabled = false;
+            }
         }
     </script>
 </body>
