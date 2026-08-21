@@ -3,182 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foto Fiesta en Vivo</title>
+    <title>¡Foto Fiesta en Vivo!</title>
     <style>
-        /* Fondo general de la pantalla (Violeta oscuro texturado) */
+        /* Fondo con textura granulada original */
         body {
             margin: 0;
             padding: 0;
-            background-color: #1a0f24;
-            background-image: radial-gradient(circle, #2a163b 0%, #11081a 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            background-color: #1a1025;
+            background-image: 
+                radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0),
+                radial-gradient(rgba(0, 0, 0, 0.3) 1px, transparent 0);
+            background-size: 4px 4px, 8px 8px;
+            background-position: 0 0, 2px 2px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #ffffff;
         }
 
-        /* Panel Central (Morado) */
-        .panel {
-            background: linear-gradient(135deg, #3d2256 0%, #29153d 100%);
-            width: 90%;
-            max-width: 400px;
-            padding: 30px 20px;
+        /* Tarjeta principal estilo Neumorfismo / Glassmorphism */
+        .card {
+            background: linear-gradient(135deg, rgba(40, 25, 55, 0.95), rgba(25, 15, 35, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
             border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            padding: 30px 20px;
+            width: 90%;
+            max-width: 380px;
+            text-align: center;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            box-sizing: border-box;
+            gap: 20px;
         }
 
-        .panel-title {
-            font-size: 20px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            margin-bottom: 25px;
-            color: #d8c2ef;
-            text-align: center;
+        .card h2 {
+            font-size: 1.1rem;
+            letter-spacing: 1.5px;
+            color: #e0d4ed;
+            margin: 0 0 10px 0;
+            font-weight: 600;
         }
 
-        /* Botones Neumórficos Cian */
-        .btn-cyan {
-            width: 100%;
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            border: none;
-            border-radius: 50px;
-            background: linear-gradient(145deg, #00d2ff, #007bb5);
-            color: #0b1a26;
-            font-weight: bold;
-            font-size: 14px;
-            letter-spacing: 0.5px;
+        /* Estilo base para los botones principales con icono a la izquierda y texto centrado */
+        .btn-accion {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            box-shadow: 0 8px 20px rgba(0, 210, 255, 0.3), inset 0 2px 3px rgba(255, 255, 255, 0.4);
+            position: relative;
+            background: linear-gradient(135deg, #00b4db, #0083b0);
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            padding: 16px 20px;
+            width: 100%;
+            font-size: 0.9rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
             cursor: pointer;
-            transition: transform 0.1s ease;
+            box-shadow: 0 4px 20px rgba(0, 180, 219, 0.4);
+            text-decoration: none;
+            box-sizing: border-box;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .btn-cyan:active {
+        .btn-accion:active {
             transform: scale(0.98);
         }
 
-        /* Caja de texto "calada" (Efecto cóncavo) */
-        .input-container {
-            width: 100%;
-            background: #1c0e29;
-            border-radius: 16px;
-            padding: 15px;
-            margin-bottom: 20px;
-            box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.5), inset -4px -4px 8px rgba(255, 255, 255, 0.03);
-            box-sizing: border-box;
+        /* Icono fijo a la izquierda */
+        .btn-accion .icono {
+            position: absolute;
+            left: 22px;
+            font-size: 1.2rem;
         }
 
-        .input-container textarea {
+        /* Texto centrado en el botón */
+        .btn-accion .texto {
+            margin: 0 auto;
+        }
+
+        /* Caja de texto para saludos */
+        .textarea-box {
+            background-color: rgba(15, 8, 22, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 15px;
+            text-align: left;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        textarea {
             width: 100%;
             background: transparent;
             border: none;
-            color: #ffffff;
-            font-size: 14px;
+            color: #e0d4ed;
+            font-size: 0.95rem;
             resize: none;
             outline: none;
-            height: 70px;
             font-family: inherit;
+            box-sizing: border-box;
+            min-height: 70px;
         }
 
-        .input-container textarea::placeholder {
-            color: #8c73a8;
+        textarea::placeholder {
+            color: rgba(220, 210, 235, 0.5);
         }
 
-        .char-counter {
+        .contador-caracteres {
             text-align: right;
-            font-size: 11px;
-            color: #8c73a8;
+            font-size: 0.75rem;
+            color: rgba(220, 210, 235, 0.5);
             margin-top: 5px;
         }
 
-        /* Mensaje de éxito y contador */
-        .success-message {
-            font-size: 13px;
-            color: #ffffff;
-            text-align: center;
-            margin-top: 10px;
-            margin-bottom: 15px;
+        /* Mensaje de éxito */
+        .mensaje-exito {
+            font-size: 0.85rem;
+            color: #ccc;
+            margin: 5px 0;
         }
 
-        .success-message span.success-tag {
-            color: #2ecc71;
+        .mensaje-exito span.verde {
+            color: #2af598;
             font-weight: bold;
         }
 
-        .success-message span.count {
-            color: #2ecc71;
-            font-weight: bold;
-        }
-
-        /* Botón Subir Más (Placeholder de color a definir) */
+        /* Botón verde inferior "SUBIR MÁS" */
         .btn-subir-mas {
-            background: #4a3b5c;
-            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #2af598, #00b09b);
+            color: #120b18;
             border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-size: 13px;
+            border-radius: 30px;
+            padding: 10px 24px;
+            font-size: 0.85rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(42, 245, 152, 0.3);
+            margin: 0 auto;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-subir-mas:active {
+            transform: scale(0.98);
         }
     </style>
 </head>
 <body>
 
-    <div class="panel">
-        <div class="panel-title">SUBIR CONTENIDO</div>
+    <div class="card">
+        <h2>SUBIR CONTENIDO</h2>
 
-        <!-- Botón 1: Seleccionar de galería -->
-        <button class="btn-cyan" onclick="document.getElementById('fileInput').click();">
-            📂 SELECCIONAR DE GALERÍA
+        <!-- Botón Galería -->
+        <button class="btn-accion">
+            <span class="icono">🖼️</span>
+            <span class="texto">SELECCIONAR DE GALERÍA</span>
         </button>
-        <input type="file" id="fileInput" multiple accept="image/*,video/*" style="display: none;">
 
-        <!-- Botón 2: Tomar foto o video -->
-        <button class="btn-cyan" onclick="document.getElementById('cameraInput').click();">
-            📸 TOMAR FOTO O VIDEO
+        <!-- Botón Cámara -->
+        <button class="btn-accion">
+            <span class="icono">📸</span>
+            <span class="texto">TOMAR FOTO O VIDEO</span>
         </button>
-        <input type="file" id="cameraInput" accept="image/*,video/*" capture="environment" style="display: none;">
 
-        <!-- Caja de texto calada para el saludo -->
-        <div class="input-container">
-            <textarea id="saludoText" maxlength="200" placeholder="Escribe tu saludo (máx. 200 caracteres)" oninput="actualizarContador(this)"></textarea>
-            <div class="char-counter" id="counter">0/200</div>
+        <!-- Cuadro de texto -->
+        <div class="textarea-box">
+            <textarea placeholder="Escribe tu saludo (máx. 200 caracteres)" maxlength="200"></textarea>
+            <div class="contador-caracteres">0/200</div>
         </div>
 
-        <!-- Botón 3: Enviar -->
-        <button class="btn-cyan">
-            🚀 ENVIAR
+        <!-- Botón Enviar -->
+        <button class="btn-accion">
+            <span class="icono">📤</span>
+            <span class="texto">ENVIAR</span>
         </button>
 
-        <!-- Mensaje de Estado / Éxito dinámico -->
-        <div class="success-message">
-            <span class="success-tag">¡ÉXITO!</span> Se subieron <span class="count">3</span> imágenes y <span class="count">1</span> texto.
+        <!-- Estado -->
+        <div class="mensaje-exito">
+            ¡ÉXITO! Se subieron <span class="verde">3</span> imágenes y <span class="verde">1</span> texto.
         </div>
 
-        <!-- Botón Subir Más -->
+        <!-- Botón Subir Más (Verde) -->
         <button class="btn-subir-mas">
-            + SUBIR MÁS
+            <span>+</span> SUBIR MÁS
         </button>
     </div>
 
-    <script>
-        // Función simple para actualizar el contador de caracteres del saludo
-        function actualizarContador(textarea) {
-            const actual = textarea.value.length;
-            document.getElementById('counter').textContent = actual + '/200';
-        }
-    </script>
 </body>
 </html>
