@@ -13,7 +13,7 @@
         }
 
         body {
-            /* Tu textura y tono original recuperado */
+            /* Tu textura y tono original */
             background-color: #160d21;
             background-image: 
                 radial-gradient(circle at 50% 30%, rgba(70, 30, 110, 0.5) 0%, rgba(15, 8, 25, 0.98) 100%),
@@ -45,7 +45,7 @@
             text-transform: uppercase;
         }
 
-        /* Botones CIAN con efecto cilíndrico original */
+        /* Tus botones CIAN con efecto cilíndrico original */
         .btn-upload {
             display: flex;
             align-items: center;
@@ -271,7 +271,7 @@
 
                 if (videoFile) {
                     let base64 = await leerArchivoBase64(videoFile);
-                    itemsParaEnviar.push({ tipo: 'video', file: base64, name: videoFile.type, mimeType: videoFile.type });
+                    itemsParaEnviar.push({ tipo: 'video', file: base64, name: videoFile.name, mimeType: videoFile.type });
                 }
 
                 if (texto) {
