@@ -48,7 +48,7 @@
             display: block;
             width: 100%;
             height: 44px;
-            margin-bottom: 8px; /* Reducido para evitar espacios blancos extra */
+            margin-bottom: 8px;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -62,6 +62,12 @@
         #labelGaleria { background-image: url('btn-galeria.png'); }
         #labelFoto { background-image: url('btn-tomar-foto.png'); }
         #labelVideo { background-image: url('btn-grabar-video.png'); }
+        
+        /* El botón enviar ahora comparte la misma estructura idéntica */
+        #labelEnviar { 
+            background-image: url('btn-enviar.png'); 
+            margin-top: 15px;
+        }
 
         .btn-upload:active {
             transform: scale(0.97);
@@ -81,7 +87,6 @@
             font-weight: 500;
         }
 
-        /* Caja de texto con el efecto hendidura clásico restaurado */
         textarea {
             width: 100%;
             height: 75px;
@@ -106,27 +111,8 @@
             color: rgba(255, 255, 255, 0.4);
             text-align: right;
             display: block;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             padding-right: 5px;
-        }
-
-        .btn-submit {
-            display: block;
-            width: 100%;
-            height: 44px;
-            background-image: url('btn-enviar.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            transition: transform 0.1s;
-        }
-
-        .btn-submit:active {
-            transform: scale(0.97);
         }
 
         #mensajeExito {
@@ -162,7 +148,8 @@
         <textarea id="textoMensaje" maxlength="200" placeholder="Escribe un mensaje..."></textarea>
         <span id="charCount" class="char-counter">0/200 (opcional)</span>
 
-        <button class="btn-submit" onclick="enviarContenido()"></button>
+        <!-- Cambiado a div/label interactivo para que actúe igual que los otros -->
+        <div class="btn-upload" id="labelEnviar" onclick="enviarContenido()"></div>
         
         <div id="mensajeExito">¡Éxito, envío completado!</div>
     </div>
@@ -239,9 +226,9 @@
                 return;
             }
 
-            const btnSubmit = document.querySelector('.btn-submit');
+            const btnSubmit = document.getElementById('labelEnviar');
             btnSubmit.style.opacity = "0.6";
-            btnSubmit.disabled = true;
+            btnSubmit.style.pointerEvents = "none";
 
             try {
                 let itemsParaEnviar = [];
@@ -285,7 +272,7 @@
             } catch (error) {
                 alert("Hubo un error al enviar. Revisa tu conexión.");
                 btnSubmit.style.opacity = "1";
-                btnSubmit.disabled = false;
+                btnSubmit.style.pointerEvents = "auto";
             }
         }
     </script>
