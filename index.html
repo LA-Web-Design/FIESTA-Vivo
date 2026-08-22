@@ -13,7 +13,6 @@
         }
 
         body {
-            /* Fondo de textura general */
             background-color: #160d21;
             background-image: 
                 radial-gradient(circle at 50% 30%, rgba(70, 30, 110, 0.5) 0%, rgba(15, 8, 25, 0.98) 100%),
@@ -45,12 +44,11 @@
             text-transform: uppercase;
         }
 
-        /* Botones más finos y estilizados usando las imágenes con texto integrado */
         .btn-upload {
             display: block;
             width: 100%;
-            height: 44px; /* Altura más esbelta y elegante */
-            margin-bottom: 12px;
+            height: 44px;
+            margin-bottom: 8px; /* Reducido para evitar espacios blancos extra */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -75,32 +73,32 @@
         }
 
         .counter {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #00e5ff;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             display: block;
-            min-height: 14px;
+            min-height: 12px;
             font-weight: 500;
         }
 
-        /* Caja de texto con efecto de hendidura */
+        /* Caja de texto con el efecto hendidura clásico restaurado */
         textarea {
             width: 100%;
             height: 75px;
-            background: #100618;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #0b0410;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 14px;
             padding: 12px;
             color: #ffffff;
             font-size: 0.9rem;
             resize: none;
             outline: none;
-            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6);
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(255, 255, 255, 0.05);
             margin-bottom: 4px;
         }
 
         textarea::placeholder {
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.25);
         }
 
         .char-counter {
@@ -112,7 +110,6 @@
             padding-right: 5px;
         }
 
-        /* Botón ENVIAR idéntico a los demás, limpio y sin texto HTML */
         .btn-submit {
             display: block;
             width: 100%;
@@ -132,7 +129,6 @@
             transform: scale(0.97);
         }
 
-        /* Mensaje de éxito clásico en verde */
         #mensajeExito {
             display: none;
             margin-top: 15px;
