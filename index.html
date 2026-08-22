@@ -45,13 +45,11 @@
             text-transform: uppercase;
         }
 
-        /* Estilo base para los botones con tus imágenes personalizadas */
+        /* Botones más finos y estilizados usando las imágenes con texto integrado */
         .btn-upload {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: block;
             width: 100%;
-            height: 52px;
+            height: 44px; /* Altura más esbelta y elegante */
             margin-bottom: 12px;
             background-size: cover;
             background-position: center;
@@ -61,22 +59,11 @@
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
             transition: transform 0.1s, opacity 0.2s;
-            text-align: center;
-            color: transparent; /* Oculta el texto por si la imagen ya lo trae, o ajustalo según prefieras */
         }
 
-        /* Imágenes específicas para cada botón subidas a GitHub */
-        #labelGaleria {
-            background-image: url('btn-galeria.png');
-        }
-
-        #labelFoto {
-            background-image: url('btn-tomar-foto.png');
-        }
-
-        #labelVideo {
-            background-image: url('btn-grabar-video.png');
-        }
+        #labelGaleria { background-image: url('btn-galeria.png'); }
+        #labelFoto { background-image: url('btn-tomar-foto.png'); }
+        #labelVideo { background-image: url('btn-grabar-video.png'); }
 
         .btn-upload:active {
             transform: scale(0.97);
@@ -125,11 +112,11 @@
             padding-right: 5px;
         }
 
-        /* Botón principal ENVIAR con su imagen correspondiente */
+        /* Botón ENVIAR idéntico a los demás, limpio y sin texto HTML */
         .btn-submit {
             display: block;
             width: 100%;
-            height: 52px;
+            height: 44px;
             background-image: url('btn-enviar.png');
             background-size: cover;
             background-position: center;
@@ -139,7 +126,6 @@
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
             transition: transform 0.1s;
-            color: transparent;
         }
 
         .btn-submit:active {
