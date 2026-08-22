@@ -125,6 +125,7 @@
             color: #2ecc71;
             font-weight: bold;
             text-align: center;
+            line-height: 1.4;
         }
     </style>
 </head>
@@ -153,7 +154,7 @@
 
         <div class="btn-upload" id="labelEnviar" onclick="enviarContenido()"></div>
         
-        <div id="mensajeExito">¡Éxito, envío completado!</div>
+        <div id="mensajeExito"></div>
     </div>
 
     <script>
@@ -234,29 +235,37 @@
 
             try {
                 let itemsParaEnviar = [];
+                let contadorFotos = 0;
+                let contadorVideos = 0;
+                let contadorTexto = 0;
 
                 for (let file of galeriaFiles) {
                     if (file.type.startsWith('image/')) {
                         let base64Comprimido = await comprimirImagen(file);
                         itemsParaEnviar.push({ tipo: 'foto', file: base64Comprimido, name: file.name, mimeType: 'image/jpeg' });
+                        contadorFotos++;
                     } else if (file.type.startsWith('video/')) {
                         let base64 = await leerArchivoBase64(file);
                         itemsParaEnviar.push({ tipo: 'video', file: base64, name: file.name, mimeType: file.type });
+                        contadorVideos++;
                     }
                 }
 
                 if (fotoFile) {
                     let base64Comprimido = await comprimirImagen(fotoFile);
                     itemsParaEnviar.push({ tipo: 'foto', file: base64Comprimido, name: fotoFile.name, mimeType: 'image/jpeg' });
+                    contadorFotos++;
                 }
 
                 if (videoFile) {
                     let base64 = await leerArchivoBase64(videoFile);
                     itemsParaEnviar.push({ tipo: 'video', file: base64, name: videoFile.name, mimeType: videoFile.type });
+                    contadorVideos++;
                 }
 
                 if (texto) {
                     itemsParaEnviar.push({ tipo: 'texto', contenido: texto });
+                    contadorTexto = 1;
                 }
 
                 // Enviamos los elementos secuencialmente para asegurar que lleguen bien
@@ -270,7 +279,16 @@
                 }
 
                 btnSubmit.style.display = 'none';
-                document.getElementById('mensajeExito').style.display = 'block';
+
+                // Armamos el mensaje detallado de éxito con las cantidades exactas
+                let mensajeExitoHTML = `¡Éxito, envío completado!<br>`;
+                if (contadorFotos > 0) mensajeExitoHTML += `• ${contadorFotos} foto(s)<br>`;
+                if (contadorVideos > 0) mensajeExitoHTML += `• ${contadorVideos} video(s)<br>`;
+                if (contadorTexto > 0) mensajeExitoHTML += `• 1 mensaje de texto`;
+
+                const divExito = document.getElementById('mensajeExito');
+                divExito.innerHTML = mensajeExitoHTML;
+                divExito.style.display = 'block';
 
             } catch (error) {
                 alert("Hubo un error al enviar. Revisa tu conexión.");
