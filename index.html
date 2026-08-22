@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subir Contenido - Fiesta</title>
+    <title>Subir Contenido - Foto Fiesta</title>
     <style>
         * {
             box-sizing: border-box;
@@ -73,6 +73,7 @@
         #labelEnviar { 
             background-image: url('btn-enviar.png'); 
             margin-top: 15px;
+            cursor: pointer;
         }
 
         .btn-upload:active {
@@ -85,7 +86,7 @@
         }
 
         .counter {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: #00e5ff;
             margin-bottom: 6px;
             display: block;
@@ -96,7 +97,6 @@
         textarea {
             width: 100%;
             height: 75px;
-            /* Hendidura refinada: degradé violeta oscuro con sombra interna profunda */
             background: linear-gradient(135deg, #1c0c2e 0%, #10041a 100%) !important;
             border: 1px solid rgba(180, 100, 255, 0.3);
             border-radius: 14px;
@@ -157,7 +157,7 @@
 </head>
 <body>
 
-    <div class="card">
+    <div class="card" id="cardContainer">
         <h2>Subir Contenido</h2>
 
         <label class="btn-upload" id="labelGaleria">
@@ -185,22 +185,34 @@
     </div>
 
     <script>
-        const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbwR3jniWrcz6p8k06LBfT4TxDMsLkhlbpnX8dws0dEB2rElX3pJW12T9Y6xFFIY9wYo/exec";
+        // ¡No olvides actualizar esta URL con la de tu implementación web actual de Foto Fiesta!
+        const URL_APPS_SCRIPT = "AQUI_PEGA_TU_URL_DE_IMPLEMENTACION";
+
+        let archivosAcumulados = [];
 
         document.getElementById('fileGaleria').addEventListener('change', function() {
             const count = this.files.length;
             document.getElementById('counterGaleria').textContent = count > 0 ? `${count} archivo(s) seleccionado(s) ✓` : '';
+            agregarACola(this.files);
         });
 
         document.getElementById('fileFoto').addEventListener('change', function() {
             const count = this.files.length;
             document.getElementById('counterFoto').textContent = count > 0 ? `1 foto capturada ✓` : '';
+            agregarACola(this.files);
         });
 
         document.getElementById('fileVideo').addEventListener('change', function() {
             const count = this.files.length;
             document.getElementById('counterVideo').textContent = count > 0 ? `1 video grabado ✓` : '';
+            agregarACola(this.files);
         });
+
+        function agregarACola(files) {
+            for (let file of files) {
+                archivosAcumulados.push(file);
+            }
+        }
 
         const textarea = document.getElementById('textoMensaje');
         const charCount = document.getElementById('charCount');
@@ -246,12 +258,9 @@
         }
 
         async function enviarContenido() {
-            const galeriaFiles = document.getElementById('fileGaleria').files;
-            const fotoFile = document.getElementById('fileFoto').files[0];
-            const videoFile = document.getElementById('fileVideo').files[0];
             const texto = textarea.value.trim();
 
-            if (galeriaFiles.length === 0 && !fotoFile && !videoFile && !texto) {
+            if (archivosAcumulados.length === 0 && !texto) {
                 alert("Por favor selecciona al menos un archivo o escribe un mensaje.");
                 return;
             }
@@ -260,61 +269,57 @@
             btnSubmit.style.opacity = "0.6";
             btnSubmit.style.pointerEvents = "none";
 
-            try {
-                let itemsParaEnviar = [];
-                let contadorFotos = 0;
-                let contadorVideos = 0;
-                let contadorTexto = 0;
+            const divExito = document.getElementById('mensajeExito');
+            divExito.style.display = 'block';
 
-                for (let file of galeriaFiles) {
+            let correctas = 0;
+            let videoContador = 0;
+            let textoEnviado = false;
+
+            try {
+                // 1. Enviar archivos uno por uno de forma segura
+                for (let i = 0; i < archivosAcumulados.length; i++) {
+                    const file = archivosAcumulados[i];
+                    divExito.style.color = "#00e5ff";
+                    divExito.innerHTML = `Subiendo archivo ${i + 1} de ${archivosAcumulados.length}...`;
+
+                    let payload = {};
                     if (file.type.startsWith('image/')) {
                         let base64Comprimido = await comprimirImagen(file);
-                        itemsParaEnviar.push({ tipo: 'foto', file: base64Comprimido, name: file.name, mimeType: 'image/jpeg' });
-                        contadorFotos++;
+                        payload = { tipo: 'foto', file: base64Comprimido, name: file.name, mimeType: 'image/jpeg' };
+                        correctas++;
                     } else if (file.type.startsWith('video/')) {
                         let base64 = await leerArchivoBase64(file);
-                        itemsParaEnviar.push({ tipo: 'video', file: base64, name: file.name, mimeType: file.type });
-                        contadorVideos++;
+                        payload = { tipo: 'video', file: base64, name: file.name, mimeType: file.type };
+                        videoContador++;
                     }
-                }
 
-                if (fotoFile) {
-                    let base64Comprimido = await comprimirImagen(fotoFile);
-                    itemsParaEnviar.push({ tipo: 'foto', file: base64Comprimido, name: fotoFile.name, mimeType: 'image/jpeg' });
-                    contadorFotos++;
-                }
-
-                if (videoFile) {
-                    let base64 = await leerArchivoBase64(videoFile);
-                    itemsParaEnviar.push({ tipo: 'video', file: base64, name: videoFile.name, mimeType: videoFile.type });
-                    contadorVideos++;
-                }
-
-                if (texto) {
-                    itemsParaEnviar.push({ tipo: 'texto', contenido: texto });
-                    contadorTexto = 1;
-                }
-
-                for (let item of itemsParaEnviar) {
                     await fetch(URL_APPS_SCRIPT, {
                         method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                        body: JSON.stringify(item)
+                        body: JSON.stringify(payload)
                     });
-                    await new Promise(r => setTimeout(r, 400));
                 }
 
+                // 2. Enviar texto si existe
+                if (texto) {
+                    divExito.innerHTML = `Enviando mensaje de texto...`;
+                    await fetch(URL_APPS_SCRIPT, {
+                        method: 'POST',
+                        body: JSON.stringify({ tipo: 'texto', contenido: texto })
+                    });
+                    textoEnviado = true;
+                }
+
+                // 3. Pantalla de éxito final
                 btnSubmit.style.display = 'none';
 
                 let mensajeExitoHTML = `¡Éxito, envío completado!<br>`;
-                if (contadorFotos > 0) mensajeExitoHTML += `• ${contadorFotos} foto(s)<br>`;
-                if (contadorVideos > 0) mensajeExitoHTML += `• ${contadorVideos} video(s)<br>`;
-                if (contadorTexto > 0) mensajeExitoHTML += `• 1 mensaje de texto`;
+                if (correctas > 0) mensajeExitoHTML += `• ${correctas} foto(s)<br>`;
+                if (videoContador > 0) mensajeExitoHTML += `• ${videoContador} video(s)<br>`;
+                if (textoEnviado) mensajeExitoHTML += `• 1 mensaje de texto`;
 
-                const divExito = document.getElementById('mensajeExito');
+                divExito.style.color = "#2ecc71";
                 divExito.innerHTML = mensajeExitoHTML;
-                divExito.style.display = 'block';
 
                 document.getElementById('btnMasContenido').style.display = 'block';
 
@@ -322,6 +327,7 @@
                 alert("Hubo un error al enviar. Revisa tu conexión.");
                 btnSubmit.style.opacity = "1";
                 btnSubmit.style.pointerEvents = "auto";
+                divExito.style.display = 'none';
             }
         }
     </script>
