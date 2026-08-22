@@ -13,7 +13,6 @@
         }
 
         body {
-            /* Fondo general de la página usando la imagen tapiz.jpg */
             background-color: #160d21;
             background-image: url('tapiz.jpg');
             background-size: cover;
@@ -27,7 +26,6 @@
         }
 
         .card {
-            /* Fondo de la tarjeta usando fondo.jpg y sombras con blur para flotar */
             background-image: url('fondo.jpg');
             background-size: cover;
             background-position: center;
@@ -95,15 +93,15 @@
         textarea {
             width: 100%;
             height: 75px;
-            background: #0b0410;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: #11071c; /* Tono liso más oscuro para generar profundidad y hendidura */
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 14px;
             padding: 12px;
             color: #ffffff;
             font-size: 0.9rem;
             resize: none;
             outline: none;
-            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.85), 0 1px 2px rgba(255, 255, 255, 0.08);
             margin-bottom: 4px;
         }
 
@@ -243,7 +241,7 @@
                         itemsParaEnviar.push({ tipo: 'foto', file: base64Comprimido, name: file.name, mimeType: 'image/jpeg' });
                     } else if (file.type.startsWith('video/')) {
                         let base64 = await leerArchivoBase64(file);
-                        itemsParaEnviar.push({ tipo: 'video', file: base64, name: file.type, mimeType: file.type });
+                        itemsParaEnviar.push({ tipo: 'video', file: base64, name: file.name, mimeType: file.type });
                     }
                 }
 
@@ -254,13 +252,14 @@
 
                 if (videoFile) {
                     let base64 = await leerArchivoBase64(videoFile);
-                    itemsParaEnviar.push({ tipo: 'video', file: base64, name: videoFile.type, mimeType: videoFile.type });
+                    itemsParaEnviar.push({ tipo: 'video', file: base64, name: videoFile.name, mimeType: videoFile.type });
                 }
 
                 if (texto) {
                     itemsParaEnviar.push({ tipo: 'texto', contenido: texto });
                 }
 
+                // Enviamos los elementos secuencialmente para asegurar que lleguen bien
                 for (let item of itemsParaEnviar) {
                     await fetch(URL_APPS_SCRIPT, {
                         method: 'POST',
