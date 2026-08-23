@@ -51,7 +51,7 @@
             text-transform: uppercase;
         }
 
-        /* CAMPO AUTOR CON EFECTO HENDIDURA Y MEJOR CONTRASTE */
+        /* CAMPO AUTOR CON EFECTO HENDIDURA */
         .input-autor {
             width: 100%;
             height: 42px;
@@ -71,11 +71,54 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
-        /* BOTONES CON ALTURA LIGERAMENTE MAYOR */
+        /* BOTÓN CONTINUAR */
+        .btn-continuar {
+            display: block;
+            width: 100%;
+            height: 42px;
+            background-color: #9b59b6;
+            color: #ffffff;
+            border: none;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.1s, opacity 0.2s, background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-continuar:disabled {
+            background-color: #4a3b5c;
+            color: rgba(255, 255, 255, 0.4);
+            cursor: not-allowed;
+            box-shadow: none;
+            opacity: 0.7;
+        }
+
+        .btn-continuar:not(:disabled):active {
+            transform: scale(0.97);
+        }
+
+        /* CABECERA FIJA CON EL NOMBRE */
+        .fixed-header {
+            background: rgba(45, 24, 69, 0.8);
+            border: 1px solid rgba(180, 100, 255, 0.4);
+            padding: 10px 15px;
+            border-radius: 14px;
+            margin-bottom: 15px;
+            font-weight: 500;
+            color: #00e5ff;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* BOTONES DE IMAGEN REDUCIDOS ~12% (De 52px a 45px) */
         .btn-upload {
             display: block;
             width: 100%;
-            height: 52px;
+            height: 45px;
             margin-bottom: 8px;
             background-size: cover;
             background-position: center;
@@ -93,7 +136,8 @@
         
         #labelEnviar { 
             background-image: url('btn-enviar.png'); 
-            margin-top: 15px;
+            height: 45px;
+            margin-top: 12px;
             cursor: pointer;
         }
 
@@ -115,20 +159,20 @@
             font-weight: 500;
         }
 
-        /* TEXTAREA CON VIOLETA MÁS CLARO PARA ALTO CONTRASTE */
+        /* TEXTAREA */
         textarea {
             width: 100%;
-            height: 75px;
+            height: 70px;
             background: #2d1845 !important;
             border: 1px solid rgba(180, 100, 255, 0.4);
             border-radius: 14px;
-            padding: 12px;
+            padding: 10px;
             color: #ffffff;
             font-size: 0.9rem;
             resize: none;
             outline: none;
             box-shadow: inset 0 5px 12px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(255, 255, 255, 0.1);
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         textarea::placeholder {
@@ -175,44 +219,80 @@
             transform: scale(0.97);
             opacity: 0.9;
         }
+
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
 
     <div class="card" id="cardContainer">
-        <h2>Subir Contenido</h2>
+        <h2>Foto Fiesta</h2>
 
-        <!-- Campo de Nombre o Apodo -->
-        <input type="text" id="inputAutor" class="input-autor" placeholder="Tu nombre o apodo (opcional)" maxlength="30">
+        <!-- PASO 1: Pantalla de Bienvenida (Solo Identificación) -->
+        <div id="step-name">
+            <input type="text" id="inputAutor" class="input-autor" placeholder="Por favor, identifícate (Mín. 7 carac.)" maxlength="30" oninput="validarNombre()">
+            <button type="button" id="btnContinuar" class="btn-continuar" disabled onclick="continuarPanel()">Continuar</button>
+        </div>
 
-        <label class="btn-upload" id="labelGaleria">
-            <input type="file" id="fileGaleria" multiple accept="image/*,video/*">
-        </label>
-        <span id="counterGaleria" class="counter"></span>
+        <!-- PASO 2: Panel Completo de Subida (Oculto al inicio) -->
+        <div id="step-upload" class="hidden">
+            <div class="fixed-header" id="displayNombre"></div>
 
-        <label class="btn-upload" id="labelFoto">
-            <input type="file" id="fileFoto" accept="image/*" capture="environment">
-        </label>
-        <span id="counterFoto" class="counter"></span>
+            <label class="btn-upload" id="labelGaleria">
+                <input type="file" id="fileGaleria" multiple accept="image/*,video/*">
+            </label>
+            <span id="counterGaleria" class="counter"></span>
 
-        <label class="btn-upload" id="labelVideo">
-            <input type="file" id="fileVideo" accept="video/*" capture="environment">
-        </label>
-        <span id="counterVideo" class="counter"></span>
+            <label class="btn-upload" id="labelFoto">
+                <input type="file" id="fileFoto" accept="image/*" capture="environment">
+            </label>
+            <span id="counterFoto" class="counter"></span>
 
-        <textarea id="textoMensaje" maxlength="200" placeholder="Escribe un mensaje..."></textarea>
-        <span id="charCount" class="char-counter">0/200 (opcional)</span>
+            <label class="btn-upload" id="labelVideo">
+                <input type="file" id="fileVideo" accept="video/*" capture="environment">
+            </label>
+            <span id="counterVideo" class="counter"></span>
 
-        <div class="btn-upload" id="labelEnviar" onclick="enviarContenido()"></div>
-        
+            <textarea id="textoMensaje" maxlength="200" placeholder="Escribe un mensaje..."></textarea>
+            <span id="charCount" class="char-counter">0/200 (opcional)</span>
+
+            <div class="btn-upload" id="labelEnviar" onclick="enviarContenido()"></div>
+        </div>
+
+        <!-- PASO 3: Mensajes de Estado y Post-Envio -->
         <div id="mensajeExito"></div>
-        <button id="btnMasContenido" class="btn-mas-contenido" onclick="location.reload()">SUBIR MÁS</button>
+        <button id="btnMasContenido" class="btn-mas-contenido" onclick="resetearParaSubirMas()">SUBIR MÁS</button>
     </div>
 
     <script>
         const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbwR3jniWrcz6p8k06LBfT4TxDMsLkhlbpnX8dws0dEB2rElX3pJW12T9Y6xFFIY9wYo/exec";
 
         let archivosAcumulados = [];
+        let nombreUsuario = '';
+
+        // Validar que el nombre tenga al menos 7 caracteres para habilitar Continuar
+        function validarNombre() {
+            const input = document.getElementById('inputAutor');
+            const btn = document.getElementById('btnContinuar');
+            if (input.value.trim().length >= 7) {
+                btn.removeAttribute('disabled');
+            } else {
+                btn.setAttribute('disabled', 'true');
+            }
+        }
+
+        // Pasar al panel principal fijando el nombre
+        function continuarPanel() {
+            const input = document.getElementById('inputAutor');
+            nombreUsuario = input.value.trim();
+            if (nombreUsuario.length < 7) return;
+
+            document.getElementById('displayNombre').textContent = `Invitado: ${nombreUsuario}`;
+            document.getElementById('step-name').classList.add('hidden');
+            document.getElementById('step-upload').classList.remove('hidden');
+        }
 
         document.getElementById('fileGaleria').addEventListener('change', function() {
             const count = this.files.length;
@@ -283,7 +363,6 @@
 
         async function enviarContenido() {
             const texto = textarea.value.trim();
-            const autor = document.getElementById('inputAutor').value.trim() || "Invitado";
 
             if (archivosAcumulados.length === 0 && !texto) {
                 alert("Por favor selecciona al menos un archivo o escribe un mensaje.");
@@ -311,11 +390,11 @@
                     let payload = {};
                     if (file.type.startsWith('image/')) {
                         let base64Comprimido = await comprimirImagen(file);
-                        payload = { tipo: 'foto', file: base64Comprimido, name: file.name, mimeType: 'image/jpeg', autor: autor };
+                        payload = { tipo: 'foto', file: base64Comprimido, name: file.name, mimeType: 'image/jpeg', autor: nombreUsuario };
                         correctas++;
                     } else if (file.type.startsWith('video/')) {
                         let base64 = await leerArchivoBase64(file);
-                        payload = { tipo: 'video', file: base64, name: file.name, mimeType: file.type, autor: autor };
+                        payload = { tipo: 'video', file: base64, name: file.name, mimeType: file.type, autor: nombreUsuario };
                         videoContador++;
                     }
 
@@ -330,15 +409,16 @@
                     divExito.innerHTML = `Enviando mensaje de texto...`;
                     await fetch(URL_APPS_SCRIPT, {
                         method: 'POST',
-                        body: JSON.stringify({ tipo: 'texto', contenido: texto, autor: autor })
+                        body: JSON.stringify({ tipo: 'texto', contenido: texto, autor: nombreUsuario })
                     });
                     textoEnviado = true;
                 }
 
                 // 3. Pantalla de éxito final
+                document.getElementById('step-upload').classList.add('hidden');
                 btnSubmit.style.display = 'none';
 
-                let mensajeExitoHTML = `¡Éxito, envío completado!<br>`;
+                let mensajeExitoHTML = `¡Éxito, envío completado! 🎉<br>`;
                 if (correctas > 0) mensajeExitoHTML += `• ${correctas} foto(s)<br>`;
                 if (videoContador > 0) mensajeExitoHTML += `• ${videoContador} video(s)<br>`;
                 if (textoEnviado) mensajeExitoHTML += `• 1 mensaje de texto`;
@@ -354,6 +434,27 @@
                 btnSubmit.style.pointerEvents = "auto";
                 divExito.style.display = 'none';
             }
+        }
+
+        // Restablecer formulario para subir más contenido manteniendo el nombre fijo
+        function resetearParaSubirMas() {
+            archivosAcumulados = [];
+            textarea.value = '';
+            charCount.textContent = '0/200 (opcional)';
+            document.getElementById('counterGaleria').textContent = '';
+            document.getElementById('counterFoto').textContent = '';
+            document.getElementById('counterVideo').textContent = '';
+            
+            const btnSubmit = document.getElementById('labelEnviar');
+            btnSubmit.style.display = 'block';
+            btnSubmit.style.opacity = "1";
+            btnSubmit.style.pointerEvents = "auto";
+
+            document.getElementById('mensajeExito').style.display = 'none';
+            document.getElementById('btnMasContenido').style.display = 'none';
+
+            // Vuelve a mostrar el panel de subida sin pedir el nombre de nuevo
+            document.getElementById('step-upload').classList.remove('hidden');
         }
     </script>
 </body>
