@@ -371,41 +371,58 @@
     
     <!-- PASO 1 -->
     <div id="step-name" style="width: 100%;">
-        <p class="subtitle">Subí tus fotos del evento</p>
+        <p class="subtitle">Subí tus fotos, videos o dejanos tu mensaje</p>
         
         <div class="input-container">
             <input type="text" id="inputAutor" class="input-autor" placeholder="Nombre (mínimo 7 caracteres)" maxlength="30" oninput="validarNombre()" autocomplete="off">
         </div>
-        <span class="input-help">Escribe tu nombre para empezar a subir tus fotos</span>
+        <span class="input-help">Escribe tu nombre para empezar a participar</span>
 
         <button type="button" id="btnContinuar" class="btn-action btn-continuar" disabled onclick="continuarPanel()">
-            <span>EMPEZAR A SUBIR</span>
+            <span>EMPEZAR</span>
         </button>
     </div>
 
     <!-- PASO 2 -->
     <div id="step-upload" class="hidden" style="width: 100%;">
         <div class="fixed-header" id="displayNombre"></div>
-        <p class="subtitle">Tomá fotos con la cámara o elegilas de tu galería. ¡Podés sumar de ambos lados antes de enviar!</p>
+        <p class="subtitle">Tomá fotos, subí videos o dejanos tu saludo escrito.</p>
 
         <div id="upload-section" style="width: 100%;">
+            <!-- Tomar Foto -->
             <label for="cameraInput" id="labelCamera" class="btn-action btn-select">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-                <span>Tomar Fotos</span>
+                <span>Tomar Foto</span>
             </label>
             <input type="file" id="cameraInput" accept="image/*" capture="environment" multiple>
 
+            <!-- Galería de Fotos -->
             <label for="galleryInput" id="labelGallery" class="btn-action btn-select">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                 <span>Imágenes de Galería</span>
             </label>
             <input type="file" id="galleryInput" accept="image/*" multiple>
 
+            <!-- Subir Video -->
+            <label for="videoInput" id="labelVideo" class="btn-action btn-select">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                <span>Subir Video</span>
+            </label>
+            <input type="file" id="videoInput" accept="video/*" multiple>
+
+            <!-- Textbox / Mensaje Escrito -->
+            <div class="input-container" style="margin-top: 10px;">
+                <textarea id="inputTexto" class="input-autor" placeholder="Escribe un mensaje o dedicatoria..." style="height: 70px; padding-top: 12px; resize: none; border-radius: 16px;" maxlength="250"></textarea>
+            </div>
+            <button id="submitTextBtn" class="btn-action btn-select" onclick="enviarTexto()" style="margin-bottom: 12px;">
+                <span>Enviar Mensaje de Texto</span>
+            </button>
+
             <div id="counter-badge"></div>
 
             <button id="submitBtn" class="btn-action btn-submit" onclick="enviarFotos()">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                <span>Enviar al Evento</span>
+                <span>Enviar Archivos al Evento</span>
             </button>
         </div>
     </div>
@@ -413,7 +430,7 @@
     <!-- REINICIO -->
     <button id="resetBtn" class="btn-action btn-reset" onclick="reiniciarPanel()">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-        <span>Subir más imágenes</span>
+        <span>Subir más contenido</span>
     </button>
 
     <div id="status-msg"></div>
@@ -444,8 +461,10 @@
 
     const cameraInput = document.getElementById('cameraInput');
     const galleryInput = document.getElementById('galleryInput');
+    const videoInput = document.getElementById('videoInput');
     const labelCamera = document.getElementById('labelCamera');
     const labelGallery = document.getElementById('labelGallery');
+    const labelVideo = document.getElementById('labelVideo');
     const submitBtn = document.getElementById('submitBtn');
     const resetBtn = document.getElementById('resetBtn');
     const uploadSection = document.getElementById('upload-section');
@@ -487,23 +506,29 @@
     }
 
     cameraInput.addEventListener('change', (e) => {
-        agregarArchivos(e.target.files);
+        agregarArchivos(e.target.files, 'foto');
         cameraInput.value = '';
     });
 
     galleryInput.addEventListener('change', (e) => {
-        agregarArchivos(e.target.files);
+        agregarArchivos(e.target.files, 'foto');
         galleryInput.value = '';
     });
 
-    function agregarArchivos(nuevosFiles) {
+    videoInput.addEventListener('change', (e) => {
+        agregarArchivos(e.target.files, 'video');
+        videoInput.value = '';
+    });
+
+    function agregarArchivos(nuevosFiles, tipo) {
         const list = Array.from(nuevosFiles);
         list.forEach(file => {
-            if (file.size > 10 * 1024 * 1024) {
-                mostrarModal(`La foto "${file.name}" supera el límite máximo permitido de 10 MB y fue descartada.`);
+            const limiteMB = tipo === 'video' ? 50 : 10;
+            if (file.size > limiteMB * 1024 * 1024) {
+                mostrarModal(`El archivo "${file.name}" supera el límite permitido de ${limiteMB} MB y fue descartado.`);
                 return;
             }
-            archivosAcumulados.push(file);
+            archivosAcumulados.push({ file: file, tipo: tipo });
         });
         actualizarInterfaz();
     }
@@ -511,7 +536,7 @@
     function actualizarInterfaz() {
         const total = archivosAcumulados.length;
         if (total > 0) {
-            counterBadge.innerText = `📂 Total acumulado: ${total} foto(s) lista(s)`;
+            counterBadge.innerText = `📂 Total archivos acumulados: ${total}`;
             submitBtn.style.setProperty('display', 'flex', 'important');
             statusMsg.innerText = "";
         } else {
@@ -525,19 +550,60 @@
         submitBtn.disabled = disabled;
         cameraInput.disabled = disabled;
         galleryInput.disabled = disabled;
+        videoInput.disabled = disabled;
+        document.getElementById('submitTextBtn').disabled = disabled;
+        document.getElementById('inputTexto').disabled = disabled;
 
         if (disabled) {
             labelCamera.classList.add('disabled-style');
             labelGallery.classList.add('disabled-style');
+            labelVideo.classList.add('disabled-style');
         } else {
             labelCamera.classList.remove('disabled-style');
             labelGallery.classList.remove('disabled-style');
+            labelVideo.classList.remove('disabled-style');
         }
+    }
+
+    async function enviarTexto() {
+        const textoInput = document.getElementById('inputTexto');
+        const contenidoTexto = textoInput.value.trim();
+
+        if (!contenidoTexto) {
+            mostrarModal("Escribe un mensaje antes de enviarlo.");
+            return;
+        }
+
+        setFormDisabled(true);
+        statusMsg.style.color = "#fffd8d";
+        statusMsg.innerText = "Enviando mensaje...";
+
+        try {
+            await fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify({
+                    contenido: contenidoTexto,
+                    autor: nombreUsuario,
+                    tipo: "texto"
+                })
+            });
+
+            statusMsg.style.color = "#75f992";
+            statusMsg.innerText = "✨ ¡Mensaje enviado con éxito!";
+            textoInput.value = "";
+        } catch (err) {
+            statusMsg.style.color = "#ff6b6b";
+            statusMsg.innerText = "Hubo un error al enviar el mensaje.";
+        }
+
+        setFormDisabled(false);
     }
 
     async function enviarFotos() {
         if (archivosAcumulados.length === 0) {
-            mostrarModal("Por favor selecciona o toma al menos una foto para enviar.");
+            mostrarModal("Por favor selecciona o toma al menos una foto o video para enviar.");
             return;
         }
 
@@ -547,23 +613,31 @@
         let rechazadas = 0;
 
         for (let i = 0; i < archivosAcumulados.length; i++) {
-            const file = archivosAcumulados[i];
+            const item = archivosAcumulados[i];
             statusMsg.style.color = "#fffd8d";
             statusMsg.innerText = `Procesando ${i + 1} de ${archivosAcumulados.length}...`;
 
             try {
-                const base64Comprimido = await comprimirImagen(file);
+                let base64Data;
+                let mimeTypeFinal = item.file.type;
+
+                if (item.tipo === 'foto') {
+                    base64Data = await comprimirImagen(item.file);
+                    mimeTypeFinal = "image/jpeg";
+                } else {
+                    base64Data = await convertirBase64(item.file);
+                }
 
                 await fetch(WEB_APP_URL, {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: { 'Content-Type': 'text/plain' },
                     body: JSON.stringify({
-                        file: base64Comprimido,
-                        name: file.name,
-                        mimeType: "image/jpeg",
+                        file: base64Data,
+                        name: item.file.name,
+                        mimeType: mimeTypeFinal,
                         autor: nombreUsuario,
-                        tipo: "foto"
+                        tipo: item.tipo
                     })
                 });
 
@@ -574,8 +648,8 @@
         }
 
         statusMsg.style.color = "#75f992";
-        statusMsg.innerHTML = `✨ ¡LISTO! Se subieron ${correctas} foto(s) correctamente.` + 
-            (rechazadas > 0 ? `<br><span style="color:#ff6b6b;">(${rechazadas} rechazadas)</span>` : '');
+        statusMsg.innerHTML = `✨ ¡LISTO! Se enviaron ${correctas} archivo(s) correctamente.` + 
+            (rechazadas > 0 ? `<br><span style="color:#ff6b6b;">(${rechazadas} rechazados)</span>` : '');
 
         uploadSection.style.display = "none";
         resetBtn.style.setProperty('display', 'flex', 'important');
@@ -585,12 +659,22 @@
         archivosAcumulados = [];
         statusMsg.innerText = "";
         counterBadge.innerText = "";
+        document.getElementById('inputTexto').value = "";
         
         submitBtn.style.setProperty('display', 'none', 'important');
         setFormDisabled(false);
         
         resetBtn.style.setProperty('display', 'none', 'important');
         uploadSection.style.display = "block";
+    }
+
+    function convertirBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (event) => resolve(event.target.result);
+            reader.onerror = (error) => reject(error);
+        });
     }
 
     function comprimirImagen(file) {
