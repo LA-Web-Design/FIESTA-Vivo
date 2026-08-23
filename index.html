@@ -1,473 +1,443 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALBUM POV EN VIVO</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALBUM POV EN VIVO</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Exo 2', system-ui, -apple-system, sans-serif;
-        }
+    body {
+      background: #2b52a1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
 
-        body {
-            background-color: #160d21;
-            background-image: url('tapiz.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px 15px;
-        }
+    .card {
+      background: linear-gradient(145deg, #2a082e, #1c0520);
+      width: 100%;
+      max-width: 380px;
+      border-radius: 28px;
+      padding: 25px 20px 20px 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        /* TARJETA NEOMÓRFICA PÚRPURA */
-        .card {
-            width: 100%;
-            max-width: 360px;
-            padding: 30px 22px 20px 22px;
-            border-radius: 28px;
-            background-color: #22022b !important;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.2'/%3E%3C/svg%3E");
-            box-shadow: 
-                0 25px 60px rgba(0, 0, 0, 0.85),
-                inset 0 1px 2px rgba(255, 255, 255, 0.3),
-                inset 0 -3px 6px rgba(0, 0, 0, 0.9);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
+    .title {
+      color: #ffffff;
+      font-size: 1.25rem;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 4px;
+    }
 
-        h2 {
-            color: #ffffff;
-            font-size: 1.25rem;
-            font-weight: 800;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.7);
-        }
+    .subtitle {
+      color: #bfa8d8;
+      font-size: 0.85rem;
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-        p.subtitle {
-            color: #d1b4e8;
-            font-size: 0.88rem;
-            margin-bottom: 20px;
-            line-height: 1.4;
-            font-weight: 400;
-        }
+    .input-box {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 12px 15px;
+      color: #00d2ff;
+      font-size: 0.95rem;
+      text-align: center;
+      outline: none;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+    }
 
-        /* INPUTS Y TEXTAREA NEOMÓRFICOS OSCUROS */
-        .input-autor, textarea {
-            width: 100%;
-            background-color: #14051c !important;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: #ffffff;
-            outline: none;
-            box-shadow: 
-                inset 0 6px 10px rgba(0, 0, 0, 0.95),
-                inset 0 -2px 5px rgba(255, 255, 255, 0.15);
-        }
+    .input-box::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
 
-        .input-autor {
-            height: 48px;
-            border-radius: 24px;
-            padding: 0 18px;
-            font-size: 0.95rem;
-            font-weight: 400;
-            text-align: center;
-            color: #00d4ff !important;
-        }
+    .textarea-box {
+      width: 100%;
+      height: 70px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 12px;
+      color: #ffffff;
+      font-size: 0.9rem;
+      resize: none;
+      outline: none;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+    }
 
-        .input-autor::placeholder { color: rgba(255, 255, 255, 0.35); }
+    .textarea-box::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
 
-        .input-help {
-            color: rgba(255, 255, 255, 0.55);
-            font-size: 0.72rem;
-            margin-top: 6px;
-            margin-bottom: 18px;
-            display: block;
-        }
+    .btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: 25px;
+      border: none;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
 
-        textarea {
-            height: 75px;
-            border-radius: 18px;
-            padding: 12px 16px;
-            font-size: 0.9rem;
-            resize: none;
-            margin-top: 6px;
-        }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      filter: grayscale(40%);
+    }
 
-        textarea::placeholder { color: rgba(255, 255, 255, 0.35); }
+    .btn-purple {
+      background: linear-gradient(180deg, #9b2cdd 0%, #59118e 100%);
+      color: white;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), 0 4px 10px rgba(0,0,0,0.4);
+    }
 
-        .char-counter {
-            font-size: 0.72rem;
-            color: rgba(255, 255, 255, 0.55);
-            text-align: right;
-            width: 100%;
-            display: block;
-            margin-bottom: 12px;
-        }
+    .btn-blue {
+      background: linear-gradient(180deg, #2b82d9 0%, #1551a3 100%);
+      color: white;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), 0 4px 10px rgba(0,0,0,0.4);
+    }
 
-        /* CABECERA FIJA DE USUARIO */
-        .fixed-header {
-            background: #14051c;
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            padding: 10px 15px;
-            border-radius: 16px;
-            margin-bottom: 15px;
-            color: #00d4ff;
-            font-size: 0.95rem;
-            text-align: center;
-            width: 100%;
-            box-shadow: 
-                inset 0 6px 10px rgba(0, 0, 0, 0.95),
-                inset 0 -2px 5px rgba(255, 255, 255, 0.15);
-        }
+    .btn-green {
+      background: linear-gradient(180deg, #28a745 0%, #1e7e34 100%);
+      color: white;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), 0 4px 10px rgba(0,0,0,0.4);
+    }
 
-        /* BOTONES DE ACCIÓN */
-        .btn-action {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 50px;
-            padding: 0 16px;
-            font-size: 0.82rem;
-            font-weight: 800;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-            border-radius: 25px;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.1s ease, filter 0.1s ease;
-            margin-bottom: 6px;
-        }
+    .screen {
+      display: none;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        .btn-action span { text-align: center; width: 100%; }
-        .btn-action svg { margin-right: 8px; flex-shrink: 0; }
+    .screen.active {
+      display: flex;
+    }
 
-        .btn-continuar {
-            background: linear-gradient(180deg, #1a0724 0%, #2f1340 15%, #200a2d 35%, #100318 75%, #07010b 100%);
-            color: rgba(255, 255, 255, 0.25);
-            cursor: not-allowed;
-            margin-top: 10px;
-        }
+    .file-status {
+      color: #00d2ff;
+      font-size: 0.8rem;
+      margin-top: 6px;
+      text-align: center;
+      font-weight: 600;
+    }
 
-        .btn-continuar.active {
-            background: linear-gradient(180deg, #7a22b8 0%, #ca78ff 15%, #a83bf6 30%, #6c1cb0 70%, #380859 100%);
-            color: #ffffff;
-            cursor: pointer;
-            box-shadow: 0 6px 18px rgba(168, 59, 246, 0.45), inset 0 2px 3px rgba(255, 255, 255, 0.8);
-        }
+    .char-count {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.75rem;
+      width: 100%;
+      text-align: right;
+      margin-top: 4px;
+    }
 
-        .btn-select, .btn-submit {
-            background: linear-gradient(180deg, #0f5ba6 0%, #71bdff 15%, #1D89F5 30%, #105db0 70%, #05254a 100%);
-            color: #ffffff;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.65), inset 0 2px 3px rgba(255, 255, 255, 0.8);
-        }
+    .status-msg {
+      color: #ffd700;
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin-top: 15px;
+      text-align: center;
+    }
 
-        .btn-submit { margin-top: 8px; margin-bottom: 12px; }
+    .success-icon {
+      color: #28a745;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      text-align: center;
+      line-height: 1.5;
+    }
 
-        .btn-mas-contenido {
-            background: linear-gradient(180deg, #135d23 0%, #75f992 15%, #2bb84b 30%, #1b8533 70%, #083312 100%);
-            color: #ffffff;
-            display: none;
-            margin-top: 15px;
-        }
+    /* FIRMA INTEGRADA AL PANEL */
+    .footer-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.6);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: 25px;
+      margin-bottom: 15px;
+    }
 
-        /* CONTADORES DE ARCHIVOS */
-        .counter {
-            font-size: 0.78rem;
-            color: #00d4ff;
-            margin-bottom: 10px;
-            display: block;
-            min-height: 1rem;
-            font-weight: 600;
-        }
+    .footer-text {
+      color: #00d2ff;
+      font-size: 0.7rem;
+      text-align: center;
+      line-height: 1.45;
+      font-weight: 500;
+      opacity: 0.9;
+    }
 
-        #mensajeExito {
-            display: none;
-            margin-top: 12px;
-            font-size: 0.88rem;
-            font-weight: 600;
-            text-align: center;
-            line-height: 1.4;
-        }
-
-        /* FIRMA INTEGRADA AL PANEL CON LÍNEA DE HENDIDURA */
-        .card-footer {
-            width: 100%;
-            margin-top: 25px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1); /* Línea divisoria suave */
-            font-size: 0.72rem;
-            line-height: 1.4;
-            color: #00d4ff; /* Tono Cyan/Celeste */
-        }
-
-        .card-footer p { margin-bottom: 3px; }
-        .card-footer a { color: #00d4ff; text-decoration: none; }
-
-        input[type="file"] { display: none; }
-        .hidden { display: none !important; }
-    </style>
+    input[type="file"] {
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="card">
-        <h2>ALBUM POV EN VIVO</h2>
+  <div class="card">
+    <h1 class="title">ALBUM POV EN VIVO</h1>
 
-        <!-- PASO 1: INGRESO DE NOMBRE -->
-        <div id="step-name" style="width: 100%;">
-            <p class="subtitle">Subí fotos, videos o mensajes</p>
-            <input type="text" id="inputAutor" class="input-autor" placeholder="Nombre (mínimo 7 caracteres)" maxlength="30" oninput="validarNombre()" autocomplete="off">
-            <span class="input-help">Escribe tu nombre para empezar a subir</span>
-            <button type="button" id="btnContinuar" class="btn-action btn-continuar" disabled onclick="continuarPanel()">
-                <span>EMPEZAR A SUBIR</span>
-            </button>
-        </div>
-
-        <!-- PASO 2: PANEL DE SUBIDA -->
-        <div id="step-upload" class="hidden" style="width: 100%;">
-            <div class="fixed-header" id="displayNombre"></div>
-
-            <label class="btn-action btn-select">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                <span>Galería (Fotos / Videos)</span>
-                <input type="file" id="fileGaleria" multiple accept="image/*,video/*">
-            </label>
-            <span id="counterGaleria" class="counter"></span>
-
-            <label class="btn-action btn-select">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-                <span>Tomar Foto</span>
-                <input type="file" id="fileFoto" accept="image/*" capture="environment">
-            </label>
-            <span id="counterFoto" class="counter"></span>
-
-            <label class="btn-action btn-select">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-                <span>Grabar Video</span>
-                <input type="file" id="fileVideo" accept="video/*" capture="environment">
-            </label>
-            <span id="counterVideo" class="counter"></span>
-
-            <textarea id="textoMensaje" maxlength="200" placeholder="Escribe un mensaje..."></textarea>
-            <span id="charCount" class="char-counter">0/200 (opcional)</span>
-
-            <button class="btn-action btn-submit" id="labelEnviar" onclick="enviarContenido()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                <span>Enviar Contenido</span>
-            </button>
-        </div>
-
-        <!-- PASO 3: ÉXITO Y REINICIO -->
-        <div id="mensajeExito"></div>
-        <button id="btnMasContenido" class="btn-action btn-mas-contenido" onclick="resetearParaSubirMas()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-            <span>Subir Más</span>
-        </button>
-
-        <!-- FIRMA DENTRO DE LA TARJETA (VERIFICADA) -->
-        <div class="card-footer">
-            <p><a href="http://www.luisalbertocaceres.com.ar" target="_blank" rel="noopener noreferrer">Diseño de Luis Alberto Cáceres</a></p>
-            <p>Código de Gemini @ 2026</p>
-            <p>Prohibida su reproducción total y/o parcial</p>
-        </div>
+    <!-- PANTALLA 1: INGRESO DE NOMBRE -->
+    <div id="screen1" class="screen active">
+      <p class="subtitle">Subí fotos, videos o mensajes</p>
+      
+      <input type="text" id="userName" class="input-box" placeholder="Nombre (mínimo 7 caracteres)" style="margin-bottom: 8px;">
+      <p style="color: rgba(255,255,255,0.4); font-size: 0.75rem; margin-bottom: 20px;">Escribe tu nombre para empezar a subir</p>
+      
+      <button id="btnStart" class="btn btn-purple" disabled>EMPEZAR A SUBIR</button>
     </div>
 
-    <script>
-        const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbwR3jniWrcz6p8k06LBfT4TxDMsLkhlbpnX8dws0dEB2rElX3pJW12T9Y6xFFIY9wYo/exec";
+    <!-- PANTALLA 2: SELECCIÓN Y ENVÍO -->
+    <div id="screen2" class="screen">
+      <input type="text" id="displayName" class="input-box" readonly style="margin-bottom: 15px; background: rgba(0,0,0,0.6);">
 
-        let archivosAcumulados = [];
-        let nombreUsuario = '';
+      <!-- BOTO/INPUT GALERÍA -->
+      <button class="btn btn-blue media-btn" onclick="document.getElementById('fileGallery').click()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        GALERÍA (FOTOS / VIDEOS)
+      </button>
+      <input type="file" id="fileGallery" multiple accept="image/*,video/*">
+      <div id="galleryStatus" class="file-status"></div>
 
-        function validarNombre() {
-            const input = document.getElementById('inputAutor');
-            const btn = document.getElementById('btnContinuar');
-            if (input.value.trim().length >= 7) {
-                btn.removeAttribute('disabled');
-                btn.classList.add('active');
-            } else {
-                btn.setAttribute('disabled', 'true');
-                btn.classList.remove('active');
-            }
+      <!-- BOTÓN/INPUT FOTO -->
+      <button class="btn btn-blue media-btn" style="margin-top: 12px;" onclick="document.getElementById('filePhoto').click()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        TOMAR FOTO
+      </button>
+      <input type="file" id="filePhoto" accept="image/*" capture="environment">
+
+      <!-- BOTÓN/INPUT VIDEO -->
+      <button class="btn btn-blue media-btn" style="margin-top: 12px;" onclick="document.getElementById('fileVideo').click()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        GRABAR VIDEO
+      </button>
+      <input type="file" id="fileVideo" accept="video/*" capture="environment">
+
+      <!-- CASILLERO DE TEXTO OPCIONAL -->
+      <div style="width: 100%; margin-top: 20px;">
+        <textarea id="textMsg" class="textarea-box" maxlength="200" placeholder="Escribe un mensaje..."></textarea>
+        <div id="charCounter" class="char-count">0/200 (opcional)</div>
+      </div>
+
+      <!-- BOTÓN DE ENVÍO -->
+      <button id="btnSend" class="btn btn-blue" style="margin-top: 15px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        ENVIAR CONTENIDO
+      </button>
+
+      <div id="uploadStatus" class="status-msg"></div>
+    </div>
+
+    <!-- PANTALLA 3: ÉXITO -->
+    <div id="screen3" class="screen">
+      <div id="successSummary" class="success-icon" style="color: #ffffff; margin-bottom: 15px;"></div>
+
+      <button id="btnReset" class="btn btn-green">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+        SUBIR MÁS
+      </button>
+    </div>
+
+    <!-- FIRMA INTEGRADA -->
+    <div class="footer-divider"></div>
+    <div class="footer-text">
+      Diseño de Luis Alberto Cáceres<br>
+      Código de Gemini @ 2026<br>
+      Prohibida su reproducción total y/o parcial
+    </div>
+  </div>
+
+  <script>
+    // URL del Web App de Apps Script
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby3L04Q5qS69r-Wk45e_Xq8hDls0G_2O0vA/exec"; // Reemplazar si cambia tu URL
+
+    // Elementos DOM
+    const userNameInput = document.getElementById('userName');
+    const btnStart = document.getElementById('btnStart');
+    const screen1 = document.getElementById('screen1');
+    const screen2 = document.getElementById('screen2');
+    const screen3 = document.getElementById('screen3');
+    const displayName = document.getElementById('displayName');
+    
+    const fileGallery = document.getElementById('fileGallery');
+    const filePhoto = document.getElementById('filePhoto');
+    const fileVideo = document.getElementById('fileVideo');
+    const galleryStatus = document.getElementById('galleryStatus');
+    
+    const textMsg = document.getElementById('textMsg');
+    const charCounter = document.getElementById('charCounter');
+    const btnSend = document.getElementById('btnSend');
+    const uploadStatus = document.getElementById('uploadStatus');
+    const successSummary = document.getElementById('successSummary');
+    const btnReset = document.getElementById('btnReset');
+    const mediaBtns = document.querySelectorAll('.media-btn');
+
+    let selectedFiles = [];
+
+    // Validar nombre (mínimo 7 caracteres)
+    userNameInput.addEventListener('input', () => {
+      btnStart.disabled = userNameInput.value.trim().length < 7;
+    });
+
+    // Pasar a Pantalla 2
+    btnStart.addEventListener('click', () => {
+      displayName.value = userNameInput.value.trim();
+      screen1.classList.remove('active');
+      screen2.classList.add('active');
+    });
+
+    // Manejar selección de archivos
+    function handleFiles(files) {
+      if (files.length > 0) {
+        selectedFiles = Array.from(files);
+        galleryStatus.innerText = `${selectedFiles.length} archivo(s) seleccionado(s) ✓`;
+      }
+    }
+
+    fileGallery.addEventListener('change', (e) => handleFiles(e.target.files));
+    filePhoto.addEventListener('change', (e) => handleFiles(e.target.files));
+    fileVideo.addEventListener('change', (e) => handleFiles(e.target.files));
+
+    // Contador de caracteres de texto
+    textMsg.addEventListener('input', () => {
+      charCounter.innerText = `${textMsg.value.length}/200 (opcional)`;
+    });
+
+    // Función para activar/desactivar todos los controles durante el envío
+    function setFormDisabled(disabled) {
+      btnSend.disabled = disabled;
+      mediaBtns.forEach(btn => btn.disabled = disabled);
+      textMsg.disabled = disabled;
+    }
+
+    // Convertir archivo a Base64
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Enviar Contenido
+    btnSend.addEventListener('click', async () => {
+      const msg = textMsg.value.trim();
+
+      if (selectedFiles.length === 0 && msg === "") {
+        alert("Selecciona al menos un archivo o escribe un mensaje.");
+        return;
+      }
+
+      // Bloquear botones e inputs
+      setFormDisabled(true);
+
+      let photosSent = 0;
+      let videosSent = 0;
+      let textSent = false;
+
+      try {
+        // 1. Enviar Archivos
+        for (let i = 0; i < selectedFiles.length; i++) {
+          const file = selectedFiles[i];
+          uploadStatus.innerText = `Subiendo archivo ${i + 1} de ${selectedFiles.length}...`;
+
+          const base64 = await fileToBase64(file);
+          const isVideo = file.type.startsWith('video/');
+
+          const payload = {
+            name: `${displayName.value}_${Date.now()}_${file.name}`,
+            file: `data:${file.type};base64,${base64}`
+          };
+
+          await fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (isVideo) videosSent++;
+          else photosSent++;
         }
 
-        function continuarPanel() {
-            const input = document.getElementById('inputAutor');
-            nombreUsuario = input.value.trim();
-            if (nombreUsuario.length < 7) return;
+        // 2. Enviar Mensaje de Texto (si existe)
+        if (msg !== "") {
+          uploadStatus.innerText = "Enviando mensaje de texto...";
+          const textPayload = {
+            type: 'texto',
+            userName: displayName.value,
+            message: msg
+          };
 
-            document.getElementById('displayNombre').textContent = nombreUsuario;
-            document.getElementById('step-name').classList.add('hidden');
-            document.getElementById('step-upload').classList.remove('hidden');
+          await fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(textPayload)
+          });
+
+          textSent = true;
         }
 
-        document.getElementById('fileGaleria').addEventListener('change', function() {
-            document.getElementById('counterGaleria').textContent = this.files.length > 0 ? `${this.files.length} archivo(s) seleccionado(s) ✓` : '';
-            agregarACola(this.files);
-        });
+        // Construir resumen de éxito
+        let summaryHtml = `<strong style="color:#28a745; font-size:1.1rem;">¡Éxito, envío completado! 🎉</strong><br><br>`;
+        if (photosSent > 0) summaryHtml += `• ${photosSent} foto(s)<br>`;
+        if (videosSent > 0) summaryHtml += `• ${videosSent} video(s)<br>`;
+        if (textSent) summaryHtml += `• 1 mensaje de texto<br>`;
 
-        document.getElementById('fileFoto').addEventListener('change', function() {
-            document.getElementById('counterFoto').textContent = this.files.length > 0 ? `1 foto capturada ✓` : '';
-            agregarACola(this.files);
-        });
+        successSummary.innerHTML = summaryHtml;
 
-        document.getElementById('fileVideo').addEventListener('change', function() {
-            document.getElementById('counterVideo').textContent = this.files.length > 0 ? `1 video grabado ✓` : '';
-            agregarACola(this.files);
-        });
+        // Pasar a Pantalla 3
+        screen2.classList.remove('active');
+        screen3.classList.add('active');
 
-        function agregarACola(files) {
-            for (let file of files) archivosAcumulados.push(file);
-        }
+      } catch (err) {
+        alert("Ocurrió un error al subir. Intenta de nuevo.");
+        console.error(err);
+      } finally {
+        uploadStatus.innerText = "";
+        setFormDisabled(false);
+      }
+    });
 
-        const textarea = document.getElementById('textoMensaje');
-        textarea.addEventListener('input', function() {
-            document.getElementById('charCount').textContent = `${this.value.length}/200 (opcional)`;
-        });
+    // Resetear para "Subir más"
+    btnReset.addEventListener('click', () => {
+      selectedFiles = [];
+      fileGallery.value = "";
+      filePhoto.value = "";
+      fileVideo.value = "";
+      galleryStatus.innerText = "";
+      textMsg.value = "";
+      charCounter.innerText = "0/200 (opcional)";
+      
+      setFormDisabled(false);
 
-        function comprimirImagen(file) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = (event) => {
-                    const img = new Image();
-                    img.src = event.target.result;
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        let width = img.width;
-                        let height = img.height;
-                        const MAX = 1000;
-                        if (width > MAX) {
-                            height = Math.round((height * MAX) / width);
-                            width = MAX;
-                        }
-                        canvas.width = width;
-                        canvas.height = height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, height);
-                        resolve(canvas.toDataURL('image/jpeg', 0.80));
-                    };
-                };
-            });
-        }
-
-        function leerArchivoBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-                reader.readAsDataURL(file);
-            });
-        }
-
-        async function enviarContenido() {
-            const texto = textarea.value.trim();
-
-            if (archivosAcumulados.length === 0 && !texto) {
-                alert("Por favor selecciona al menos un archivo o escribe un mensaje.");
-                return;
-            }
-
-            const btnSubmit = document.getElementById('labelEnviar');
-            btnSubmit.style.opacity = "0.6";
-            btnSubmit.style.pointerEvents = "none";
-
-            const divExito = document.getElementById('mensajeExito');
-            divExito.style.display = 'block';
-
-            let correctas = 0;
-            let videoContador = 0;
-            let textoEnviado = false;
-
-            try {
-                for (let i = 0; i < archivosAcumulados.length; i++) {
-                    const file = archivosAcumulados[i];
-                    divExito.style.color = "#fffd8d";
-                    divExito.innerHTML = `Subiendo archivo ${i + 1} de ${archivosAcumulados.length}...`;
-
-                    let payload = {};
-                    if (file.type.startsWith('image/')) {
-                        let base64Comprimido = await comprimirImagen(file);
-                        payload = { tipo: 'foto', file: base64Comprimido, name: file.name, mimeType: 'image/jpeg', autor: nombreUsuario };
-                        correctas++;
-                    } else if (file.type.startsWith('video/')) {
-                        let base64 = await leerArchivoBase64(file);
-                        payload = { tipo: 'video', file: base64, name: file.name, mimeType: file.type, autor: nombreUsuario };
-                        videoContador++;
-                    }
-
-                    await fetch(URL_APPS_SCRIPT, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'text/plain' },
-                        body: JSON.stringify(payload)
-                    });
-                }
-
-                if (texto) {
-                    divExito.style.color = "#fffd8d";
-                    divExito.innerHTML = `Enviando mensaje de texto...`;
-                    await fetch(URL_APPS_SCRIPT, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'text/plain' },
-                        body: JSON.stringify({ tipo: 'texto', contenido: texto, autor: nombreUsuario })
-                    });
-                    textoEnviado = true;
-                }
-
-                document.getElementById('step-upload').classList.add('hidden');
-                btnSubmit.style.display = 'none';
-
-                let mensajeExitoHTML = `¡Éxito, envío completado! 🎉<br>`;
-                if (correctas > 0) mensajeExitoHTML += `• ${correctas} foto(s)<br>`;
-                if (videoContador > 0) mensajeExitoHTML += `• ${videoContador} video(s)<br>`;
-                if (textoEnviado) mensajeExitoHTML += `• 1 mensaje de texto`;
-
-                divExito.style.color = "#75f992";
-                divExito.innerHTML = mensajeExitoHTML;
-
-                document.getElementById('btnMasContenido').style.setProperty('display', 'flex', 'important');
-
-            } catch (error) {
-                alert("Hubo un error al enviar. Revisa tu conexión.");
-                btnSubmit.style.opacity = "1";
-                btnSubmit.style.pointerEvents = "auto";
-                divExito.style.display = 'none';
-            }
-        }
-
-        function resetearParaSubirMas() {
-            archivosAcumulados = [];
-            textarea.value = '';
-            document.getElementById('charCount').textContent = '0/200 (opcional)';
-            document.getElementById('counterGaleria').textContent = '';
-            document.getElementById('counterFoto').textContent = '';
-            document.getElementById('counterVideo').textContent = '';
-            
-            const btnSubmit = document.getElementById('labelEnviar');
-            btnSubmit.style.display = 'flex';
-            btnSubmit.style.opacity = "1";
-            btnSubmit.style.pointerEvents = "auto";
-
-            document.getElementById('mensajeExito').style.display = 'none';
-            document.getElementById('btnMasContenido').style.setProperty('display', 'none', 'important');
-
-            document.getElementById('step-upload').classList.remove('hidden');
-        }
-    </script>
+      screen3.classList.remove('active');
+      screen2.classList.add('active');
+    });
+  </script>
 </body>
 </html>
