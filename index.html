@@ -4,67 +4,295 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ALBUM POV EN VIVO</title>
+    <!-- Tipografía Exo 2 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;800&display=swap" rel="stylesheet">
+
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px 10px;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #0d0d0d;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            padding: 0;
+            font-family: 'Exo 2', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #160d21;
+            background-image: url('tapiz.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             min-height: 100vh;
-            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 15px;
         }
 
-        .main-container {
+        /* TARJETA / PANEL PRINCIPAL - PÚRPURA VIBRANTE NEOMÓRFICO */
+        .card {
             width: 100%;
-            max-width: 380px;
+            max-width: 360px;
+            padding: 30px 22px;
+            border-radius: 28px;
+            background-color: #22022b !important;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.2'/%3E%3C/svg%3E");
+            box-shadow: 
+                0 25px 60px rgba(0, 0, 0, 0.85),
+                inset 0 1px 2px rgba(255, 255, 255, 0.3),
+                inset 0 -3px 6px rgba(0, 0, 0, 0.9);
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-
-        h1 {
-            color: #ffffff;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
             text-align: center;
-            letter-spacing: 1px;
+            position: relative;
+        }
+
+        h2 {
+            color: #ffffff;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
+            margin-bottom: 6px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.7);
         }
 
-        /* Estilo del campo de entrada neutral */
-        .input-field {
+        p.subtitle {
+            color: #d1b4e8;
+            font-size: 0.88rem;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            font-weight: 400;
+        }
+
+        /* INPUTS Y TEXTAREA NEOMÓRFICOS */
+        .input-autor {
             width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border: 1px solid #333;
-            background-color: #1a1a1a;
-            color: #fff;
+            height: 48px;
+            background-color: #14051c !important;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 0 18px;
+            color: #00d4ff !important;
             font-size: 0.95rem;
-            box-sizing: border-box;
+            font-weight: 400;
             outline: none;
-            transition: border-color 0.2s ease;
+            text-align: center;
+            box-shadow: 
+                inset 0 6px 10px rgba(0, 0, 0, 0.95),
+                inset 0 -2px 5px rgba(255, 255, 255, 0.15),
+                0 1px 2px rgba(255, 255, 255, 0.05) !important;
+            transition: all 0.2s ease;
         }
 
-        .input-field:focus {
-            border-color: #00d4ff;
+        .input-autor:-webkit-autofill,
+        .input-autor:-webkit-autofill:hover, 
+        .input-autor:-webkit-autofill:focus, 
+        .input-autor:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px #14051c inset !important;
+            -webkit-text-fill-color: #00d4ff !important;
+            caret-color: #00d4ff;
         }
 
-        .input-field::placeholder {
-            color: #888888;
+        .input-autor::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+            font-weight: 400;
         }
 
-        /* Footer con textura oscura estilo OSB / Antracita */
+        .input-help {
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 0.72rem;
+            margin-top: 6px;
+            margin-bottom: 18px;
+            display: block;
+            font-weight: 400;
+        }
+
+        textarea {
+            width: 100%;
+            height: 75px;
+            background-color: #14051c !important;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 12px 16px;
+            color: #ffffff;
+            font-size: 0.9rem;
+            resize: none;
+            outline: none;
+            margin-top: 6px;
+            box-shadow: 
+                inset 0 6px 10px rgba(0, 0, 0, 0.95),
+                inset 0 -2px 5px rgba(255, 255, 255, 0.15);
+        }
+
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .char-counter {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.55);
+            text-align: right;
+            width: 100%;
+            display: block;
+            margin-bottom: 12px;
+            padding-right: 5px;
+        }
+
+        /* CABECERA NOMBRE DE AUTOR */
+        .fixed-header {
+            background: #14051c;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            padding: 10px 15px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            font-weight: 400;
+            color: #00d4ff;
+            font-size: 0.95rem;
+            text-align: center;
+            letter-spacing: 0.5px;
+            width: 100%;
+            box-shadow: 
+                inset 0 6px 10px rgba(0, 0, 0, 0.95),
+                inset 0 -2px 5px rgba(255, 255, 255, 0.15);
+        }
+
+        /* BOTONES CILÍNDRICOS */
+        .btn-action {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 50px;
+            padding: 0 16px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            box-sizing: border-box;
+            transition: transform 0.1s ease, filter 0.1s ease, background 0.3s ease;
+            margin-bottom: 6px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn-action span { text-align: center; width: 100%; }
+        .btn-action svg { margin-right: 8px; flex-shrink: 0; }
+
+        .btn-action:hover:not(:disabled) { filter: brightness(1.1); }
+        .btn-action:active:not(:disabled) { transform: translateY(2px); }
+
+        /* EMPEZAR A SUBIR */
+        .btn-continuar {
+            background: linear-gradient(
+                180deg, 
+                #1a0724 0%, 
+                #2f1340 15%, 
+                #200a2d 35%, 
+                #100318 75%, 
+                #07010b 100%
+            );
+            color: rgba(255, 255, 255, 0.25);
+            box-shadow: 
+                0 4px 10px rgba(0, 0, 0, 0.5),
+                inset 0 1px 2px rgba(255, 255, 255, 0.08),
+                inset 0 -4px 6px rgba(0, 0, 0, 0.7);
+            cursor: not-allowed;
+            margin-top: 10px;
+        }
+
+        .btn-continuar.active {
+            background: linear-gradient(
+                180deg, 
+                #7a22b8 0%, 
+                #ca78ff 15%, 
+                #a83bf6 30%, 
+                #6c1cb0 70%, 
+                #380859 100%
+            );
+            color: #ffffff;
+            cursor: pointer;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+            box-shadow: 
+                0 6px 18px rgba(168, 59, 246, 0.45),
+                inset 0 2px 3px rgba(255, 255, 255, 0.8),
+                inset 0 -5px 7px rgba(0, 0, 0, 0.7);
+        }
+
+        /* BOTONES DE ACCIÓN (AZUL Y VERDE) */
+        .btn-select, .btn-submit {
+            background: linear-gradient(
+                180deg, 
+                #0f5ba6 0%, 
+                #71bdff 15%, 
+                #1D89F5 30%, 
+                #105db0 70%, 
+                #05254a 100%
+            );
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            box-shadow: 
+                0 6px 16px rgba(0, 0, 0, 0.65),
+                inset 0 2px 3px rgba(255, 255, 255, 0.8),
+                inset 0 -5px 7px rgba(0, 0, 0, 0.8);
+        }
+
+        .btn-submit {
+            margin-top: 8px;
+            margin-bottom: 12px;
+        }
+
+        .btn-mas-contenido {
+            background: linear-gradient(
+                180deg, 
+                #135d23 0%, 
+                #75f992 15%, 
+                #2bb84b 30%, 
+                #1b8533 70%, 
+                #083312 100%
+            );
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+            box-shadow: 
+                0 6px 16px rgba(0, 0, 0, 0.65),
+                inset 0 2px 3px rgba(255, 255, 255, 0.8),
+                inset 0 -5px 7px rgba(0, 0, 0, 0.8);
+            display: none;
+            margin-top: 15px;
+        }
+
+        .counter {
+            font-size: 0.78rem;
+            color: #00d4ff;
+            margin-bottom: 10px;
+            display: block;
+            min-height: 1rem;
+            font-weight: 600;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+
+        #mensajeExito {
+            display: none;
+            margin-top: 12px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        /* FOOTER CON TEXTURA OSCURA ESTILO OSB Y TEXTO CIAN EN 3 LÍNEAS */
         .app-footer {
             margin-top: 25px;
             width: 100%;
+            max-width: 360px;
             padding: 14px 10px;
-            border-radius: 8px;
+            border-radius: 12px;
             text-align: center;
             font-size: 0.75rem;
             line-height: 1.5;
@@ -91,28 +319,264 @@
         }
 
         .app-footer a:hover {
-            opacity: 0.8;
+            opacity: 0.85;
             text-shadow: 0 0 8px rgba(0, 212, 255, 0.7);
         }
+
+        input[type="file"] { display: none; }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-    <main class="main-container">
-        <h1>ALBUM POV EN VIVO</h1>
+    <div class="card" id="cardContainer">
+        <h2>ALBUM POV EN VIVO</h2>
 
-        <!-- Campo de identificación amigable y neutral -->
-        <input type="text" class="input-field" placeholder="Nombre (mínimo 7 caracteres)">
+        <!-- PASO 1: Identificación -->
+        <div id="step-name" style="width: 100%;">
+            <p class="subtitle">Subí fotos, videos o mensajes</p>
+            <input type="text" id="inputAutor" class="input-autor" placeholder="Nombre (mínimo 7 caracteres)" maxlength="30" oninput="validarNombre()" autocomplete="off">
+            <span class="input-help">Escribe tu nombre para empezar a subir</span>
+            <button type="button" id="btnContinuar" class="btn-action btn-continuar" disabled onclick="continuarPanel()">
+                <span>EMPEZAR A SUBIR</span>
+            </button>
+        </div>
 
-        <!-- Aquí van los demás botones o controles de tu app -->
+        <!-- PASO 2: Panel de Subida -->
+        <div id="step-upload" class="hidden" style="width: 100%;">
+            <div class="fixed-header" id="displayNombre"></div>
 
-        <!-- Pie de página con tu firma -->
-        <footer class="app-footer">
-            <p><a href="http://www.luisalbertocaceres.com.ar" target="_blank" rel="noopener noreferrer">Diseño de Luis Alberto Cáceres © 2026</a></p>
-            <p>Código de Gemini</p>
-            <p>Prohibida su reproducción total y/o parcial</p>
-        </footer>
-    </main>
+            <label class="btn-action btn-select" id="labelGaleria">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span>Galería (Fotos / Videos)</span>
+                <input type="file" id="fileGaleria" multiple accept="image/*,video/*">
+            </label>
+            <span id="counterGaleria" class="counter"></span>
 
+            <label class="btn-action btn-select" id="labelFoto">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <span>Tomar Foto</span>
+                <input type="file" id="fileFoto" accept="image/*" capture="environment">
+            </label>
+            <span id="counterFoto" class="counter"></span>
+
+            <label class="btn-action btn-select" id="labelVideo">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                <span>Grabar Video</span>
+                <input type="file" id="fileVideo" accept="video/*" capture="environment">
+            </label>
+            <span id="counterVideo" class="counter"></span>
+
+            <textarea id="textoMensaje" maxlength="200" placeholder="Escribe un mensaje..."></textarea>
+            <span id="charCount" class="char-counter">0/200 (opcional)</span>
+
+            <button class="btn-action btn-submit" id="labelEnviar" onclick="enviarContenido()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                <span>Enviar Contenido</span>
+            </button>
+        </div>
+
+        <!-- PASO 3: Mensajes de Estado y Post-Envío -->
+        <div id="mensajeExito"></div>
+        <button id="btnMasContenido" class="btn-action btn-mas-contenido" onclick="resetearParaSubirMas()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            <span>Subir Más</span>
+        </button>
+    </div>
+
+    <!-- FIRMA PERSONALIZADA EN 3 LÍNEAS -->
+    <footer class="app-footer">
+        <p><a href="http://www.luisalbertocaceres.com.ar" target="_blank" rel="noopener noreferrer">Diseño de Luis Alberto Cáceres © 2026</a></p>
+        <p>Código de Gemini</p>
+        <p>Prohibida su reproducción total y/o parcial</p>
+    </footer>
+
+    <script>
+        const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbwR3jniWrcz6p8k06LBfT4TxDMsLkhlbpnX8dws0dEB2rElX3pJW12T9Y6xFFIY9wYo/exec";
+
+        let archivosAcumulados = [];
+        let nombreUsuario = '';
+
+        function validarNombre() {
+            const input = document.getElementById('inputAutor');
+            const btn = document.getElementById('btnContinuar');
+            if (input.value.trim().length >= 7) {
+                btn.removeAttribute('disabled');
+                btn.classList.add('active');
+            } else {
+                btn.setAttribute('disabled', 'true');
+                btn.classList.remove('active');
+            }
+        }
+
+        function continuarPanel() {
+            const input = document.getElementById('inputAutor');
+            nombreUsuario = input.value.trim();
+            if (nombreUsuario.length < 7) return;
+
+            document.getElementById('displayNombre').textContent = nombreUsuario;
+            document.getElementById('step-name').classList.add('hidden');
+            document.getElementById('step-upload').classList.remove('hidden');
+        }
+
+        document.getElementById('fileGaleria').addEventListener('change', function() {
+            const count = this.files.length;
+            document.getElementById('counterGaleria').textContent = count > 0 ? `${count} archivo(s) seleccionado(s) ✓` : '';
+            agregarACola(this.files);
+        });
+
+        document.getElementById('fileFoto').addEventListener('change', function() {
+            const count = this.files.length;
+            document.getElementById('counterFoto').textContent = count > 0 ? `1 foto capturada ✓` : '';
+            agregarACola(this.files);
+        });
+
+        document.getElementById('fileVideo').addEventListener('change', function() {
+            const count = this.files.length;
+            document.getElementById('counterVideo').textContent = count > 0 ? `1 video grabado ✓` : '';
+            agregarACola(this.files);
+        });
+
+        function agregarACola(files) {
+            for (let file of files) {
+                archivosAcumulados.push(file);
+            }
+        }
+
+        const textarea = document.getElementById('textoMensaje');
+        const charCount = document.getElementById('charCount');
+        textarea.addEventListener('input', function() {
+            const len = this.value.length;
+            charCount.textContent = `${len}/200 (opcional)`;
+        });
+
+        function comprimirImagen(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+                        const MAX_WIDTH = 1000;
+                        if (width > MAX_WIDTH) {
+                            height = Math.round((height * MAX_WIDTH) / width);
+                            width = MAX_WIDTH;
+                        }
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.80);
+                        resolve(dataUrl);
+                    };
+                };
+            });
+        }
+
+        function leerArchivoBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function enviarContenido() {
+            const texto = textarea.value.trim();
+
+            if (archivosAcumulados.length === 0 && !texto) {
+                alert("Por favor selecciona al menos un archivo o escribe un mensaje.");
+                return;
+            }
+
+            const btnSubmit = document.getElementById('labelEnviar');
+            btnSubmit.style.opacity = "0.6";
+            btnSubmit.style.pointerEvents = "none";
+
+            const divExito = document.getElementById('mensajeExito');
+            divExito.style.display = 'block';
+
+            let correctas = 0;
+            let videoContador = 0;
+            let textoEnviado = false;
+
+            try {
+                for (let i = 0; i < archivosAcumulados.length; i++) {
+                    const file = archivosAcumulados[i];
+                    divExito.style.color = "#fffd8d";
+                    divExito.innerHTML = `Subiendo archivo ${i + 1} de ${archivosAcumulados.length}...`;
+
+                    let payload = {};
+                    if (file.type.startsWith('image/')) {
+                        let base64Comprimido = await comprimirImagen(file);
+                        payload = { tipo: 'foto', file: base64Comprimido, name: file.name, mimeType: 'image/jpeg', autor: nombreUsuario };
+                        correctas++;
+                    } else if (file.type.startsWith('video/')) {
+                        let base64 = await leerArchivoBase64(file);
+                        payload = { tipo: 'video', file: base64, name: file.name, mimeType: file.type, autor: nombreUsuario };
+                        videoContador++;
+                    }
+
+                    await fetch(URL_APPS_SCRIPT, {
+                        method: 'POST',
+                        body: JSON.stringify(payload)
+                    });
+                }
+
+                if (texto) {
+                    divExito.style.color = "#fffd8d";
+                    divExito.innerHTML = `Enviando mensaje de texto...`;
+                    await fetch(URL_APPS_SCRIPT, {
+                        method: 'POST',
+                        body: JSON.stringify({ tipo: 'texto', contenido: texto, autor: nombreUsuario })
+                    });
+                    textoEnviado = true;
+                }
+
+                document.getElementById('step-upload').classList.add('hidden');
+                btnSubmit.style.display = 'none';
+
+                let mensajeExitoHTML = `¡Éxito, envío completado! 🎉<br>`;
+                if (correctas > 0) mensajeExitoHTML += `• ${correctas} foto(s)<br>`;
+                if (videoContador > 0) mensajeExitoHTML += `• ${videoContador} video(s)<br>`;
+                if (textoEnviado) mensajeExitoHTML += `• 1 mensaje de texto`;
+
+                divExito.style.color = "#75f992";
+                divExito.innerHTML = mensajeExitoHTML;
+
+                document.getElementById('btnMasContenido').style.setProperty('display', 'flex', 'important');
+
+            } catch (error) {
+                alert("Hubo un error al enviar. Revisa tu conexión.");
+                btnSubmit.style.opacity = "1";
+                btnSubmit.style.pointerEvents = "auto";
+                divExito.style.display = 'none';
+            }
+        }
+
+        function resetearParaSubirMas() {
+            archivosAcumulados = [];
+            textarea.value = '';
+            charCount.textContent = '0/200 (opcional)';
+            document.getElementById('counterGaleria').textContent = '';
+            document.getElementById('counterFoto').textContent = '';
+            document.getElementById('counterVideo').textContent = '';
+            
+            const btnSubmit = document.getElementById('labelEnviar');
+            btnSubmit.style.display = 'flex';
+            btnSubmit.style.opacity = "1";
+            btnSubmit.style.pointerEvents = "auto";
+
+            document.getElementById('mensajeExito').style.display = 'none';
+            document.getElementById('btnMasContenido').style.setProperty('display', 'none', 'important');
+
+            document.getElementById('step-upload').classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
