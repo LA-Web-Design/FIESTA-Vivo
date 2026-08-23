@@ -1,443 +1,639 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ALBUM POV EN VIVO</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALBUM POV EN VIVO</title>
+    <!-- Tipografía Exo 2 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;800&display=swap" rel="stylesheet">
 
-    body {
-      background: #2b52a1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Exo 2', system-ui, -apple-system, sans-serif;
+        }
 
-    .card {
-      background: linear-gradient(145deg, #2a082e, #1c0520);
-      width: 100%;
-      max-width: 380px;
-      border-radius: 28px;
-      padding: 25px 20px 20px 20px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: #1D89F5; 
+            background-image: url('tapiz.jpg');
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
 
-    .title {
-      color: #ffffff;
-      font-size: 1.25rem;
-      font-weight: 900;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      text-align: center;
-      margin-bottom: 4px;
-    }
+        /* TARJETA / PANEL PRINCIPAL */
+        .card {
+            width: 100%;
+            max-width: 360px;
+            padding: 30px 22px 20px 22px;
+            border-radius: 28px;
+            background-color: #22022b !important;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.2'/%3E%3C/svg%3E");
+            box-shadow: 
+                0 25px 60px rgba(0, 0, 0, 0.85),
+                inset 0 1px 2px rgba(255, 255, 255, 0.3),
+                inset 0 -3px 6px rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
 
-    .subtitle {
-      color: #bfa8d8;
-      font-size: 0.85rem;
-      text-align: center;
-      margin-bottom: 20px;
-    }
+        h2 {
+            color: #ffffff;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.7);
+        }
 
-    .input-box {
-      width: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 20px;
-      padding: 12px 15px;
-      color: #00d2ff;
-      font-size: 0.95rem;
-      text-align: center;
-      outline: none;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-    }
+        p.subtitle {
+            color: #d1b4e8;
+            font-size: 0.88rem;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            font-weight: 400;
+        }
 
-    .input-box::placeholder {
-      color: rgba(255, 255, 255, 0.3);
-    }
+        .input-container {
+            width: 100%;
+            margin-bottom: 6px;
+        }
 
-    .textarea-box {
-      width: 100%;
-      height: 70px;
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 12px;
-      color: #ffffff;
-      font-size: 0.9rem;
-      resize: none;
-      outline: none;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-    }
+        .input-autor {
+            width: 100%;
+            height: 48px;
+            background-color: #14051c !important;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 0 18px;
+            color: #00d4ff !important;
+            font-size: 0.95rem;
+            font-weight: 400;
+            outline: none;
+            text-align: center;
+            box-shadow: 
+                inset 0 6px 10px rgba(0, 0, 0, 0.95),
+                inset 0 -2px 5px rgba(255, 255, 255, 0.15),
+                0 1px 2px rgba(255, 255, 255, 0.05) !important;
+            transition: all 0.2s ease;
+        }
 
-    .textarea-box::placeholder {
-      color: rgba(255, 255, 255, 0.3);
-    }
+        .input-autor:-webkit-autofill,
+        .input-autor:-webkit-autofill:hover, 
+        .input-autor:-webkit-autofill:focus, 
+        .input-autor:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px #14051c inset !important;
+            -webkit-text-fill-color: #00d4ff !important;
+            caret-color: #00d4ff;
+        }
 
-    .btn {
-      width: 100%;
-      padding: 13px;
-      border-radius: 25px;
-      border: none;
-      font-weight: 800;
-      font-size: 0.85rem;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      text-transform: uppercase;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
+        .input-autor::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+            font-weight: 400;
+        }
 
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      filter: grayscale(40%);
-    }
+        .input-autor:focus::placeholder {
+            color: transparent;
+        }
 
-    .btn-purple {
-      background: linear-gradient(180deg, #9b2cdd 0%, #59118e 100%);
-      color: white;
-      box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), 0 4px 10px rgba(0,0,0,0.4);
-    }
+        .input-help {
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 0.72rem;
+            margin-bottom: 18px;
+            display: block;
+            font-weight: 400;
+        }
 
-    .btn-blue {
-      background: linear-gradient(180deg, #2b82d9 0%, #1551a3 100%);
-      color: white;
-      box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), 0 4px 10px rgba(0,0,0,0.4);
-    }
+        .fixed-header {
+            background: #14051c;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            padding: 10px 15px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            font-weight: 400;
+            color: #00d4ff;
+            font-size: 0.95rem;
+            text-align: center;
+            letter-spacing: 0.5px;
+            width: 100%;
+            box-shadow: 
+                inset 0 6px 10px rgba(0, 0, 0, 0.95),
+                inset 0 -2px 5px rgba(255, 255, 255, 0.15);
+        }
 
-    .btn-green {
-      background: linear-gradient(180deg, #28a745 0%, #1e7e34 100%);
-      color: white;
-      box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), 0 4px 10px rgba(0,0,0,0.4);
-    }
+        .btn-action {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            height: 50px;
+            padding: 0 20px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            box-sizing: border-box;
+            transition: transform 0.1s ease, filter 0.1s ease, background 0.3s ease;
+            margin-bottom: 15px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
 
-    .screen {
-      display: none;
-      width: 100%;
-      flex-direction: column;
-      align-items: center;
-    }
+        .btn-action span { 
+            text-align: center;
+            width: 100%;
+            margin-right: 20px;
+        }
 
-    .screen.active {
-      display: flex;
-    }
+        .btn-action svg { 
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
 
-    .file-status {
-      color: #00d2ff;
-      font-size: 0.8rem;
-      margin-top: 6px;
-      text-align: center;
-      font-weight: 600;
-    }
+        .btn-action:hover:not(:disabled) { filter: brightness(1.1); }
+        .btn-action:active:not(:disabled) { transform: translateY(2px); }
 
-    .char-count {
-      color: rgba(255, 255, 255, 0.4);
-      font-size: 0.75rem;
-      width: 100%;
-      text-align: right;
-      margin-top: 4px;
-    }
+        .btn-action:disabled,
+        .btn-action.disabled-style {
+            opacity: 0.55;
+            cursor: not-allowed !important;
+            filter: grayscale(40%);
+            pointer-events: none;
+        }
 
-    .status-msg {
-      color: #ffd700;
-      font-size: 0.85rem;
-      font-weight: bold;
-      margin-top: 15px;
-      text-align: center;
-    }
+        .btn-continuar {
+            justify-content: center;
+            background: linear-gradient(
+                180deg, 
+                #1a0724 0%, 
+                #2f1340 15%, 
+                #200a2d 35%, 
+                #100318 75%, 
+                #07010b 100%
+            );
+            color: rgba(255, 255, 255, 0.25);
+            box-shadow: 
+                0 4px 10px rgba(0, 0, 0, 0.5),
+                inset 0 1px 2px rgba(255, 255, 255, 0.08),
+                inset 0 -4px 6px rgba(0, 0, 0, 0.7);
+            cursor: not-allowed;
+        }
 
-    .success-icon {
-      color: #28a745;
-      font-size: 1.1rem;
-      margin-bottom: 8px;
-      text-align: center;
-      line-height: 1.5;
-    }
+        .btn-continuar span {
+            margin-right: 0;
+        }
 
-    /* FIRMA INTEGRADA AL PANEL */
-    .footer-divider {
-      width: 100%;
-      height: 1px;
-      background: rgba(0, 0, 0, 0.6);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      margin-top: 25px;
-      margin-bottom: 15px;
-    }
+        .btn-continuar.active {
+            background: linear-gradient(
+                180deg, 
+                #7a22b8 0%, 
+                #ca78ff 15%, 
+                #a83bf6 30%, 
+                #6c1cb0 70%, 
+                #380859 100%
+            );
+            color: #ffffff;
+            cursor: pointer;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+            box-shadow: 
+                0 6px 18px rgba(168, 59, 246, 0.45),
+                inset 0 2px 3px rgba(255, 255, 255, 0.8),
+                inset 0 -5px 7px rgba(0, 0, 0, 0.7);
+        }
 
-    .footer-text {
-      color: #00d2ff;
-      font-size: 0.7rem;
-      text-align: center;
-      line-height: 1.45;
-      font-weight: 500;
-      opacity: 0.9;
-    }
+        .btn-select, .btn-submit {
+            background: linear-gradient(
+                180deg, 
+                #0f5ba6 0%, 
+                #71bdff 15%, 
+                #1D89F5 30%, 
+                #105db0 70%, 
+                #05254a 100%
+            );
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            box-shadow: 
+                0 6px 16px rgba(0, 0, 0, 0.65),
+                inset 0 2px 3px rgba(255, 255, 255, 0.8),
+                inset 0 -5px 7px rgba(0, 0, 0, 0.8);
+        }
 
-    input[type="file"] {
-      display: none;
-    }
-  </style>
+        .btn-submit { 
+            display: none !important; 
+        }
+
+        .btn-reset {
+            background: linear-gradient(
+                180deg, 
+                #135d23 0%, 
+                #75f992 15%, 
+                #2bb84b 30%, 
+                #1b8533 70%, 
+                #083312 100%
+            );
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+            box-shadow: 
+                0 6px 16px rgba(0, 0, 0, 0.65),
+                inset 0 2px 3px rgba(255, 255, 255, 0.8),
+                inset 0 -5px 7px rgba(0, 0, 0, 0.8);
+            display: none !important; 
+        }
+
+        #counter-badge {
+            font-size: 0.88rem;
+            color: #75f992;
+            font-weight: 600;
+            margin-bottom: 12px;
+            min-height: 1.2em;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+
+        input[type="file"] { display: none; }
+
+        #status-msg {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            min-height: 1.2em;
+            width: 100%;
+        }
+
+        .hidden { display: none !important; }
+
+        /* FIRMA INTEGRADA AL PANEL */
+        .footer-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(0, 0, 0, 0.6);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .footer-text {
+            color: #00d4ff;
+            font-size: 0.7rem;
+            text-align: center;
+            line-height: 1.45;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.75);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: #22022b;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            width: 85%;
+            max-width: 310px;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.85);
+            transform: scale(0.9);
+            transition: transform 0.2s ease;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-body {
+            color: #d0c0e0;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            margin-bottom: 18px;
+            font-weight: 400;
+        }
+
+        .modal-btn {
+            background: #00d4ff;
+            color: #0b1a2d;
+            font-weight: 800;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            box-shadow: 0 3px 8px rgba(0, 212, 255, 0.3);
+        }
+    </style>
 </head>
 <body>
 
-  <div class="card">
-    <h1 class="title">ALBUM POV EN VIVO</h1>
+<div class="card">
+    <h2>ALBUM POV EN VIVO</h2>
+    
+    <!-- PASO 1 -->
+    <div id="step-name" style="width: 100%;">
+        <p class="subtitle">Subí tus fotos del evento</p>
+        
+        <div class="input-container">
+            <input type="text" id="inputAutor" class="input-autor" placeholder="Nombre (mínimo 7 caracteres)" maxlength="30" oninput="validarNombre()" autocomplete="off">
+        </div>
+        <span class="input-help">Escribe tu nombre para empezar a subir tus fotos</span>
 
-    <!-- PANTALLA 1: INGRESO DE NOMBRE -->
-    <div id="screen1" class="screen active">
-      <p class="subtitle">Subí fotos, videos o mensajes</p>
-      
-      <input type="text" id="userName" class="input-box" placeholder="Nombre (mínimo 7 caracteres)" style="margin-bottom: 8px;">
-      <p style="color: rgba(255,255,255,0.4); font-size: 0.75rem; margin-bottom: 20px;">Escribe tu nombre para empezar a subir</p>
-      
-      <button id="btnStart" class="btn btn-purple" disabled>EMPEZAR A SUBIR</button>
+        <button type="button" id="btnContinuar" class="btn-action btn-continuar" disabled onclick="continuarPanel()">
+            <span>EMPEZAR A SUBIR</span>
+        </button>
     </div>
 
-    <!-- PANTALLA 2: SELECCIÓN Y ENVÍO -->
-    <div id="screen2" class="screen">
-      <input type="text" id="displayName" class="input-box" readonly style="margin-bottom: 15px; background: rgba(0,0,0,0.6);">
+    <!-- PASO 2 -->
+    <div id="step-upload" class="hidden" style="width: 100%;">
+        <div class="fixed-header" id="displayNombre"></div>
+        <p class="subtitle">Tomá fotos con la cámara o elegilas de tu galería. ¡Podés sumar de ambos lados antes de enviar!</p>
 
-      <!-- BOTO/INPUT GALERÍA -->
-      <button class="btn btn-blue media-btn" onclick="document.getElementById('fileGallery').click()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-        GALERÍA (FOTOS / VIDEOS)
-      </button>
-      <input type="file" id="fileGallery" multiple accept="image/*,video/*">
-      <div id="galleryStatus" class="file-status"></div>
+        <div id="upload-section" style="width: 100%;">
+            <label for="cameraInput" id="labelCamera" class="btn-action btn-select">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <span>Tomar Fotos</span>
+            </label>
+            <input type="file" id="cameraInput" accept="image/*" capture="environment" multiple>
 
-      <!-- BOTÓN/INPUT FOTO -->
-      <button class="btn btn-blue media-btn" style="margin-top: 12px;" onclick="document.getElementById('filePhoto').click()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        TOMAR FOTO
-      </button>
-      <input type="file" id="filePhoto" accept="image/*" capture="environment">
+            <label for="galleryInput" id="labelGallery" class="btn-action btn-select">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <span>Imágenes de Galería</span>
+            </label>
+            <input type="file" id="galleryInput" accept="image/*" multiple>
 
-      <!-- BOTÓN/INPUT VIDEO -->
-      <button class="btn btn-blue media-btn" style="margin-top: 12px;" onclick="document.getElementById('fileVideo').click()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-        GRABAR VIDEO
-      </button>
-      <input type="file" id="fileVideo" accept="video/*" capture="environment">
+            <div id="counter-badge"></div>
 
-      <!-- CASILLERO DE TEXTO OPCIONAL -->
-      <div style="width: 100%; margin-top: 20px;">
-        <textarea id="textMsg" class="textarea-box" maxlength="200" placeholder="Escribe un mensaje..."></textarea>
-        <div id="charCounter" class="char-count">0/200 (opcional)</div>
-      </div>
-
-      <!-- BOTÓN DE ENVÍO -->
-      <button id="btnSend" class="btn btn-blue" style="margin-top: 15px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        ENVIAR CONTENIDO
-      </button>
-
-      <div id="uploadStatus" class="status-msg"></div>
+            <button id="submitBtn" class="btn-action btn-submit" onclick="enviarFotos()">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                <span>Enviar al Evento</span>
+            </button>
+        </div>
     </div>
 
-    <!-- PANTALLA 3: ÉXITO -->
-    <div id="screen3" class="screen">
-      <div id="successSummary" class="success-icon" style="color: #ffffff; margin-bottom: 15px;"></div>
+    <!-- REINICIO -->
+    <button id="resetBtn" class="btn-action btn-reset" onclick="reiniciarPanel()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        <span>Subir más imágenes</span>
+    </button>
 
-      <button id="btnReset" class="btn btn-green">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-        SUBIR MÁS
-      </button>
-    </div>
+    <div id="status-msg"></div>
 
-    <!-- FIRMA INTEGRADA -->
+    <!-- FIRMA INTEGRADA AL PANEL -->
     <div class="footer-divider"></div>
     <div class="footer-text">
-      Diseño de Luis Alberto Cáceres<br>
-      Código de Gemini @ 2026<br>
-      Prohibida su reproducción total y/o parcial
+        Diseño de Luis Alberto Cáceres<br>
+        Código de Gemini @ 2026<br>
+        Prohibida su reproducción total y/o parcial
     </div>
-  </div>
+</div>
 
-  <script>
-    // URL del Web App de Apps Script
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby3L04Q5qS69r-Wk45e_Xq8hDls0G_2O0vA/exec"; // Reemplazar si cambia tu URL
+<!-- MODAL -->
+<div class="modal-overlay" id="customModal">
+    <div class="modal-box">
+        <div class="modal-title">ALBUM POV EN VIVO dice:</div>
+        <div class="modal-body" id="modalText">Mensaje de advertencia</div>
+        <button class="modal-btn" onclick="cerrarModal()">Aceptar</button>
+    </div>
+</div>
 
-    // Elementos DOM
-    const userNameInput = document.getElementById('userName');
-    const btnStart = document.getElementById('btnStart');
-    const screen1 = document.getElementById('screen1');
-    const screen2 = document.getElementById('screen2');
-    const screen3 = document.getElementById('screen3');
-    const displayName = document.getElementById('displayName');
-    
-    const fileGallery = document.getElementById('fileGallery');
-    const filePhoto = document.getElementById('filePhoto');
-    const fileVideo = document.getElementById('fileVideo');
-    const galleryStatus = document.getElementById('galleryStatus');
-    
-    const textMsg = document.getElementById('textMsg');
-    const charCounter = document.getElementById('charCounter');
-    const btnSend = document.getElementById('btnSend');
-    const uploadStatus = document.getElementById('uploadStatus');
-    const successSummary = document.getElementById('successSummary');
-    const btnReset = document.getElementById('btnReset');
-    const mediaBtns = document.querySelectorAll('.media-btn');
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx-nJQ25ybvnDQTWnhvUn8IWFREKyTtNq_JlbttDPsAzwJRA30itIIf5LMoMxHqtoI/exec";
 
-    let selectedFiles = [];
+    let archivosAcumulados = [];
+    let nombreUsuario = '';
 
-    // Validar nombre (mínimo 7 caracteres)
-    userNameInput.addEventListener('input', () => {
-      btnStart.disabled = userNameInput.value.trim().length < 7;
-    });
+    const cameraInput = document.getElementById('cameraInput');
+    const galleryInput = document.getElementById('galleryInput');
+    const labelCamera = document.getElementById('labelCamera');
+    const labelGallery = document.getElementById('labelGallery');
+    const submitBtn = document.getElementById('submitBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const uploadSection = document.getElementById('upload-section');
+    const counterBadge = document.getElementById('counter-badge');
+    const statusMsg = document.getElementById('status-msg');
 
-    // Pasar a Pantalla 2
-    btnStart.addEventListener('click', () => {
-      displayName.value = userNameInput.value.trim();
-      screen1.classList.remove('active');
-      screen2.classList.add('active');
-    });
-
-    // Manejar selección de archivos
-    function handleFiles(files) {
-      if (files.length > 0) {
-        selectedFiles = Array.from(files);
-        galleryStatus.innerText = `${selectedFiles.length} archivo(s) seleccionado(s) ✓`;
-      }
+    function mostrarModal(mensaje) {
+        document.getElementById('modalText').innerText = mensaje;
+        document.getElementById('customModal').classList.add('active');
     }
 
-    fileGallery.addEventListener('change', (e) => handleFiles(e.target.files));
-    filePhoto.addEventListener('change', (e) => handleFiles(e.target.files));
-    fileVideo.addEventListener('change', (e) => handleFiles(e.target.files));
+    function cerrarModal() {
+        document.getElementById('customModal').classList.remove('active');
+    }
 
-    // Contador de caracteres de texto
-    textMsg.addEventListener('input', () => {
-      charCounter.innerText = `${textMsg.value.length}/200 (opcional)`;
+    function validarNombre() {
+        const input = document.getElementById('inputAutor');
+        const btn = document.getElementById('btnContinuar');
+        if (input.value.trim().length >= 7) {
+            btn.removeAttribute('disabled');
+            btn.classList.add('active');
+        } else {
+            btn.setAttribute('disabled', 'true');
+            btn.classList.remove('active');
+        }
+    }
+
+    function continuarPanel() {
+        const input = document.getElementById('inputAutor');
+        nombreUsuario = input.value.trim();
+        if (nombreUsuario.length < 7) {
+            mostrarModal("Por favor escribe tu nombre completo (mínimo 7 caracteres) para continuar.");
+            return;
+        }
+
+        document.getElementById('displayNombre').textContent = nombreUsuario;
+        document.getElementById('step-name').classList.add('hidden');
+        document.getElementById('step-upload').classList.remove('hidden');
+    }
+
+    cameraInput.addEventListener('change', (e) => {
+        agregarArchivos(e.target.files);
+        cameraInput.value = '';
     });
 
-    // Función para activar/desactivar todos los controles durante el envío
+    galleryInput.addEventListener('change', (e) => {
+        agregarArchivos(e.target.files);
+        galleryInput.value = '';
+    });
+
+    function agregarArchivos(nuevosFiles) {
+        const list = Array.from(nuevosFiles);
+        list.forEach(file => {
+            if (file.size > 10 * 1024 * 1024) {
+                mostrarModal(`La foto "${file.name}" supera el límite máximo permitido de 10 MB y fue descartada.`);
+                return;
+            }
+            archivosAcumulados.push(file);
+        });
+        actualizarInterfaz();
+    }
+
+    function actualizarInterfaz() {
+        const total = archivosAcumulados.length;
+        if (total > 0) {
+            counterBadge.innerText = `📂 Total acumulado: ${total} foto(s) lista(s)`;
+            submitBtn.style.setProperty('display', 'flex', 'important');
+            statusMsg.innerText = "";
+        } else {
+            counterBadge.innerText = "";
+            submitBtn.style.setProperty('display', 'none', 'important');
+            statusMsg.innerText = "";
+        }
+    }
+
     function setFormDisabled(disabled) {
-      btnSend.disabled = disabled;
-      mediaBtns.forEach(btn => btn.disabled = disabled);
-      textMsg.disabled = disabled;
+        submitBtn.disabled = disabled;
+        cameraInput.disabled = disabled;
+        galleryInput.disabled = disabled;
+
+        if (disabled) {
+            labelCamera.classList.add('disabled-style');
+            labelGallery.classList.add('disabled-style');
+        } else {
+            labelCamera.classList.remove('disabled-style');
+            labelGallery.classList.remove('disabled-style');
+        }
     }
 
-    // Convertir archivo a Base64
-    function fileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result.split(',')[1]);
-        reader.onerror = error => reject(error);
-        reader.readAsDataURL(file);
-      });
+    async function enviarFotos() {
+        if (archivosAcumulados.length === 0) {
+            mostrarModal("Por favor selecciona o toma al menos una foto para enviar.");
+            return;
+        }
+
+        setFormDisabled(true);
+        
+        let correctas = 0;
+        let rechazadas = 0;
+
+        for (let i = 0; i < archivosAcumulados.length; i++) {
+            const file = archivosAcumulados[i];
+            statusMsg.style.color = "#fffd8d";
+            statusMsg.innerText = `Procesando ${i + 1} de ${archivosAcumulados.length}...`;
+
+            try {
+                const base64Comprimido = await comprimirImagen(file);
+
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify({
+                        file: base64Comprimido,
+                        name: file.name,
+                        mimeType: "image/jpeg",
+                        autor: nombreUsuario,
+                        tipo: "foto"
+                    })
+                });
+
+                correctas++;
+            } catch (err) {
+                rechazadas++;
+            }
+        }
+
+        statusMsg.style.color = "#75f992";
+        statusMsg.innerHTML = `✨ ¡LISTO! Se subieron ${correctas} foto(s) correctamente.` + 
+            (rechazadas > 0 ? `<br><span style="color:#ff6b6b;">(${rechazadas} rechazadas)</span>` : '');
+
+        uploadSection.style.display = "none";
+        resetBtn.style.setProperty('display', 'flex', 'important');
     }
 
-    // Enviar Contenido
-    btnSend.addEventListener('click', async () => {
-      const msg = textMsg.value.trim();
-
-      if (selectedFiles.length === 0 && msg === "") {
-        alert("Selecciona al menos un archivo o escribe un mensaje.");
-        return;
-      }
-
-      // Bloquear botones e inputs
-      setFormDisabled(true);
-
-      let photosSent = 0;
-      let videosSent = 0;
-      let textSent = false;
-
-      try {
-        // 1. Enviar Archivos
-        for (let i = 0; i < selectedFiles.length; i++) {
-          const file = selectedFiles[i];
-          uploadStatus.innerText = `Subiendo archivo ${i + 1} de ${selectedFiles.length}...`;
-
-          const base64 = await fileToBase64(file);
-          const isVideo = file.type.startsWith('video/');
-
-          const payload = {
-            name: `${displayName.value}_${Date.now()}_${file.name}`,
-            file: `data:${file.type};base64,${base64}`
-          };
-
-          await fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-
-          if (isVideo) videosSent++;
-          else photosSent++;
-        }
-
-        // 2. Enviar Mensaje de Texto (si existe)
-        if (msg !== "") {
-          uploadStatus.innerText = "Enviando mensaje de texto...";
-          const textPayload = {
-            type: 'texto',
-            userName: displayName.value,
-            message: msg
-          };
-
-          await fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(textPayload)
-          });
-
-          textSent = true;
-        }
-
-        // Construir resumen de éxito
-        let summaryHtml = `<strong style="color:#28a745; font-size:1.1rem;">¡Éxito, envío completado! 🎉</strong><br><br>`;
-        if (photosSent > 0) summaryHtml += `• ${photosSent} foto(s)<br>`;
-        if (videosSent > 0) summaryHtml += `• ${videosSent} video(s)<br>`;
-        if (textSent) summaryHtml += `• 1 mensaje de texto<br>`;
-
-        successSummary.innerHTML = summaryHtml;
-
-        // Pasar a Pantalla 3
-        screen2.classList.remove('active');
-        screen3.classList.add('active');
-
-      } catch (err) {
-        alert("Ocurrió un error al subir. Intenta de nuevo.");
-        console.error(err);
-      } finally {
-        uploadStatus.innerText = "";
+    function reiniciarPanel() {
+        archivosAcumulados = [];
+        statusMsg.innerText = "";
+        counterBadge.innerText = "";
+        
+        submitBtn.style.setProperty('display', 'none', 'important');
         setFormDisabled(false);
-      }
-    });
+        
+        resetBtn.style.setProperty('display', 'none', 'important');
+        uploadSection.style.display = "block";
+    }
 
-    // Resetear para "Subir más"
-    btnReset.addEventListener('click', () => {
-      selectedFiles = [];
-      fileGallery.value = "";
-      filePhoto.value = "";
-      fileVideo.value = "";
-      galleryStatus.innerText = "";
-      textMsg.value = "";
-      charCounter.innerText = "0/200 (opcional)";
-      
-      setFormDisabled(false);
+    function comprimirImagen(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (event) => {
+                const img = new Image();
+                img.src = event.target.result;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
 
-      screen3.classList.remove('active');
-      screen2.classList.add('active');
-    });
-  </script>
+                    const MAX_WIDTH = 1000;
+                    const MAX_HEIGHT = 1000;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+                    resolve(dataUrl);
+                };
+                img.onerror = (error) => reject(error);
+            };
+            reader.onerror = (error) => reject(error);
+        });
+    }
+</script>
+
 </body>
 </html>
