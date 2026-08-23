@@ -30,7 +30,7 @@
             padding: 20px 15px;
         }
 
-        /* TARJETA NEOMÓRFICA */
+        /* TARJETA NEOMÓRFICA PÚRPURA */
         .card {
             width: 100%;
             max-width: 360px;
@@ -66,21 +66,26 @@
             font-weight: 400;
         }
 
-        .input-autor {
+        /* INPUTS Y TEXTAREA NEOMÓRFICOS OSCUROS */
+        .input-autor, textarea {
             width: 100%;
-            height: 48px;
             background-color: #14051c !important;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 0 18px;
-            color: #00d4ff !important;
-            font-size: 0.95rem;
-            font-weight: 400;
+            color: #ffffff;
             outline: none;
-            text-align: center;
             box-shadow: 
                 inset 0 6px 10px rgba(0, 0, 0, 0.95),
                 inset 0 -2px 5px rgba(255, 255, 255, 0.15);
+        }
+
+        .input-autor {
+            height: 48px;
+            border-radius: 24px;
+            padding: 0 18px;
+            font-size: 0.95rem;
+            font-weight: 400;
+            text-align: center;
+            color: #00d4ff !important;
         }
 
         .input-autor::placeholder { color: rgba(255, 255, 255, 0.35); }
@@ -94,20 +99,12 @@
         }
 
         textarea {
-            width: 100%;
             height: 75px;
-            background-color: #14051c !important;
-            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 18px;
             padding: 12px 16px;
-            color: #ffffff;
             font-size: 0.9rem;
             resize: none;
-            outline: none;
             margin-top: 6px;
-            box-shadow: 
-                inset 0 6px 10px rgba(0, 0, 0, 0.95),
-                inset 0 -2px 5px rgba(255, 255, 255, 0.15);
         }
 
         textarea::placeholder { color: rgba(255, 255, 255, 0.35); }
@@ -121,6 +118,7 @@
             margin-bottom: 12px;
         }
 
+        /* CABECERA FIJA DE USUARIO */
         .fixed-header {
             background: #14051c;
             border: 1px solid rgba(0, 212, 255, 0.3);
@@ -136,6 +134,7 @@
                 inset 0 -2px 5px rgba(255, 255, 255, 0.15);
         }
 
+        /* BOTONES DE ACCIÓN */
         .btn-action {
             display: flex;
             justify-content: center;
@@ -186,6 +185,7 @@
             margin-top: 15px;
         }
 
+        /* CONTADORES DE ARCHIVOS */
         .counter {
             font-size: 0.78rem;
             color: #00d4ff;
@@ -204,17 +204,18 @@
             line-height: 1.4;
         }
 
-        /* FIRMA INTEGRADA DENTRO DEL ANCHO DEL PANEL */
+        /* FIRMA INTEGRADA AL PANEL CON LÍNEA DE HENDIDURA */
         .card-footer {
             width: 100%;
             margin-top: 25px;
             padding-top: 15px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1); /* Línea divisoria suave */
             font-size: 0.72rem;
             line-height: 1.4;
-            color: #00d4ff;
+            color: #00d4ff; /* Tono Cyan/Celeste */
         }
 
+        .card-footer p { margin-bottom: 3px; }
         .card-footer a { color: #00d4ff; text-decoration: none; }
 
         input[type="file"] { display: none; }
@@ -226,7 +227,7 @@
     <div class="card">
         <h2>ALBUM POV EN VIVO</h2>
 
-        <!-- PASO 1 -->
+        <!-- PASO 1: INGRESO DE NOMBRE -->
         <div id="step-name" style="width: 100%;">
             <p class="subtitle">Subí fotos, videos o mensajes</p>
             <input type="text" id="inputAutor" class="input-autor" placeholder="Nombre (mínimo 7 caracteres)" maxlength="30" oninput="validarNombre()" autocomplete="off">
@@ -236,7 +237,7 @@
             </button>
         </div>
 
-        <!-- PASO 2 -->
+        <!-- PASO 2: PANEL DE SUBIDA -->
         <div id="step-upload" class="hidden" style="width: 100%;">
             <div class="fixed-header" id="displayNombre"></div>
 
@@ -270,18 +271,18 @@
             </button>
         </div>
 
-        <!-- PASO 3 -->
+        <!-- PASO 3: ÉXITO Y REINICIO -->
         <div id="mensajeExito"></div>
         <button id="btnMasContenido" class="btn-action btn-mas-contenido" onclick="resetearParaSubirMas()">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
             <span>Subir Más</span>
         </button>
 
-        <!-- FIRMA DENTRO DE LA TARJETA -->
-        <div class="footer-credits">
-          <p>Diseño de Luis Alberto Cáceres</p>
-          <p>Código de Gemini @ 2026</p>
-          <p>Prohibida su reproducción total y/o parcial</p>
+        <!-- FIRMA DENTRO DE LA TARJETA (VERIFICADA) -->
+        <div class="card-footer">
+            <p><a href="http://www.luisalbertocaceres.com.ar" target="_blank" rel="noopener noreferrer">Diseño de Luis Alberto Cáceres</a></p>
+            <p>Código de Gemini @ 2026</p>
+            <p>Prohibida su reproducción total y/o parcial</p>
         </div>
     </div>
 
