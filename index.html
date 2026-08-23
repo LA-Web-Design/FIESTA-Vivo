@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Aplicación Web</title>
+    <title>ALBUM POV EN VIVO</title>
     <style>
-        /* Estilos generales del cuerpo de la página */
         body {
             margin: 0;
-            padding: 0;
+            padding: 20px 10px;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background-color: #0d0d0d;
             color: #ffffff;
@@ -17,38 +16,71 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+            box-sizing: border-box;
         }
 
-        /* Contenedor principal de la app */
         .main-container {
-            width: 90%;
-            max-width: 400px;
-            padding: 20px;
-            text-align: center;
+            width: 100%;
+            max-width: 380px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* Estilos del Footer con textura oscura y texto cian */
+        h1 {
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Estilo del campo de entrada neutral */
+        .input-field {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background-color: #1a1a1a;
+            color: #fff;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .input-field:focus {
+            border-color: #00d4ff;
+        }
+
+        .input-field::placeholder {
+            color: #888888;
+        }
+
+        /* Footer con textura oscura estilo OSB / Antracita */
         .app-footer {
-            margin-top: 30px;
-            padding: 15px 12px;
+            margin-top: 25px;
+            width: 100%;
+            padding: 14px 10px;
             border-radius: 8px;
             text-align: center;
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             line-height: 1.5;
             letter-spacing: 0.3px;
+            box-sizing: border-box;
             
-            /* Fondo oscuro con textura simulada estilo OSB/antracita */
             background-color: #111111;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.25'/%3E%3C/svg%3E");
             
-            /* Borde sutil y sombra para integrar con el diseño */
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
         }
 
         .app-footer p {
-            margin: 4px 0;
-            color: #00d4ff; /* Azul cian brillante idéntico a tu sitio */
+            margin: 3px 0;
+            color: #00d4ff;
             font-weight: 500;
         }
 
@@ -66,17 +98,21 @@
 </head>
 <body>
 
-    <!-- CONTENIDO PRINCIPAL DE TU APP -->
     <main class="main-container">
-        <!-- Acá va el contenido, botones o funciones de tu app -->
-    </main>
+        <h1>ALBUM POV EN VIVO</h1>
 
-    <!-- FOOTER CON TU FIRMA Y CRÉDITOS -->
-    <footer class="app-footer">
-        <p><a href="http://www.luisalbertocaceres.com.ar" target="_blank" rel="noopener noreferrer">Diseño de Luis Alberto Cáceres © 2026</a></p>
-        <p>Código de Gemini</p>
-        <p>Prohibida su reproducción total y/o parcial</p>
-    </footer>
+        <!-- Campo de identificación amigable y neutral -->
+        <input type="text" class="input-field" placeholder="Nombre (mínimo 7 caracteres)">
+
+        <!-- Aquí van los demás botones o controles de tu app -->
+
+        <!-- Pie de página con tu firma -->
+        <footer class="app-footer">
+            <p><a href="http://www.luisalbertocaceres.com.ar" target="_blank" rel="noopener noreferrer">Diseño de Luis Alberto Cáceres © 2026</a></p>
+            <p>Código de Gemini</p>
+            <p>Prohibida su reproducción total y/o parcial</p>
+        </footer>
+    </main>
 
 </body>
 </html>
