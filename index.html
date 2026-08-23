@@ -386,7 +386,7 @@
     <!-- PASO 2 -->
     <div id="step-upload" class="hidden" style="width: 100%;">
         <div class="fixed-header" id="displayNombre"></div>
-        <p class="subtitle">Agregá fotos, videos y un mensaje. ¡Se envía todo junto al final!</p>
+        <p class="subtitle">Tomá fotos, subí videos o dejanos tu saludo escrito.</p>
 
         <div id="upload-section" style="width: 100%;">
             <!-- Tomar Foto -->
@@ -419,7 +419,7 @@
 
             <button id="submitBtn" class="btn-action btn-submit" onclick="enviarTodo()">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                <span>Enviar Todo al Evento</span>
+                <span>ENVIAR</span>
             </button>
         </div>
     </div>
@@ -584,7 +584,7 @@
         
         let correctasFotos = 0;
         let correctasVideos = 0;
-        let enviadoTexto = false;
+        let enviadoTexto = 0;
         let rechazadas = 0;
 
         const totalPasos = archivosAcumulados.length + (textoEscrito ? 1 : 0);
@@ -645,15 +645,14 @@
                         tipo: "texto"
                     })
                 });
-                enviadoTexto = true;
+                enviadoTexto = 1;
             } catch (err) {
                 rechazadas++;
             }
         }
 
         statusMsg.style.color = "#75f992";
-        statusMsg.innerHTML = `✨ ¡LISTO! Se enviaron: ` +
-            `${correctasFotos} foto(s), ${correctasVideos} video(s) y ${enviadoTexto ? 1 : 0} texto.` + 
+        statusMsg.innerHTML = `✨ ¡LISTO! Se enviaron: ${correctasFotos} foto(s), ${correctasVideos} video(s) y ${enviadoTexto} texto.` + 
             (rechazadas > 0 ? `<br><span style="color:#ff6b6b;">(${rechazadas} error/es)</span>` : '');
 
         uploadSection.style.display = "none";
