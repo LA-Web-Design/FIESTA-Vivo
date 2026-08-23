@@ -69,7 +69,7 @@
 
         .input-container {
             width: 100%;
-            margin-bottom: 6px;
+            margin-bottom: 12px;
         }
 
         .input-autor {
@@ -386,7 +386,7 @@
     <!-- PASO 2 -->
     <div id="step-upload" class="hidden" style="width: 100%;">
         <div class="fixed-header" id="displayNombre"></div>
-        <p class="subtitle">Tomá fotos, subí videos o dejanos tu saludo escrito.</p>
+        <p class="subtitle">Agregá fotos, videos y un mensaje. ¡Se envía todo junto al final!</p>
 
         <div id="upload-section" style="width: 100%;">
             <!-- Tomar Foto -->
@@ -411,18 +411,15 @@
             <input type="file" id="videoInput" accept="video/*" multiple>
 
             <!-- Textbox / Mensaje Escrito -->
-            <div class="input-container" style="margin-top: 10px;">
-                <textarea id="inputTexto" class="input-autor" placeholder="Escribe un mensaje o dedicatoria..." style="height: 70px; padding-top: 12px; resize: none; border-radius: 16px;" maxlength="250"></textarea>
+            <div class="input-container">
+                <textarea id="inputTexto" class="input-autor" placeholder="Escribe un mensaje o dedicatoria..." style="height: 70px; padding-top: 12px; resize: none; border-radius: 16px;" maxlength="250" oninput="actualizarInterfaz()"></textarea>
             </div>
-            <button id="submitTextBtn" class="btn-action btn-select" onclick="enviarTexto()" style="margin-bottom: 12px;">
-                <span>Enviar Mensaje de Texto</span>
-            </button>
 
             <div id="counter-badge"></div>
 
-            <button id="submitBtn" class="btn-action btn-submit" onclick="enviarFotos()">
+            <button id="submitBtn" class="btn-action btn-submit" onclick="enviarTodo()">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                <span>Enviar Archivos al Evento</span>
+                <span>Enviar Todo al Evento</span>
             </button>
         </div>
     </div>
@@ -470,6 +467,7 @@
     const uploadSection = document.getElementById('upload-section');
     const counterBadge = document.getElementById('counter-badge');
     const statusMsg = document.getElementById('status-msg');
+    const inputTexto = document.getElementById('inputTexto');
 
     function mostrarModal(mensaje) {
         document.getElementById('modalText').innerText = mensaje;
@@ -534,9 +532,20 @@
     }
 
     function actualizarInterfaz() {
-        const total = archivosAcumulados.length;
-        if (total > 0) {
-            counterBadge.innerText = `📂 Total archivos acumulados: ${total}`;
+        const totalArchivos = archivosAcumulados.length;
+        const textoEscrito = inputTexto.value.trim();
+        const tieneTexto = textoEscrito.length > 0 ? 1 : 0;
+
+        if (totalArchivos > 0 || tieneTexto > 0) {
+            let descripciones = [];
+            let fotosCount = archivosAcumulados.filter(x => x.tipo === 'foto').length;
+            let videosCount = archivosAcumulados.filter(x => x.tipo === 'video').length;
+
+            if (fotosCount > 0) descripciones.push(`${fotosCount} foto(s)`);
+            if (videosCount > 0) descripciones.push(`${videosCount} video(s)`);
+            if (tieneTexto > 0) descripciones.push(`1 texto`);
+
+            counterBadge.innerText = `📂 Seleccionado: ${descripciones.join(', ')}`;
             submitBtn.style.setProperty('display', 'flex', 'important');
             statusMsg.innerText = "";
         } else {
@@ -551,8 +560,7 @@
         cameraInput.disabled = disabled;
         galleryInput.disabled = disabled;
         videoInput.disabled = disabled;
-        document.getElementById('submitTextBtn').disabled = disabled;
-        document.getElementById('inputTexto').disabled = disabled;
+        inputTexto.disabled = disabled;
 
         if (disabled) {
             labelCamera.classList.add('disabled-style');
@@ -565,57 +573,29 @@
         }
     }
 
-    async function enviarTexto() {
-        const textoInput = document.getElementById('inputTexto');
-        const contenidoTexto = textoInput.value.trim();
-
-        if (!contenidoTexto) {
-            mostrarModal("Escribe un mensaje antes de enviarlo.");
-            return;
-        }
-
-        setFormDisabled(true);
-        statusMsg.style.color = "#fffd8d";
-        statusMsg.innerText = "Enviando mensaje...";
-
-        try {
-            await fetch(WEB_APP_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'text/plain' },
-                body: JSON.stringify({
-                    contenido: contenidoTexto,
-                    autor: nombreUsuario,
-                    tipo: "texto"
-                })
-            });
-
-            statusMsg.style.color = "#75f992";
-            statusMsg.innerText = "✨ ¡Mensaje enviado con éxito!";
-            textoInput.value = "";
-        } catch (err) {
-            statusMsg.style.color = "#ff6b6b";
-            statusMsg.innerText = "Hubo un error al enviar el mensaje.";
-        }
-
-        setFormDisabled(false);
-    }
-
-    async function enviarFotos() {
-        if (archivosAcumulados.length === 0) {
-            mostrarModal("Por favor selecciona o toma al menos una foto o video para enviar.");
+    async function enviarTodo() {
+        const textoEscrito = inputTexto.value.trim();
+        if (archivosAcumulados.length === 0 && !textoEscrito) {
+            mostrarModal("Por favor selecciona al menos una foto, un video o escribe un mensaje para enviar.");
             return;
         }
 
         setFormDisabled(true);
         
-        let correctas = 0;
+        let correctasFotos = 0;
+        let correctasVideos = 0;
+        let enviadoTexto = false;
         let rechazadas = 0;
 
+        const totalPasos = archivosAcumulados.length + (textoEscrito ? 1 : 0);
+        let actual = 0;
+
+        // 1. Enviar archivos acumulados (fotos y videos)
         for (let i = 0; i < archivosAcumulados.length; i++) {
             const item = archivosAcumulados[i];
+            actual++;
             statusMsg.style.color = "#fffd8d";
-            statusMsg.innerText = `Procesando ${i + 1} de ${archivosAcumulados.length}...`;
+            statusMsg.innerText = `Procesando archivo ${actual} de ${totalPasos}...`;
 
             try {
                 let base64Data;
@@ -641,15 +621,40 @@
                     })
                 });
 
-                correctas++;
+                if (item.tipo === 'foto') correctasFotos++;
+                else correctasVideos++;
+            } catch (err) {
+                rechazadas++;
+            }
+        }
+
+        // 2. Enviar el texto si existe
+        if (textoEscrito) {
+            actual++;
+            statusMsg.style.color = "#fffd8d";
+            statusMsg.innerText = `Enviando mensaje de texto (${actual} de ${totalPasos})...`;
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify({
+                        contenido: textoEscrito,
+                        autor: nombreUsuario,
+                        tipo: "texto"
+                    })
+                });
+                enviadoTexto = true;
             } catch (err) {
                 rechazadas++;
             }
         }
 
         statusMsg.style.color = "#75f992";
-        statusMsg.innerHTML = `✨ ¡LISTO! Se enviaron ${correctas} archivo(s) correctamente.` + 
-            (rechazadas > 0 ? `<br><span style="color:#ff6b6b;">(${rechazadas} rechazados)</span>` : '');
+        statusMsg.innerHTML = `✨ ¡LISTO! Se enviaron: ` +
+            `${correctasFotos} foto(s), ${correctasVideos} video(s) y ${enviadoTexto ? 1 : 0} texto.` + 
+            (rechazadas > 0 ? `<br><span style="color:#ff6b6b;">(${rechazadas} error/es)</span>` : '');
 
         uploadSection.style.display = "none";
         resetBtn.style.setProperty('display', 'flex', 'important');
@@ -659,7 +664,7 @@
         archivosAcumulados = [];
         statusMsg.innerText = "";
         counterBadge.innerText = "";
-        document.getElementById('inputTexto').value = "";
+        inputTexto.value = "";
         
         submitBtn.style.setProperty('display', 'none', 'important');
         setFormDisabled(false);
