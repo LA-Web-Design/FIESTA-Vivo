@@ -91,22 +91,9 @@
             transition: all 0.2s ease;
         }
 
-        .input-autor:-webkit-autofill,
-        .input-autor:-webkit-autofill:hover, 
-        .input-autor:-webkit-autofill:focus, 
-        .input-autor:-webkit-autofill:active {
-            -webkit-box-shadow: 0 0 0 30px #14051c inset !important;
-            -webkit-text-fill-color: #00d4ff !important;
-            caret-color: #00d4ff;
-        }
-
         .input-autor::placeholder {
             color: rgba(255, 255, 255, 0.35);
             font-weight: 400;
-        }
-
-        .input-autor:focus::placeholder {
-            color: transparent;
         }
 
         .input-help {
@@ -169,125 +156,53 @@
         .btn-action:hover:not(:disabled) { filter: brightness(1.1); }
         .btn-action:active:not(:disabled) { transform: translateY(2px); }
 
-        .btn-action:disabled,
-        .btn-action.disabled-style {
-            opacity: 0.55;
-            cursor: not-allowed !important;
-            filter: grayscale(40%);
-            pointer-events: none;
-        }
-
         .btn-continuar {
             justify-content: center;
-            background: linear-gradient(
-                180deg, 
-                #1a0724 0%, 
-                #2f1340 15%, 
-                #200a2d 35%, 
-                #100318 75%, 
-                #07010b 100%
-            );
+            background: linear-gradient(180deg, #1a0724 0%, #2f1340 15%, #200a2d 35%, #100318 75%, #07010b 100%);
             color: rgba(255, 255, 255, 0.25);
-            box-shadow: 
-                0 4px 10px rgba(0, 0, 0, 0.5),
-                inset 0 1px 2px rgba(255, 255, 255, 0.08),
-                inset 0 -4px 6px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.08), inset 0 -4px 6px rgba(0, 0, 0, 0.7);
             cursor: not-allowed;
         }
 
-        .btn-continuar span {
-            margin-right: 0;
-        }
+        .btn-continuar span { margin-right: 0; }
 
         .btn-continuar.active {
-            background: linear-gradient(
-                180deg, 
-                #7a22b8 0%, 
-                #ca78ff 15%, 
-                #a83bf6 30%, 
-                #6c1cb0 70%, 
-                #380859 100%
-            );
+            background: linear-gradient(180deg, #7a22b8 0%, #ca78ff 15%, #a83bf6 30%, #6c1cb0 70%, #380859 100%);
             color: #ffffff;
             cursor: pointer;
             text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-            box-shadow: 
-                0 6px 18px rgba(168, 59, 246, 0.45),
-                inset 0 2px 3px rgba(255, 255, 255, 0.8),
-                inset 0 -5px 7px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 6px 18px rgba(168, 59, 246, 0.45), inset 0 2px 3px rgba(255, 255, 255, 0.8), inset 0 -5px 7px rgba(0, 0, 0, 0.7);
         }
 
         .btn-select {
-            background: linear-gradient(
-                180deg, 
-                #0f5ba6 0%, 
-                #71bdff 15%, 
-                #1D89F5 30%, 
-                #105db0 70%, 
-                #05254a 100%
-            );
+            background: linear-gradient(180deg, #0f5ba6 0%, #71bdff 15%, #1D89F5 30%, #105db0 70%, #05254a 100%);
             color: #ffffff;
             text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-            box-shadow: 
-                0 6px 16px rgba(0, 0, 0, 0.65),
-                inset 0 2px 3px rgba(255, 255, 255, 0.8),
-                inset 0 -5px 7px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.65), inset 0 2px 3px rgba(255, 255, 255, 0.8), inset 0 -5px 7px rgba(0, 0, 0, 0.8);
         }
 
         .btn-submit {
-            background: linear-gradient(
-                180deg, 
-                #135d23 0%, 
-                #75f992 15%, 
-                #2bb84b 30%, 
-                #1b8533 70%, 
-                #083312 100%
-            );
+            background: linear-gradient(180deg, #135d23 0%, #75f992 15%, #2bb84b 30%, #1b8533 70%, #083312 100%);
             color: #ffffff;
             text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-            box-shadow: 
-                0 6px 16px rgba(0, 0, 0, 0.65),
-                inset 0 2px 3px rgba(255, 255, 255, 0.8),
-                inset 0 -5px 7px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.65), inset 0 2px 3px rgba(255, 255, 255, 0.8), inset 0 -5px 7px rgba(0, 0, 0, 0.8);
             display: flex !important; 
         }
 
-        .btn-submit:disabled,
-        .btn-submit.disabled-style {
-            background: linear-gradient(
-                180deg, 
-                #111a13 0%, 
-                #223826 15%, 
-                #162419 30%, 
-                #0e1710 70%, 
-                #070c08 100%
-            ) !important;
+        .btn-submit:disabled {
+            background: linear-gradient(180deg, #111a13 0%, #223826 15%, #162419 30%, #0e1710 70%, #070c08 100%) !important;
             color: rgba(255, 255, 255, 0.25) !important;
             text-shadow: none !important;
-            box-shadow: 
-                0 4px 10px rgba(0, 0, 0, 0.5),
-                inset 0 1px 2px rgba(255, 255, 255, 0.05),
-                inset 0 -4px 6px rgba(0, 0, 0, 0.7) !important;
-            opacity: 1 !important;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.05), inset 0 -4px 6px rgba(0, 0, 0, 0.7) !important;
             cursor: not-allowed !important;
             pointer-events: none;
         }
 
         .btn-reset {
-            background: linear-gradient(
-                180deg, 
-                #135d23 0%, 
-                #75f992 15%, 
-                #2bb84b 30%, 
-                #1b8533 70%, 
-                #083312 100%
-            );
+            background: linear-gradient(180deg, #135d23 0%, #75f992 15%, #2bb84b 30%, #1b8533 70%, #083312 100%);
             color: #ffffff;
             text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-            box-shadow: 
-                0 6px 16px rgba(0, 0, 0, 0.65),
-                inset 0 2px 3px rgba(255, 255, 255, 0.8),
-                inset 0 -5px 7px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.65), inset 0 2px 3px rgba(255, 255, 255, 0.8), inset 0 -5px 7px rgba(0, 0, 0, 0.8);
             display: none !important; 
         }
 
@@ -365,9 +280,7 @@
             transition: transform 0.2s ease;
         }
 
-        .modal-overlay.active .modal-box {
-            transform: scale(1);
-        }
+        .modal-overlay.active .modal-box { transform: scale(1); }
 
         .modal-title {
             color: #ffffff;
@@ -437,12 +350,12 @@
             </label>
             <input type="file" id="videoInput" accept="video/*" capture="environment">
 
-            <!-- Galería de Fotos -->
+            <!-- Galería de Archivos (Fotos y Videos) -->
             <label for="galleryInput" id="labelGallery" class="btn-action btn-select">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                <span>Imágenes de Galería</span>
+                <span>Galería (Fotos y Videos)</span>
             </label>
-            <input type="file" id="galleryInput" accept="image/*" multiple>
+            <input type="file" id="galleryInput" accept="image/*,video/*" multiple>
 
             <!-- Textbox / Mensaje Escrito -->
             <div class="input-container">
@@ -493,12 +406,8 @@
     const cameraInput = document.getElementById('cameraInput');
     const galleryInput = document.getElementById('galleryInput');
     const videoInput = document.getElementById('videoInput');
-    const labelCamera = document.getElementById('labelCamera');
-    const labelGallery = document.getElementById('labelGallery');
-    const labelVideo = document.getElementById('labelVideo');
     const submitBtn = document.getElementById('submitBtn');
     const resetBtn = document.getElementById('resetBtn');
-    const uploadSection = document.getElementById('upload-section');
     const counterBadge = document.getElementById('counter-badge');
     const statusMsg = document.getElementById('status-msg');
     const inputTexto = document.getElementById('inputTexto');
@@ -538,61 +447,32 @@
     }
 
     cameraInput.addEventListener('change', (e) => {
-        agregarArchivos(e.target.files, 'foto');
+        agregarArchivos(e.target.files);
         cameraInput.value = '';
     });
 
     galleryInput.addEventListener('change', (e) => {
-        agregarArchivos(e.target.files, 'foto');
+        agregarArchivos(e.target.files);
         galleryInput.value = '';
     });
 
     videoInput.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            if (file.size > 50 * 1024 * 1024) {
-                mostrarModal("El video es demasiado pesado (máximo 50 MB / aprox. 15 segundos). Por favor graba un video más corto.");
-                videoInput.value = '';
-                return;
-            }
-
-            const videoElement = document.createElement('video');
-            videoElement.preload = 'metadata';
-            videoElement.onloadedmetadata = function() {
-                window.URL.revokeObjectURL(videoElement.src);
-                if (videoElement.duration > 18) {
-                    mostrarModal("El video dura más de 15 segundos. Por favor selecciona o graba un clip más corto.");
-                    videoInput.value = '';
-                } else {
-                    // CORREGIDO AQUÍ: Usamos .push para acumular el video junto a las fotos
-                    archivosAcumulados.push({ file: file, tipo: 'video' });
-                    videoInput.value = '';
-                    actualizarInterfaz();
-                }
-            }
-            videoElement.src = URL.createObjectURL(file);
-        }
+        agregarArchivos(e.target.files);
+        videoInput.value = '';
     });
 
-    function agregarArchivos(nuevosFiles, tipo) {
-        const list = Array.from(nuevosFiles);
-        list.forEach(file => {
-            if (tipo === 'foto') {
-                if (file.size > 10 * 1024 * 1024) {
-                    mostrarModal(`La foto "${file.name}" supera el límite de 10 MB y fue descartada.`);
-                    return;
-                }
-                archivosAcumulados.push({ file: file, tipo: tipo });
-            }
-        });
+    function agregarArchivos(nuevosFiles) {
+        for (let file of nuevosFiles) {
+            archivosAcumulados.push(file);
+        }
         actualizarInterfaz();
     }
 
     function actualizarInterfaz() {
         const textoEscrito = inputTexto.value.trim();
+        let fotosCount = archivosAcumulados.filter(f => f.type.startsWith('image/')).length;
+        let videosCount = archivosAcumulados.filter(f => f.type.startsWith('video/')).length;
         let descripciones = [];
-        let fotosCount = archivosAcumulados.filter(x => x.tipo === 'foto').length;
-        let videosCount = archivosAcumulados.filter(x => x.tipo === 'video').length;
 
         if (fotosCount > 0) descripciones.push(`${fotosCount} foto(s)`);
         if (videosCount > 0) descripciones.push(`${videosCount} video(s)`);
@@ -614,16 +494,6 @@
         galleryInput.disabled = disabled;
         videoInput.disabled = disabled;
         inputTexto.disabled = disabled;
-
-        if (disabled) {
-            labelCamera.classList.add('disabled-style');
-            labelGallery.classList.add('disabled-style');
-            labelVideo.classList.add('disabled-style');
-        } else {
-            labelCamera.classList.remove('disabled-style');
-            labelGallery.classList.remove('disabled-style');
-            labelVideo.classList.remove('disabled-style');
-        }
     }
 
     async function enviarTodo() {
@@ -644,37 +514,39 @@
         let actual = 0;
 
         for (let i = 0; i < archivosAcumulados.length; i++) {
-            const item = archivosAcumulados[i];
+            const file = archivosAcumulados[i];
             actual++;
             statusMsg.style.color = "#fffd8d";
             statusMsg.innerText = `Procesando archivo ${actual} de ${totalPasos}...`;
 
             try {
-                let base64Data;
-                let mimeTypeFinal = item.file.type;
-
-                if (item.tipo === 'foto') {
-                    base64Data = await comprimirImagen(item.file);
-                    mimeTypeFinal = "image/jpeg";
-                } else {
-                    base64Data = await convertirBase64(item.file);
+                let payload = {};
+                if (file.type.startsWith('image/')) {
+                    let base64Comprimido = await comprimirImagen(file);
+                    payload = {
+                        tipo: 'foto',
+                        file: base64Comprimido,
+                        name: file.name,
+                        mimeType: 'image/jpeg',
+                        autor: nombreUsuario
+                    };
+                    correctasFotos++;
+                } else if (file.type.startsWith('video/')) {
+                    let base64Video = await leerArchivoBase64(file);
+                    payload = {
+                        tipo: 'video',
+                        file: base64Video,
+                        name: file.name,
+                        mimeType: file.type,
+                        autor: nombreUsuario
+                    };
+                    correctasVideos++;
                 }
 
                 await fetch(WEB_APP_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'text/plain' },
-                    body: JSON.stringify({
-                        file: base64Data,
-                        name: item.file.name,
-                        mimeType: mimeTypeFinal,
-                        autor: nombreUsuario,
-                        tipo: item.tipo
-                    })
+                    body: JSON.stringify(payload)
                 });
-
-                if (item.tipo === 'foto') correctasFotos++;
-                else correctasVideos++;
             } catch (err) {
                 rechazadas++;
             }
@@ -688,12 +560,10 @@
             try {
                 await fetch(WEB_APP_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'text/plain' },
                     body: JSON.stringify({
+                        tipo: 'texto',
                         contenido: textoEscrito,
-                        autor: nombreUsuario,
-                        tipo: "texto"
+                        autor: nombreUsuario
                     })
                 });
                 enviadoTexto = 1;
@@ -722,17 +592,17 @@
         submitBtn.style.setProperty('display', 'flex', 'important');
     }
 
-    function convertirBase64(file) {
+    function leerArchivoBase64(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
             reader.readAsDataURL(file);
-            reader.onload = (event) => resolve(event.target.result);
-            reader.onerror = (error) => reject(error);
         });
     }
 
     function comprimirImagen(file) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = (event) => {
@@ -742,33 +612,19 @@
                     const canvas = document.createElement('canvas');
                     let width = img.width;
                     let height = img.height;
-
                     const MAX_WIDTH = 1000;
-                    const MAX_HEIGHT = 1000;
-
-                    if (width > height) {
-                        if (width > MAX_WIDTH) {
-                            height *= MAX_WIDTH / width;
-                            width = MAX_WIDTH;
-                        }
-                    } else {
-                        if (height > MAX_HEIGHT) {
-                            width *= MAX_HEIGHT / height;
-                            height = MAX_HEIGHT;
-                        }
+                    if (width > MAX_WIDTH) {
+                        height = Math.round((height * MAX_WIDTH) / width);
+                        width = MAX_WIDTH;
                     }
-
                     canvas.width = width;
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-
-                    const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.80);
                     resolve(dataUrl);
                 };
-                img.onerror = (error) => reject(error);
             };
-            reader.onerror = (error) => reject(error);
         });
     }
 </script>
