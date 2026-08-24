@@ -234,7 +234,6 @@
                 inset 0 -5px 7px rgba(0, 0, 0, 0.8);
         }
 
-        /* ESTILO PARA EL BOTÓN ENVIAR APAGADO / DESACTIVADO */
         .btn-submit {
             background: linear-gradient(
                 180deg, 
@@ -253,7 +252,6 @@
             display: flex !important; 
         }
 
-        /* Estado inactivo / apagado de ENVIAR */
         .btn-submit:disabled,
         .btn-submit.disabled-style {
             background: linear-gradient(
@@ -270,14 +268,9 @@
                 0 4px 10px rgba(0, 0, 0, 0.5),
                 inset 0 1px 2px rgba(255, 255, 255, 0.05),
                 inset 0 -4px 6px rgba(0, 0, 0, 0.7) !important;
-            opacity: 1 !important; /* Mantiene la visibilidad pero opaco/apagado */
+            opacity: 1 !important;
             cursor: not-allowed !important;
             pointer-events: none;
-        }
-        
-        .btn-submit:disabled svg stroke,
-        .btn-submit.disabled-style svg {
-            stroke: rgba(255, 255, 255, 0.25) !important;
         }
 
         .btn-reset {
@@ -319,7 +312,6 @@
 
         .hidden { display: none !important; }
 
-        /* LÍNEA DE HENDIDURA Y FIRMA INTEGRADA AL PANEL */
         .footer-divider {
             width: 100%;
             height: 2px;
@@ -339,7 +331,6 @@
             opacity: 0.9;
         }
 
-        /* MODAL */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -460,7 +451,7 @@
 
             <div id="counter-badge"></div>
 
-            <!-- BOTÓN ENVIAR (Siempre visible pero desactivado al principio) -->
+            <!-- BOTÓN ENVIAR -->
             <button id="submitBtn" class="btn-action btn-submit" disabled onclick="enviarTodo()">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                 <span>ENVIAR</span>
@@ -476,7 +467,6 @@
 
     <div id="status-msg"></div>
 
-    <!-- LÍNEA DE HENDIDURA Y FIRMA INTEGRADA AL PANEL -->
     <div class="footer-divider"></div>
     <div class="footer-text">
         Diseño de Luis Alberto Cáceres<br>
@@ -574,7 +564,8 @@
                     mostrarModal("El video dura más de 15 segundos. Por favor selecciona o graba un clip más corto.");
                     videoInput.value = '';
                 } else {
-                    archivosAcumulados = [{ file: file, tipo: 'video' }];
+                    // CORREGIDO AQUÍ: Usamos .push para acumular el video junto a las fotos
+                    archivosAcumulados.push({ file: file, tipo: 'video' });
                     videoInput.value = '';
                     actualizarInterfaz();
                 }
@@ -604,15 +595,15 @@
         let videosCount = archivosAcumulados.filter(x => x.tipo === 'video').length;
 
         if (fotosCount > 0) descripciones.push(`${fotosCount} foto(s)`);
-        if (videosCount > 0) descripciones.push(`1 video`);
+        if (videosCount > 0) descripciones.push(`${videosCount} video(s)`);
         if (textoEscrito.length > 0) descripciones.push(`1 texto`);
 
-        if (descripciones.length > 0) {
+        if (descripciones.length > 0 || archivosAcumulados.length > 0) {
             counterBadge.innerText = `📂 Seleccionado: ${descripciones.join(', ')}`;
-            submitBtn.removeAttribute('disabled'); // Se activa
+            submitBtn.removeAttribute('disabled');
         } else {
             counterBadge.innerText = "";
-            submitBtn.setAttribute('disabled', 'true'); // Se desactiva (color apagado)
+            submitBtn.setAttribute('disabled', 'true');
         }
         statusMsg.innerText = "";
     }
@@ -652,7 +643,6 @@
         const totalPasos = archivosAcumulados.length + (textoEscrito ? 1 : 0);
         let actual = 0;
 
-        // 1. Enviar archivos acumulados (fotos y videos)
         for (let i = 0; i < archivosAcumulados.length; i++) {
             const item = archivosAcumulados[i];
             actual++;
@@ -690,7 +680,6 @@
             }
         }
 
-        // 2. Enviar el texto si existe
         if (textoEscrito) {
             actual++;
             statusMsg.style.color = "#fffd8d";
@@ -728,7 +717,7 @@
         inputTexto.value = "";
         
         setFormDisabled(false);
-        submitBtn.setAttribute('disabled', 'true'); // Vuelve a quedar desactivado (apagado)
+        submitBtn.setAttribute('disabled', 'true');
         resetBtn.style.setProperty('display', 'none', 'important');
         submitBtn.style.setProperty('display', 'flex', 'important');
     }
