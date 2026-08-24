@@ -217,7 +217,7 @@
                 inset 0 -5px 7px rgba(0, 0, 0, 0.7);
         }
 
-        .btn-select, .btn-submit {
+        .btn-select {
             background: linear-gradient(
                 180deg, 
                 #0f5ba6 0%, 
@@ -234,8 +234,50 @@
                 inset 0 -5px 7px rgba(0, 0, 0, 0.8);
         }
 
-        .btn-submit { 
-            display: none !important; 
+        /* ESTILO PARA EL BOTÓN ENVIAR APAGADO / DESACTIVADO */
+        .btn-submit {
+            background: linear-gradient(
+                180deg, 
+                #135d23 0%, 
+                #75f992 15%, 
+                #2bb84b 30%, 
+                #1b8533 70%, 
+                #083312 100%
+            );
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+            box-shadow: 
+                0 6px 16px rgba(0, 0, 0, 0.65),
+                inset 0 2px 3px rgba(255, 255, 255, 0.8),
+                inset 0 -5px 7px rgba(0, 0, 0, 0.8);
+            display: flex !important; 
+        }
+
+        /* Estado inactivo / apagado de ENVIAR */
+        .btn-submit:disabled,
+        .btn-submit.disabled-style {
+            background: linear-gradient(
+                180deg, 
+                #111a13 0%, 
+                #223826 15%, 
+                #162419 30%, 
+                #0e1710 70%, 
+                #070c08 100%
+            ) !important;
+            color: rgba(255, 255, 255, 0.25) !important;
+            text-shadow: none !important;
+            box-shadow: 
+                0 4px 10px rgba(0, 0, 0, 0.5),
+                inset 0 1px 2px rgba(255, 255, 255, 0.05),
+                inset 0 -4px 6px rgba(0, 0, 0, 0.7) !important;
+            opacity: 1 !important; /* Mantiene la visibilidad pero opaco/apagado */
+            cursor: not-allowed !important;
+            pointer-events: none;
+        }
+        
+        .btn-submit:disabled svg stroke,
+        .btn-submit.disabled-style svg {
+            stroke: rgba(255, 255, 255, 0.25) !important;
         }
 
         .btn-reset {
@@ -277,14 +319,15 @@
 
         .hidden { display: none !important; }
 
-        /* FIRMA INTEGRADA AL PANEL */
+        /* LÍNEA DE HENDIDURA Y FIRMA INTEGRADA AL PANEL */
         .footer-divider {
             width: 100%;
-            height: 1px;
-            background: rgba(0, 0, 0, 0.6);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            height: 2px;
+            background: rgba(0, 0, 0, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             margin-top: 25px;
             margin-bottom: 15px;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.9);
         }
 
         .footer-text {
@@ -396,19 +439,19 @@
             </label>
             <input type="file" id="cameraInput" accept="image/*" capture="environment">
 
+            <!-- Grabar Video -->
+            <label for="videoInput" id="labelVideo" class="btn-action btn-select">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                <span>Grabar Video</span>
+            </label>
+            <input type="file" id="videoInput" accept="video/*" capture="environment">
+
             <!-- Galería de Fotos -->
             <label for="galleryInput" id="labelGallery" class="btn-action btn-select">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                 <span>Imágenes de Galería</span>
             </label>
             <input type="file" id="galleryInput" accept="image/*" multiple>
-
-            <!-- Subir Video -->
-            <label for="videoInput" id="labelVideo" class="btn-action btn-select">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-                <span>Subir Video</span>
-            </label>
-            <input type="file" id="videoInput" accept="video/*">
 
             <!-- Textbox / Mensaje Escrito -->
             <div class="input-container">
@@ -417,7 +460,8 @@
 
             <div id="counter-badge"></div>
 
-            <button id="submitBtn" class="btn-action btn-submit" onclick="enviarTodo()">
+            <!-- BOTÓN ENVIAR (Siempre visible pero desactivado al principio) -->
+            <button id="submitBtn" class="btn-action btn-submit" disabled onclick="enviarTodo()">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                 <span>ENVIAR</span>
             </button>
@@ -432,7 +476,7 @@
 
     <div id="status-msg"></div>
 
-    <!-- FIRMA INTEGRADA AL PANEL -->
+    <!-- LÍNEA DE HENDIDURA Y FIRMA INTEGRADA AL PANEL -->
     <div class="footer-divider"></div>
     <div class="footer-text">
         Diseño de Luis Alberto Cáceres<br>
@@ -516,19 +560,17 @@
     videoInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (file) {
-            // Validar límite de peso para videos (máximo 50MB / aprox 15-20 segundos)
             if (file.size > 50 * 1024 * 1024) {
                 mostrarModal("El video es demasiado pesado (máximo 50 MB / aprox. 15 segundos). Por favor graba un video más corto.");
                 videoInput.value = '';
                 return;
             }
 
-            // Validar duración exacta del video mediante elemento de video temporal
             const videoElement = document.createElement('video');
             videoElement.preload = 'metadata';
             videoElement.onloadedmetadata = function() {
                 window.URL.revokeObjectURL(videoElement.src);
-                if (videoElement.duration > 18) { // Margen estricto de 15 a 18 segundos
+                if (videoElement.duration > 18) {
                     mostrarModal("El video dura más de 15 segundos. Por favor selecciona o graba un clip más corto.");
                     videoInput.value = '';
                 } else {
@@ -556,27 +598,23 @@
     }
 
     function actualizarInterfaz() {
-        const totalArchivos = archivosAcumulados.length;
         const textoEscrito = inputTexto.value.trim();
-        const tieneTexto = textoEscrito.length > 0 ? 1 : 0;
+        let descripciones = [];
+        let fotosCount = archivosAcumulados.filter(x => x.tipo === 'foto').length;
+        let videosCount = archivosAcumulados.filter(x => x.tipo === 'video').length;
 
-        if (totalArchivos > 0 || tieneTexto > 0) {
-            let descripciones = [];
-            let fotosCount = archivosAcumulados.filter(x => x.tipo === 'foto').length;
-            let videosCount = archivosAcumulados.filter(x => x.tipo === 'video').length;
+        if (fotosCount > 0) descripciones.push(`${fotosCount} foto(s)`);
+        if (videosCount > 0) descripciones.push(`1 video`);
+        if (textoEscrito.length > 0) descripciones.push(`1 texto`);
 
-            if (fotosCount > 0) descripciones.push(`${fotosCount} foto(s)`);
-            if (videosCount > 0) descripciones.push(`1 video`);
-            if (tieneTexto > 0) descripciones.push(`1 texto`);
-
+        if (descripciones.length > 0) {
             counterBadge.innerText = `📂 Seleccionado: ${descripciones.join(', ')}`;
-            submitBtn.style.setProperty('display', 'flex', 'important');
-            statusMsg.innerText = "";
+            submitBtn.removeAttribute('disabled'); // Se activa
         } else {
             counterBadge.innerText = "";
-            submitBtn.style.setProperty('display', 'none', 'important');
-            statusMsg.innerText = "";
+            submitBtn.setAttribute('disabled', 'true'); // Se desactiva (color apagado)
         }
+        statusMsg.innerText = "";
     }
 
     function setFormDisabled(disabled) {
@@ -679,7 +717,7 @@
         statusMsg.innerHTML = `✨ ¡LISTO! Se enviaron: ${correctasFotos} foto(s), ${correctasVideos} video(s) y ${enviadoTexto} texto.` + 
             (rechazadas > 0 ? `<br><span style="color:#ff6b6b;">(${rechazadas} error/es)</span>` : '');
 
-        uploadSection.style.display = "none";
+        submitBtn.style.setProperty('display', 'none', 'important');
         resetBtn.style.setProperty('display', 'flex', 'important');
     }
 
@@ -689,11 +727,10 @@
         counterBadge.innerText = "";
         inputTexto.value = "";
         
-        submitBtn.style.setProperty('display', 'none', 'important');
         setFormDisabled(false);
-        
+        submitBtn.setAttribute('disabled', 'true'); // Vuelve a quedar desactivado (apagado)
         resetBtn.style.setProperty('display', 'none', 'important');
-        uploadSection.style.display = "block";
+        submitBtn.style.setProperty('display', 'flex', 'important');
     }
 
     function convertirBase64(file) {
