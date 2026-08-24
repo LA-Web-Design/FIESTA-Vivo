@@ -394,7 +394,7 @@
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
                 <span>Tomar Foto</span>
             </label>
-            <input type="file" id="cameraInput" accept="image/*" capture="environment" multiple>
+            <input type="file" id="cameraInput" accept="image/*" capture="environment">
 
             <!-- Galería de Fotos -->
             <label for="galleryInput" id="labelGallery" class="btn-action btn-select">
@@ -408,7 +408,7 @@
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
                 <span>Subir Video</span>
             </label>
-            <input type="file" id="videoInput" accept="video/*" multiple>
+            <input type="file" id="videoInput" accept="video/*">
 
             <!-- Textbox / Mensaje Escrito -->
             <div class="input-container">
@@ -514,19 +514,43 @@
     });
 
     videoInput.addEventListener('change', (e) => {
-        agregarArchivos(e.target.files, 'video');
-        videoInput.value = '';
+        const file = e.target.files[0];
+        if (file) {
+            // Validar límite de peso para videos (máximo 50MB / aprox 15-20 segundos)
+            if (file.size > 50 * 1024 * 1024) {
+                mostrarModal("El video es demasiado pesado (máximo 50 MB / aprox. 15 segundos). Por favor graba un video más corto.");
+                videoInput.value = '';
+                return;
+            }
+
+            // Validar duración exacta del video mediante elemento de video temporal
+            const videoElement = document.createElement('video');
+            videoElement.preload = 'metadata';
+            videoElement.onloadedmetadata = function() {
+                window.URL.revokeObjectURL(videoElement.src);
+                if (videoElement.duration > 18) { // Margen estricto de 15 a 18 segundos
+                    mostrarModal("El video dura más de 15 segundos. Por favor selecciona o graba un clip más corto.");
+                    videoInput.value = '';
+                } else {
+                    archivosAcumulados = [{ file: file, tipo: 'video' }];
+                    videoInput.value = '';
+                    actualizarInterfaz();
+                }
+            }
+            videoElement.src = URL.createObjectURL(file);
+        }
     });
 
     function agregarArchivos(nuevosFiles, tipo) {
         const list = Array.from(nuevosFiles);
         list.forEach(file => {
-            const limiteMB = tipo === 'video' ? 50 : 10;
-            if (file.size > limiteMB * 1024 * 1024) {
-                mostrarModal(`El archivo "${file.name}" supera el límite permitido de ${limiteMB} MB y fue descartado.`);
-                return;
+            if (tipo === 'foto') {
+                if (file.size > 10 * 1024 * 1024) {
+                    mostrarModal(`La foto "${file.name}" supera el límite de 10 MB y fue descartada.`);
+                    return;
+                }
+                archivosAcumulados.push({ file: file, tipo: tipo });
             }
-            archivosAcumulados.push({ file: file, tipo: tipo });
         });
         actualizarInterfaz();
     }
@@ -542,7 +566,7 @@
             let videosCount = archivosAcumulados.filter(x => x.tipo === 'video').length;
 
             if (fotosCount > 0) descripciones.push(`${fotosCount} foto(s)`);
-            if (videosCount > 0) descripciones.push(`${videosCount} video(s)`);
+            if (videosCount > 0) descripciones.push(`1 video`);
             if (tieneTexto > 0) descripciones.push(`1 texto`);
 
             counterBadge.innerText = `📂 Seleccionado: ${descripciones.join(', ')}`;
